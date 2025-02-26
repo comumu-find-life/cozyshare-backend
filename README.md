@@ -123,37 +123,6 @@
 
 </details>
 
-<details>
-<summary><b>📁 모듈 역할</b></summary>
-  
-<br />
-  
-
-### **`fl-api`**
-- REST API를 제공하며, Spring Security를 포함한 인증/인가 관련 처리를 담당합니다.
-
-### **`fl-batch`**
-- 스케줄러 기능을 처리하는 모듈입니다.
-- 추후 구현될 배치 작업도 이 모듈에서 담당합니다.
-
-### **`fl-chatting`**
-- 채팅 서버와 관련된 기능을 관리하는 모듈입니다.
-
-### **`fl-common`**
-- 여러 모듈에서 공통적으로 사용할 수 있는 기능들을 제공합니다:
-  - Redis
-  - FCM (Firebase Cloud Messaging)
-  - 이메일 전송
-  - S3 파일 업로드 등
-
-### **`fl-core`**
-- 도메인 및 Repository를 관리합니다.
-- DTO 정의 및 DTO ↔ Entity 변환 기능을 담당합니다.
-
-### **`fl-service`**
-- 비즈니스 로직을 처리하는 모듈입니다.
-</details>
-
 
 ### 기능 소개
 ----
