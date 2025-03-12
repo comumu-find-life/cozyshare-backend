@@ -1,15 +1,18 @@
-package com.chatting.config;
+package com.core.config;
 
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+@AutoConfiguration
 @Configuration
-@ComponentScan(basePackages = {"com.infra", "com.core"})
-@EnableJpaRepositories(basePackages = {"com.core"})
 @EnableMongoRepositories(basePackages = {"com.core.domain"})
-@EntityScan(basePackages = {"com.core"})
-public class ChattingAppConfig {
+@EntityScan(basePackages = "com.core.domain")
+@EnableJpaRepositories(basePackages = "com.core.domain")
+@ComponentScan(basePackages = "com.core")
+public class CoreAutoConfiguration {
 }

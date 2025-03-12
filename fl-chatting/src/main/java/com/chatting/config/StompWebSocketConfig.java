@@ -10,12 +10,15 @@ import org.springframework.web.socket.config.annotation.*;
 public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 
+    // /dm
     @Value("${domain.chat.directMessage}")
     private String dmUrl;
 
+    // /pub
     @Value("${domain.chat.publish}")
     private String pub;
 
+    //sub
     @Value("${domain.chat.subscribe}")
     private String sub;
 

@@ -38,7 +38,7 @@ public class HomeQueryService {
      */
     @Cacheable(value = "homeOverviewCache", key = "'allHomes'")
     public HomeOverviewWrapper findAllHomes() {
-        List<HomeOverviewResponse> homeOverviewResponses = homeRepository.findAllSellHome();  // 데이터베이스에서 결과 가져오기
+        List<HomeOverviewResponse> homeOverviewResponses = homeRepository.findAllSellHome();
         return new HomeOverviewWrapper(homeOverviewResponses);
     }
 

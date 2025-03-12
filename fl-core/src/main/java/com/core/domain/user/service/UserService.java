@@ -46,9 +46,7 @@ public class UserService {
     @Value("${admin.token}")
     private String secretToken;
 
-    /**
-     * 회원가입 메서드
-     */
+
     public Long signUp(UserSignupRequest userSignupRequest,String encodePassword, MultipartFile image) throws Exception {
         validation.validateSignUp(userSignupRequest.getEmail(), userSignupRequest.getNickname());
         User user = createUser(userSignupRequest, encodePassword, image);
@@ -64,45 +62,26 @@ public class UserService {
         return Arrays.asList(userMapper.toProfile(senderUser), userMapper.toProfile(receiverUser));
     }
 
-
-
-    /**
-     * 사용자 프로필 조회 메서드 by userId
-     */
     public UserProfileResponse getUserProfile(Long id) {
         User user = OptionalUtil.getOrElseThrow(userRepository.findById(id), NOT_EXIST_USER_ID);
         return userMapper.toProfile(user);
     }
 
-    /**
-     * 이메일 중복 확인 메서드
-     */
     public boolean validateDuplicateEmail(String email){
         Optional<User> byEmail = userRepository.findByEmail(email);
         return byEmail.isEmpty();
     }
 
-    /**
-     * 회원 조회 메서드 by userId
-     */
     public UserInformationResponse findById(Long id) {
         User user = OptionalUtil.getOrElseThrow(userRepository.findById(id), NOT_EXIST_USER_ID);
         return userMapper.toDto(user);
     }
 
-    /**
-     * 회원 조회 메서드 by email
-     */
     public UserInformationResponse findByEmail(String email) {
         User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
         return userMapper.toDto(user);
     }
 
-
-
-    /**
-     * 사용자 프로필 수정
-     */
     @Transactional
     public void update(UserProfileUpdateRequest userProfileUpdateRequest){
         User user = OptionalUtil.getOrElseThrow(userRepository.findById(userProfileUpdateRequest.getUserId()), NOT_EXIST_USER_ID);
@@ -110,18 +89,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    /**
-     * 사용자 계좌 정보 수정
-     */
+    @Transactional
+    public void blockUser(final Long userId){
+
+
+    }
+
     public void updateAccount(UserAccountRequest userAccountRequest, String email) {
         User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
         UserAccount userAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(user.getId()), NOT_EXIST_USER_ID);
         userMapper.updateUserAccount(userAccountRequest, userAccount);
     }
 
-    /**
-     * 사용자 프로필 이미지 수정
-     */
     @Transactional
     public void updateImage(Long userId, MultipartFile image){
         User user = OptionalUtil.getOrElseThrow(userRepository.findById(userId), NOT_EXIST_USER_ID);
@@ -132,9 +111,6 @@ public class UserService {
         user.setProfileUrl(profileUrl);
     }
 
-    /**
-     * 계정 삭제 메서드 by userId
-     */
     @Transactional
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     public void delete(final String email, final Long id) {
@@ -177,7 +153,7 @@ public class UserService {
 
     private User createUser(UserSignupRequest dto, String password,MultipartFile image) {
         User user = userMapper.toEntity(dto);
-        user.passwordEncode(password);
+        user.setPassword(password);
         if (image != null) {
             String profileUrl = uploadProfileImage(image);
             user.setProfileUrl(profileUrl);
@@ -199,9 +175,6 @@ public class UserService {
 
     }
 
-    /**
-     * 출금 신청된 정보 조회 메서드 (by admin)
-     */
     public List<WithDrawHistoryResponse> findWithDraws() {
         return userAccountRepository.findAll().stream()
                 .flatMap(userAccount -> userAccount.getChargeHistories().stream()

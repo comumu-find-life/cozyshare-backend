@@ -90,12 +90,16 @@ public class ProtectedDealService {
      */
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     @Transactional
-    public void acceptProtectedDeal(Long dealId) throws Exception {
+    public void acceptProtectedDeal(Long dealId)  {
+        //안전거래 조회
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
         User getter = OptionalUtil.getOrElseThrow(userRepository.findById(protectedDeal.getGetterId()), NOT_EXIST_USER_ID);
         UserAccount userAccount = userAccountRepository.findByUserId(getter.getId()).get();
+        //임차인 포인트가 충분한지 검증
         userAccount.validatePointsSufficiency(protectedDeal.calculateTotalPrice());
+        //임차인 포인트 감소
         userAccount.decreasePoint(protectedDeal.calculateTotalPrice());
+        //안전거래 상태 변경
         protectedDeal.setDealState(DealState.ACCEPT_DEAL);
         protectedDeal.getProtectedDealDateTime().setStartAt(LocalDateTime.now());
     }

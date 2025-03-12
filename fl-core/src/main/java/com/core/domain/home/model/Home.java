@@ -18,9 +18,10 @@ public class Home extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "home_id")
+    @Column(name = "home_id", nullable = false)
     private Long id;
 
+    @Column(name = "user_idx", nullable = false)
     private Long userIdx;
 
     @JsonIgnore

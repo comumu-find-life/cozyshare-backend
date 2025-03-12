@@ -16,23 +16,31 @@ public class HomeAddress extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "home_address_id")
+    @Column(name = "home_address_id", nullable = false)
     private Long id;
 
+    @Column(name = "state", nullable = false)
     private String state;
 
+    @Column(name = "city", nullable = false)
     private String city;
 
+    @Column(name = "post_code", nullable = false)
     private Integer postCode;
 
+    @Column(name = "detail_address", nullable = false)
     private String detailAddress;
 
+    @Column(name = "street_name", nullable = false)
     private String streetName;
 
+    @Column(name = "street_code", nullable = false)
     private String streetCode;
 
+    @Column(name = "latitude", nullable = true)
     private double latitude;
 
+    @Column(name = "longitude", nullable = true)
     private double longitude;
 
     protected void setLatLnd(double latitude, double longitude){

@@ -15,9 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class HomeInformationResponse {
-    /**
-     *  집주인 정보
-     */
     private String providerId;
 
     private String providerProfileUrl;
@@ -25,7 +22,7 @@ public class HomeInformationResponse {
     private String providerName;
 
     private Long homeId;
-    // 주소
+
     private String address;
 
     private List<String> images;
@@ -44,13 +41,10 @@ public class HomeInformationResponse {
 
     private String options;
 
-    // 화장실 개수
     private Integer bathRoomCount;
 
-    // Bedroom / 침실 개수
     private Integer bedroomCount;
 
-    // Resident 입주자 수
     private Integer residentCount;
 
     private double latitude;
@@ -60,7 +54,4 @@ public class HomeInformationResponse {
     private boolean canParking;
 
     private HomeStatus homeStatus;
-
-    // DTO 는 도메인과 완전히 분리 되어야해.
-//    private HomeInfo homeInfo;
 }

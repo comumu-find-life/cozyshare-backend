@@ -28,7 +28,7 @@ public class PaypalService {
     @Value("${paypal.mode}")
     private String mode;
 
-    private static final String PAYPAL_API_URL = "https://api.sandbox.paypal.com/v1/payments/payment/";
+    private static final String PAYPAL_API_URL = "https://api-m.paypal.com/v1/payments/payment/";
 
     public boolean verifyPayment(final PaymentRequest request) throws JsonProcessingException {
         String accessToken = getAccessToken();
@@ -44,7 +44,7 @@ public class PaypalService {
     }
 
     private String getAccessToken() throws JsonProcessingException {
-        String url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+        String url = "https://api-m.paypal.com/v1/oauth2/token";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + encodeBase64(clientId + ":" + clientSecret));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

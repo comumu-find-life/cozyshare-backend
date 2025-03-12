@@ -16,24 +16,31 @@ public class ProtectedDeal extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "protected_deal_id")
+    @Column(name = "protected_deal_id", nullable = false)
     private Long id;
 
+    @Column(name = "home_id", nullable = false)
     private Long homeId;
 
+    @Column(name = "dm_id", nullable = false)
     private Long dmId;
 
+    @Column(name = "getter_id", nullable = false)
     private Long getterId;
 
+    @Column(name = "provider_id", nullable = false)
     private Long providerId;
 
+    @Column(name = "deposit", nullable = false)
     private double deposit;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "protected_deal_time_id")
     private ProtectedDealDateTime protectedDealDateTime;
 
+    @Setter
     @Enumerated(EnumType.STRING)
+    @Column(name = "deal_state", nullable = false)
     private DealState dealState;
 
 
@@ -53,7 +60,4 @@ public class ProtectedDeal extends BaseTimeEntity {
         return protectedDealDateTime.isFiveDaysPassed() && (dealState.equals(DealState.ACCEPT_DEAL));
     }
 
-    public void setDealState(DealState state) {
-        this.dealState = state;
-    }
 }

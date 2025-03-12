@@ -47,8 +47,6 @@ public interface UserMapper {
     @Mapping(target = "email", ignore = true)
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "profileUrl", ignore = true)
-    @Mapping(target = "brith", ignore = true)
-    @Mapping(target = "phoneNumber", ignore = true)
     @Mapping(target = "userState", ignore = true)
     @Mapping(target = "nationality", ignore = true)
     @Mapping(target = "signupType", ignore = true)

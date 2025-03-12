@@ -16,9 +16,10 @@ public class HomeImage extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "home_image_id")
+    @Column(name = "home_image_id", nullable = false)
     private Long id;
 
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

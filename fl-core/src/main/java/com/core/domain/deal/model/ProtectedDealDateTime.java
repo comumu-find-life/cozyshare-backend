@@ -19,14 +19,19 @@ public class ProtectedDealDateTime {
     @Column(name = "protected_deal_time_id")
     private Long id;
 
+    @Column(name = "create_at")
     private LocalDateTime createAt;
 
+    @Column(name = "start_at")
     private LocalDateTime startAt;
 
+    @Column(name = "cancel_at")
     private LocalDateTime cancelAt;
 
+    @Column(name = "complete_at")
     private LocalDateTime completeAt;
 
+    @Column(name = "deal_at")
     private LocalDateTime dealAt;
 
     public boolean isToday() {

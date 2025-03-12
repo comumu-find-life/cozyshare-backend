@@ -13,7 +13,7 @@ plugins {
 }
 
 bootJar {
-    enabled = true // Spring Boot의 JAR 패키징을 활성화
+    enabled = true
 }
 
 
@@ -21,7 +21,7 @@ jar {
     enabled = false
     manifest {
         attributes(
-                'Main-Class': 'com.api.ApiApplication'  // 진입점 클래스 지정
+                'Main-Class': 'com.api.ApiApplication'
         )
     }
 }
@@ -34,17 +34,10 @@ repositories {
 }
 
 dependencies {
-    implementation project(':fl-core')
-    testImplementation project(':fl-core')
     testImplementation(testFixtures(project(":fl-core")))
     testImplementation(testFixtures(project(":fl-infra")))
-    testRuntimeOnly(testFixtures(project(":fl-core")))
-
-    implementation 'org.springframework.data:spring-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation group: 'com.auth0', name: 'java-jwt', version: '3.16.0'
