@@ -21,7 +21,6 @@ public class ApiUrlConstants {
     public static final String USERS_CHECK_DUPLICATE_EMAIL = USERS_BASE_URL + "/verification/email/{email}";
     public static final String USERS_FCM_TOKEN_REGISTER = USERS_BASE_URL + "/fcm";
     public static final String SEND_EMAIL_URL = USERS_BASE_URL+"/verification/email/send/{email}";
-    public static final String BLOCK_USER_URL = USERS_BASE_URL+"/block";
     public static final String VERIFICATION_EMAIL_CODE_URL = USERS_BASE_URL + "/verification/email/confirm/{email}/{code}";
     public static final String USERS_FIND_BY_ID = USERS_BASE_URL + "/{userId}";
     public static final String USERS_UPDATE = USERS_BASE_URL;

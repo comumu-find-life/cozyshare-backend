@@ -9,6 +9,5 @@ import lombok.Setter;
 @Builder
 public class GoogleAuthRequest {
     private String idToken;
-    // Android, Ios
     private PlatformType platformType;
 }
