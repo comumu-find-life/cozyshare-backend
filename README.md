@@ -30,7 +30,7 @@
 **Backend** : `Spring Boot`, `JPA`, `QueryDSL`  
 **Database** : `MySQL`, `MongoDB`, `Redis`  
 **Frontend** : `Flutter`  
-**Devops** : `Docker`, `GitAction`, `Aws Ec2`, `Aws RDS`, `Aws S3`  
+**Devops** : `Docker`, `GitAction`, `Aws Ec2`, `Aws RDS`, `Aws S3`, `Aws cloud Watch`  
 
 </details>
 
@@ -75,6 +75,27 @@
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
 
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h4><a href="https://comumu.tistory.com/153" target="_blank" style="color: #007bff; text-decoration: none;">Cloud Watch 로 로그 모니터링</a></h4>
+  </div>
+
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h4><a href="https://comumu.tistory.com/155" target="_blank" style="color: #007bff; text-decoration: none;">비관적 락을 이용한 금융기능 동시성 제어</a></h4>
+  </div>
+
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h4><a href="https://comumu.tistory.com/158" target="_blank" style="color: #007bff; text-decoration: none;">Redis Master-Replica 구조에서의 권한 문제</a></h4>
+  </div>
+
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h4><a href="https://comumu.tistory.com/160" target="_blank" style="color: #007bff; text-decoration: none;">STOMP 웹소켓 채팅 기능 구현</a></h4>
+  </div>
+
+  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h4><a href="https://comumu.tistory.com/152" target="_blank" style="color: #007bff; text-decoration: none;">커스텀 Resolver Exception 로 예외 관리하기
+</a></h4>
+  </div>
+  
   <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <h4><a href="https://comumu.tistory.com/149" target="_blank" style="color: #007bff; text-decoration: none;">Docker EC2 CI/CD 구축</a></h4>
   </div>
