@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class DirectMessageTotalRequest {
-    private Long senderId; // 이걸로 계좌 유무 조회
+    private Long senderId;
     private Long receiverId;
     private Long homeId;
     private Long roomId;

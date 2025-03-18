@@ -1,6 +1,70 @@
 version: '3.8'
 
+networks:
+  app-network:
+    driver: bridge
+
 services:
+  redis-master:
+    image: redis:7.0
+    container_name: redis-master
+    hostname: redis-master
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Australia/Sydney
+    networks:
+      - app-network
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-southeast-2
+        awslogs-group: cozysharelogs
+        awslogs-stream: redis-master
+        awslogs-create-group: "true"
+
+  redis-slave-1:
+    image: redis:7.0
+    container_name: redis-slave-1
+    hostname: redis-slave-1
+    command: redis-server --replicaof redis-master 6379
+    ports:
+      - "6380:6379"
+    depends_on:
+      - redis-master
+    environment:
+      - TZ=Australia/Sydney
+    networks:
+      - app-network
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-southeast-2
+        awslogs-group: cozysharelogs
+        awslogs-stream: redis-slave-1
+        awslogs-create-group: "true"
+
+  redis-slave-2:
+    image: redis:7.0
+    container_name: redis-slave-2
+    hostname: redis-slave-2
+    command: redis-server --replicaof redis-master 6379
+    ports:
+      - "6381:6379"
+    depends_on:
+      - redis-master
+    environment:
+      - TZ=Australia/Sydney
+    networks:
+      - app-network
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-southeast-2
+        awslogs-group: cozysharelogs
+        awslogs-stream: redis-slave-2
+        awslogs-create-group: "true"
+
   fl-api:
     image: minseok2000/cozy-api
     container_name: fl-api
@@ -12,8 +76,9 @@ services:
       - /home/ubuntu/.env
     environment:
       - TZ=Australia/Sydney
+      - REDIS_HOST=redis-master  # Redis Master 사용
     depends_on:
-      - redis
+      - redis-master
     networks:
       - app-network
     logging:
@@ -23,7 +88,6 @@ services:
         awslogs-group: cozysharelogs
         awslogs-stream: fl-api
         awslogs-create-group: "true"
-
 
   fl-chatting:
     image: minseok2000/cozy-chatting
@@ -36,8 +100,9 @@ services:
       - /home/ubuntu/.env
     environment:
       - TZ=Australia/Sydney
+      - REDIS_HOST=redis-master  # Redis Master 사용
     depends_on:
-      - redis
+      - redis-master
     networks:
       - app-network
     logging:
@@ -47,8 +112,6 @@ services:
         awslogs-group: cozysharelogs
         awslogs-stream: fl-chatting
         awslogs-create-group: "true"
-
-
 
   fl-batch:
     image: minseok2000/cozy-batch
@@ -61,8 +124,9 @@ services:
       - /home/ubuntu/.env
     environment:
       - TZ=Australia/Sydney
+      - REDIS_HOST=redis-master  # Redis Master 사용
     depends_on:
-      - redis
+      - redis-master
     networks:
       - app-network
     logging:
@@ -72,29 +136,3 @@ services:
         awslogs-group: cozysharelogs
         awslogs-stream: fl-batch
         awslogs-create-group: "true"
-
-  redis:
-    image: redis:7.0
-    container_name: redis
-    hostname: redis
-    ports:
-      - "6379:6379"
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    environment:
-      - TZ=Australia/Sydney
-    networks:
-      - app-network
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ap-southeast-2
-        awslogs-group: cozysharelogs
-        awslogs-stream: redis
-        awslogs-create-group: "true"
-
-networks:
-  app-network:
