@@ -19,4 +19,5 @@ public class DirectMessageRequest {
     private int isDeal;
     private Long dealId;
     private DealState dealState;
+    private String imageUrl;
 }

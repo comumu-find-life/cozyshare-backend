@@ -89,12 +89,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional
-    public void blockUser(final Long userId){
-
-
-    }
-
     public void updateAccount(UserAccountRequest userAccountRequest, String email) {
         User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
         UserAccount userAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(user.getId()), NOT_EXIST_USER_ID);

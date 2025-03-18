@@ -92,6 +92,4 @@ public class ChatController {
         SuccessResponse response = new SuccessResponse(true, message, data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-
 }

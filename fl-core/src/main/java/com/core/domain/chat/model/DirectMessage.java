@@ -34,6 +34,9 @@ public class DirectMessage {
     @Column(name = "deal_id", nullable = true)
     private Long dealId;
 
+    @Column(name = "image_url", nullable = true)
+    private String imageUrl;
+
     /**
      * 0 --> 일반 채팅 메시지
      * 1 --> 안전거래 시작 폼
