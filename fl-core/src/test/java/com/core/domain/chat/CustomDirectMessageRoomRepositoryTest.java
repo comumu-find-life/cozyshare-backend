@@ -11,17 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.core.helper.DirectMessageRoomHelper.generateDirectMessageRoom;
-import static com.core.helper.UserHelper.generateUser;
+import static com.core.chat.DirectMessageRoomHelper.generateDirectMessageRoom;
+import static com.core.user.UserBuilder.generateUser;
 
 @DataJpaTest
+@ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(TestConfig.class)
-public class DirectMessageRoomRepositoryTest {
+public class CustomDirectMessageRoomRepositoryTest {
 
     @Autowired
     private DirectMessageRoomRepository repository;
@@ -30,7 +32,7 @@ public class DirectMessageRoomRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    void 두명의_사용자가_속한_채팅방_조회_테스트() {
+    void 두명의_사용자가_속한_채팅방을_조회한다() {
         //given
         User user1 = userRepository.save(generateUser(1L));
         User user2 = userRepository.save(generateUser(2L));
@@ -38,7 +40,7 @@ public class DirectMessageRoomRepositoryTest {
         repository.save(directMessageRoom);
 
         //when
-        Optional<DirectMessageRoom> byUser1IdAndUser2Id = repository.findByUser1IdAndUser2Id(1L, 2L);
+        Optional<DirectMessageRoom> byUser1IdAndUser2Id = repository.findByUser1IdAndUser2Id(user1.getId(), user2.getId());
         //then
         Assertions.assertThat(byUser1IdAndUser2Id).isNotEmpty();
     }
@@ -46,25 +48,19 @@ public class DirectMessageRoomRepositoryTest {
     @Test
     void 자신이_소속한_채팅방_조회_테스트() {
         //given
-        saveMultipleDirectMessageRoom();
-
-        //when
-        List<DirectMessageRoom> byUser1IdOrUser2Id = repository.findByUser1IdOrUser2Id(1L);
-
-        //then
-        Assertions.assertThat(byUser1IdOrUser2Id.size()).isEqualTo(2);
-
-    }
-
-    private void saveMultipleDirectMessageRoom() {
         User user1 = userRepository.save(generateUser(1L));
         User user2 = userRepository.save(generateUser(2L));
         DirectMessageRoom directMessageRoom = generateDirectMessageRoom(user1, user2);
         repository.save(directMessageRoom);
-
         User user4 = userRepository.save(generateUser(4L));
         DirectMessageRoom directMessageRoom2 = generateDirectMessageRoom(user1, user4);
         repository.save(directMessageRoom2);
+
+        //when
+        List<DirectMessageRoom> byUser1IdOrUser2Id = repository.findByUser1IdOrUser2Id(user1.getId());
+
+        //then
+        Assertions.assertThat(byUser1IdOrUser2Id.size()).isEqualTo(2);
 
     }
 }

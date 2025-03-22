@@ -23,10 +23,7 @@ public class DirectMessageRoom {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user2;
 
+    @Setter
+    @Column(name = "progress_home_id")
     private Long progressHomeId;
-
-    public void setProgressHomeId(Long progressHomeId){
-        this.progressHomeId = progressHomeId;
-    }
-
 }

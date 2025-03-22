@@ -1,4 +1,4 @@
-package com.core.domain.home.repository;
+package com.core.domain.home.repository.impl;
 
 
 import com.core.domain.home.dto.HomeInformationResponse;

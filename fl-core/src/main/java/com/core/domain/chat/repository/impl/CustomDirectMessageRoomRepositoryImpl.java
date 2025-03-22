@@ -1,7 +1,8 @@
-package com.core.domain.chat.repository;
+package com.core.domain.chat.repository.impl;
 
 import com.core.domain.chat.model.DirectMessageRoom;
 import com.core.domain.chat.model.QDirectMessageRoom;
+import com.core.domain.chat.repository.CustomDirectMessageRoomRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;

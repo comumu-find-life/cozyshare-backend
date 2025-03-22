@@ -1,4 +1,4 @@
-package com.core.helper;
+package com.core.home;
 
 import com.core.domain.home.model.*;
 import com.core.domain.user.model.Gender;

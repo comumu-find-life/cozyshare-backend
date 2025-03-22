@@ -1,4 +1,4 @@
-package com.core.home.repository;
+package com.core.domain.home.repository;
 
 import com.core.domain.home.model.Home;
 import com.core.domain.home.repository.HomeRepository;
@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import static com.core.helper.HomeHelper.generateHome;
-import static com.core.helper.UserHelper.generateUser;
+import static com.core.home.HomeHelper.generateHome;
+import static com.core.user.UserBuilder.generateUser;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -34,7 +34,6 @@ public class CustomHomeRepositoryImplTest {
         Home save = homeRepository.save(generateHome(user.getId()));
 
         homeRepository.findHomeAndUserById(save.getId());
-        System.out.println("--------");
     }
 
 }

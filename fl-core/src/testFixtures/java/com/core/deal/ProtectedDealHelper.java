@@ -6,7 +6,7 @@ import com.core.domain.deal.model.ProtectedDealDateTime;
 
 import java.time.LocalDateTime;
 
-public class ProtectedDealBuilder {
+public class ProtectedDealHelper {
 
     public static ProtectedDeal createProtectedDeal(Long homeId){
         return ProtectedDeal.builder()

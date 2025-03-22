@@ -21,6 +21,7 @@ subprojects {
 
     repositories {
         mavenCentral()
+        google()
     }
 
     ext {
@@ -81,5 +82,6 @@ project(':fl-infra') {
 project(':fl-core') {
     dependencies {
         implementation project(':fl-infra')
+        testImplementation project(':fl-infra')
     }
 }

@@ -1,6 +1,7 @@
-package com.core.domain.chat.repository;
+package com.core.domain.chat.repository.impl;
 
 import com.core.domain.chat.model.DirectMessage;
+import com.core.domain.chat.repository.CustomChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;

@@ -1,8 +1,9 @@
-package com.core.domain.deal.repository;
+package com.core.domain.deal.repository.impl;
 
 import com.core.domain.deal.model.DealState;
 import com.core.domain.deal.model.ProtectedDeal;
 import com.core.domain.deal.model.QProtectedDeal;
+import com.core.domain.deal.repository.CustomProtectedDealRepository;
 import com.core.domain.home.model.QHome;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;

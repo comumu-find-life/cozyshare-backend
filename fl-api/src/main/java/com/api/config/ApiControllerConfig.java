@@ -8,5 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableCaching
 @EnableJpaAuditing
 @Configuration
+//@ComponentScan(basePackages = {"com.api", "com.core", "com.infra"})
 public class ApiControllerConfig {
 }
