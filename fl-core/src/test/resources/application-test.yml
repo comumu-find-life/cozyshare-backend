@@ -10,6 +10,14 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
 
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/testdb
+      database: fl_test
+      username: root
+      password: sin981023@
+      authentication-database: admin
+
   datasource:
     initialization-mode: never
     driver-class-name: com.mysql.cj.jdbc.Driver
