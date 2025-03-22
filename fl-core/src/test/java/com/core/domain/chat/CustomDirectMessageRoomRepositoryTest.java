@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static com.core.chat.DirectMessageRoomHelper.generateDirectMessageRoom;
 import static com.core.user.UserBuilder.generateUser;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -42,11 +43,11 @@ public class CustomDirectMessageRoomRepositoryTest {
         //when
         Optional<DirectMessageRoom> byUser1IdAndUser2Id = repository.findByUser1IdAndUser2Id(user1.getId(), user2.getId());
         //then
-        Assertions.assertThat(byUser1IdAndUser2Id).isNotEmpty();
+        assertThat(byUser1IdAndUser2Id).isNotEmpty();
     }
 
     @Test
-    void 자신이_소속한_채팅방_조회_테스트() {
+    void 자신이_속한_모든_채팅방을_조회한다() {
         //given
         User user1 = userRepository.save(generateUser(1L));
         User user2 = userRepository.save(generateUser(2L));
@@ -60,7 +61,22 @@ public class CustomDirectMessageRoomRepositoryTest {
         List<DirectMessageRoom> byUser1IdOrUser2Id = repository.findByUser1IdOrUser2Id(user1.getId());
 
         //then
-        Assertions.assertThat(byUser1IdOrUser2Id.size()).isEqualTo(2);
+        assertThat(byUser1IdOrUser2Id.size()).isEqualTo(2);
+    }
+
+    @Test
+    void 자신이_속한_모든_채팅방을_삭제한다(){
+        //given
+        User user1 = userRepository.save(generateUser(1L));
+        User user2 = userRepository.save(generateUser(2L));
+        DirectMessageRoom directMessageRoom = generateDirectMessageRoom(user1, user2);
+        repository.save(directMessageRoom);
+
+        //when
+        repository.deleteAllByUserId(user1.getId());
+        Optional<DirectMessageRoom> byUser1IdAndUser2Id = repository.findByUser1IdAndUser2Id(user1.getId(), user2.getId());
+        //then
+        assertThat(byUser1IdAndUser2Id).isEmpty();
 
     }
 }
