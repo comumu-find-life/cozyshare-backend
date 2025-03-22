@@ -5,7 +5,7 @@ import com.core.domain.chat.model.DirectMessage;
 import java.util.List;
 import java.util.Optional;
 
-public interface CustomChatMessageRepository {
+public interface CustomDirectMessageRepository {
 
     Optional<DirectMessage> findLastMessageByUserIds(Long user1Id, Long user2Id);
 

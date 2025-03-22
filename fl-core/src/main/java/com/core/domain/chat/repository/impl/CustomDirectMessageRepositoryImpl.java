@@ -1,7 +1,7 @@
 package com.core.domain.chat.repository.impl;
 
 import com.core.domain.chat.model.DirectMessage;
-import com.core.domain.chat.repository.CustomChatMessageRepository;
+import com.core.domain.chat.repository.CustomDirectMessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomChatMessageRepositoryImpl implements CustomChatMessageRepository {
+public class CustomDirectMessageRepositoryImpl implements CustomDirectMessageRepository {
 
     private final MongoTemplate mongoTemplate;
 
