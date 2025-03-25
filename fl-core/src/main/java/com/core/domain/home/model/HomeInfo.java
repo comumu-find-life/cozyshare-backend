@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 public class HomeInfo {
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "can_parking", nullable = false)
     private boolean canParking;
 
     @Column(name = "bath_room_count", nullable = false)

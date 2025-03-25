@@ -21,8 +21,8 @@ public class Home extends BaseTimeEntity {
     @Column(name = "home_id", nullable = false)
     private Long id;
 
-    @Column(name = "user_idx", nullable = false)
-    private Long userIdx;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)

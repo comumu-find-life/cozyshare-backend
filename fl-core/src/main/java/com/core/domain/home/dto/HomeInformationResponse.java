@@ -17,11 +17,11 @@ import java.util.List;
 public class HomeInformationResponse {
     private String providerId;
 
+    private Long homeId;
+
     private String providerProfileUrl;
 
     private String providerName;
-
-    private Long homeId;
 
     private String address;
 

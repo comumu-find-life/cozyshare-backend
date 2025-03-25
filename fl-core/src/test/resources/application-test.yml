@@ -12,11 +12,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://localhost:27017/testdb
-      database: fl_test
-      username: root
-      password: sin981023@
-      authentication-database: admin
+      uri: mongodb://root:sin981023@localhost:27017/testdb?authSource=admin
+      database: testdb
 
   datasource:
     initialization-mode: never

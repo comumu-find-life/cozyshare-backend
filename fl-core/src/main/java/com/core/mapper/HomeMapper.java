@@ -25,9 +25,9 @@ public interface HomeMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "images", ignore = true)
     @Mapping(target = "homeStatus", expression = "java(com.core.domain.home.model.HomeStatus.FOR_SALE)")
-    @Mapping(target = "userIdx", source = "userIdx")
+    @Mapping(target = "userId", source = "userId")
     @Mapping(target = "homeInfo", source = "homeDto", qualifiedByName = "mapHomeInfo")
-    Home toEntity(HomeGeneratorRequest homeDto, Long userIdx);
+    Home toEntity(HomeGeneratorRequest homeDto, Long userId);
 
     @Named("mapHomeInfo")
     default HomeInfo mapHomeInfo(HomeGeneratorRequest homeGeneratorRequest){
@@ -68,10 +68,10 @@ public interface HomeMapper {
     /**
      * Home 게시글을 보여줄 DTO 변환
      */
+    @Mapping(target = "providerId", source = "user.id")
     @Mapping(target = "homeId", source = "home.id")
     @Mapping(target = "latitude", source = "home.homeAddress.latitude")
     @Mapping(target = "longitude", source = "home.homeAddress.longitude")
-    @Mapping(target = "providerId", source = "user.id")
     @Mapping(target = "introduce", source = "home.homeInfo.introduce")
     @Mapping(target = "providerProfileUrl", source = "user.profileUrl")
     @Mapping(target = "providerName", source = "user.nickname")

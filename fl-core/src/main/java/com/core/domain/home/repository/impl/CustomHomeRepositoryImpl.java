@@ -34,7 +34,7 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
                 .select(qHome, qUser)
                 .distinct()
                 .from(qHome)
-                .join(qUser).on(qHome.userIdx.eq(qUser.id))
+                .join(qUser).on(qHome.userId.eq(qUser.id))
                 .join(qHome.images, qHomeImage).fetchJoin()
                 .distinct()
                 .where(qHome.id.eq(homeId))
@@ -50,24 +50,37 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
     @Override
     public List<Home> findByUserId(Long userIdx) {
         List<Home> homes = query.selectFrom(qHome)
-                .where(qHome.userIdx.eq(userIdx))
+                .where(qHome.userId.eq(userIdx))
                 .fetch();
         return homes;
     }
 
     @Override
-    public List<HomeOverviewResponse> findFavoriteHomes(List<Long> homeIds) {
+    public List<HomeOverviewResponse> findByHomeIds(List<Long> homeIds) {
         List<Tuple> tuples = query
                 .select(qHome, qUser)
                 .from(qHome)
-                .leftJoin(qUser).on(qHome.userIdx.eq(qUser.id))
-                .where(qHome.id.in(homeIds)) // Home ID 필터링
+                .leftJoin(qUser).on(qHome.userId.eq(qUser.id))
+                .join(qHome.images, qHomeImage).fetchJoin()
+                .where(qHome.id.in(homeIds))
                 .fetch();
 
-        return tuples.stream()
+        Set<Home> uniqueHomes = new HashSet<>();
+        tuples.stream()
                 .map(tuple -> {
                     Home home = tuple.get(0, Home.class);
                     User user = tuple.get(1, User.class);
+                    uniqueHomes.add(home);
+                    return HomeMapper.INSTANCE.toSimpleHomeDto(home, user);
+                })
+                .collect(Collectors.toList());
+
+        return uniqueHomes.stream()
+                .map(home -> {
+                    User user = query.select(qUser)
+                            .from(qUser)
+                            .where(qUser.id.eq(home.getUserId()))
+                            .fetchFirst();
                     return HomeMapper.INSTANCE.toSimpleHomeDto(home, user);
                 })
                 .collect(Collectors.toList());
@@ -78,7 +91,7 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
         Set<Long> seenHomeIds = new HashSet<>();
         List<Tuple> tuples = query.select(qHome, qUser)
                 .from(qHome)
-                .join(qUser).on(qHome.userIdx.eq(qUser.id))
+                .join(qUser).on(qHome.userId.eq(qUser.id))
                 .leftJoin(qHome.images, qHomeImage).fetchJoin()
                 .where(qHome.homeStatus.eq(HomeStatus.FOR_SALE))
                 .fetch()

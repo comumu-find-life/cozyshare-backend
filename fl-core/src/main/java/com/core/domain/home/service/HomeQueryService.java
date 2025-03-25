@@ -45,10 +45,10 @@ public class HomeQueryService {
     /**
      * 특정 사용자의 집 게시물 모두 조회
      */
-    public List<HomeOverviewResponse> findByUserId(final Long userIdx) {
+    public List<HomeOverviewResponse> findByUserId(final Long userId) {
         List<HomeOverviewResponse> response = new ArrayList<>();
-        User user = OptionalUtil.getOrElseThrow(userRepository.findById(userIdx), NOT_EXIST_USER_ID);
-        List<Home> homes = homeRepository.findByUserId(userIdx);
+        User user = OptionalUtil.getOrElseThrow(userRepository.findById(userId), NOT_EXIST_USER_ID);
+        List<Home> homes = homeRepository.findByUserId(userId);
         homes.forEach(home -> {
             response.add(homeMapper.toSimpleHomeDto(home, user));
         });
@@ -59,16 +59,19 @@ public class HomeQueryService {
      * 찜 목록 게시글 조회
      */
     public List<HomeOverviewResponse> findFavoriteHomes(final List<Long> homeIds) {
-        return homeRepository.findFavoriteHomes(homeIds);
+        return homeRepository.findByHomeIds(homeIds);
     }
 
 
+    /**
+     * 도시 이름으로 판매중인 집 게시글 조회
+     */
     public List<HomeOverviewResponse> findByCity(final String cityName) {
         List<Home> homes = homeRepository.findByCity(cityName);
         return homes.stream()
                 .map(home -> {
-                    User user = userRepository.findById(home.getUserIdx())
-                            .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST_USER_ID + home.getUserIdx()));
+                    User user = userRepository.findById(home.getUserId())
+                            .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST_USER_ID + home.getUserId()));
                     return homeMapper.toSimpleHomeDto(home, user);
                 })
                 .collect(Collectors.toList());
