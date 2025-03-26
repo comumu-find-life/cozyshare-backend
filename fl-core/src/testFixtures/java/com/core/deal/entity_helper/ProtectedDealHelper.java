@@ -1,4 +1,4 @@
-package com.core.deal;
+package com.core.deal.entity_helper;
 
 import com.core.domain.deal.model.DealState;
 import com.core.domain.deal.model.ProtectedDeal;

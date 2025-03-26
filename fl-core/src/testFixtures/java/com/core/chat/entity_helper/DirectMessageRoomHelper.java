@@ -1,4 +1,4 @@
-package com.core.chat;
+package com.core.chat.entity_helper;
 
 import com.core.domain.chat.model.DirectMessageRoom;
 import com.core.domain.user.model.User;

@@ -6,7 +6,6 @@ import com.core.domain.home.model.Home;
 import com.core.domain.user.model.User;
 import com.core.domain.user.repository.UserRepository;
 import com.core.config.TestConfig;
-import com.core.utils.Timer;
 import com.core.utils.TimerAop;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.Optional;
 
-import static com.core.home.HomeHelper.generateHome;
-import static com.core.user.UserBuilder.generateUser;
+import static com.core.home.entity_helper.HomeHelper.generateHome;
+import static com.core.user.entity_helper.UserHelper.generateUser;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
@@ -67,8 +66,8 @@ public class CustomHomeRepositoryImplTest {
     void 판매중인_집_게시글을_모두_조회한다() {
         //given
         User user = userRepository.save(generateUser(1L));
-        Home home1 = homeRepository.save(generateHome(user.getId()));
-        Home home2 = homeRepository.save(generateHome(user.getId()));
+        homeRepository.save(generateHome(user.getId()));
+        homeRepository.save(generateHome(user.getId()));
 
         //when
         List<HomeOverviewResponse> allSellHome = homeRepository.findAllSellHome();

@@ -1,9 +1,9 @@
-package com.core.user;
+package com.core.user.entity_helper;
 
 import com.core.domain.user.model.SignupType;
 import com.core.domain.user.model.User;
 
-public class UserBuilder {
+public class UserHelper {
     public static User generateUser(Long id) {
         return User.builder()
                 .id(id)

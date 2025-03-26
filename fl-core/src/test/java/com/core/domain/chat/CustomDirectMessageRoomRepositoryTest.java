@@ -5,7 +5,6 @@ import com.core.domain.chat.repository.DirectMessageRoomRepository;
 import com.core.domain.user.model.User;
 import com.core.domain.user.repository.UserRepository;
 import com.core.config.TestConfig;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,8 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.List;
 import java.util.Optional;
 
-import static com.core.chat.DirectMessageRoomHelper.generateDirectMessageRoom;
-import static com.core.user.UserBuilder.generateUser;
+import static com.core.chat.entity_helper.DirectMessageRoomHelper.generateDirectMessageRoom;
+import static com.core.user.entity_helper.UserHelper.generateUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
