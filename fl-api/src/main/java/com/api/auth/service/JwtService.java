@@ -2,6 +2,7 @@ package com.api.auth.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.core.domain.user.dto.UserInformationResponse;
 import com.core.domain.user.model.LoginResponse;
 import com.core.domain.user.repository.UserRepository;
 import com.infra.exception.AuthException;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

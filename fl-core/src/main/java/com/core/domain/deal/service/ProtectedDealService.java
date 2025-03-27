@@ -4,6 +4,7 @@ import com.core.mapper.ProtectedDealMapper;
 import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
 import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
 import com.core.domain.deal.dto.ProtectedDealResponse;
+import com.infra.exception.NotMatchGetterException;
 import com.infra.fcm.FCMHelper;
 import com.infra.fcm.FCMState;
 import com.core.domain.deal.model.DealState;
@@ -90,16 +91,13 @@ public class ProtectedDealService {
      */
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     @Transactional
-    public void acceptProtectedDeal(Long dealId)  {
-        //안전거래 조회
+    public void acceptProtectedDeal(Long dealId, Long getterId)  {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
-        User getter = OptionalUtil.getOrElseThrow(userRepository.findById(protectedDeal.getGetterId()), NOT_EXIST_USER_ID);
+        validateMatchDealOwner(protectedDeal, getterId);
+        User getter = OptionalUtil.getOrElseThrow(userRepository.findById(getterId), NOT_EXIST_USER_ID);
         UserAccount userAccount = userAccountRepository.findByUserId(getter.getId()).get();
-        //임차인 포인트가 충분한지 검증
         userAccount.validatePointsSufficiency(protectedDeal.calculateTotalPrice());
-        //임차인 포인트 감소
         userAccount.decreasePoint(protectedDeal.calculateTotalPrice());
-        //안전거래 상태 변경
         protectedDeal.setDealState(DealState.ACCEPT_DEAL);
         protectedDeal.getProtectedDealDateTime().setStartAt(LocalDateTime.now());
     }
@@ -110,8 +108,9 @@ public class ProtectedDealService {
      */
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     @Transactional
-    public void completeDeal(Long dealId) {
+    public void completeDeal(Long dealId, Long getterId) {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
+        validateMatchDealOwner(protectedDeal, getterId);
         User provider = userRepository.findById(protectedDeal.getProviderId()).get();
         UserAccount providerAccount = userAccountRepository.findByUserId(protectedDeal.getProviderId()).get();
         providerAccount.increasePoint(protectedDeal.getDeposit());
@@ -126,8 +125,9 @@ public class ProtectedDealService {
      * 안전 거래 생성 전 취소 메서드
      */
     @Transactional
-    public void cancelBeforeDeal(Long dealId) {
+    public void cancelBeforeDeal(Long dealId, Long getterId) {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
+        validateMatchDealOwner(protectedDeal, getterId);
         Home home = OptionalUtil.getOrElseThrow(homeRepository.findById(protectedDeal.getHomeId()), NOT_EXIST_HOME_ID);
         home.setHomeStatus(HomeStatus.FOR_SALE);
         protectedDeal.getProtectedDealDateTime().setCancelAt(LocalDateTime.now());
@@ -138,14 +138,21 @@ public class ProtectedDealService {
      * 안전 거래 생성 후 취소 메서드 (by getter)
      */
     @Transactional
-    public void cancelAfterDeal(Long dealId) {
+    public void cancelAfterDeal(Long dealId, Long getterId) {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
+        validateMatchDealOwner(protectedDeal, getterId);
         UserAccount getterAccount = userAccountRepository.findByUserId(protectedDeal.getGetterId()).get();
         getterAccount.increasePoint(protectedDeal.getDeposit());
         Home home = OptionalUtil.getOrElseThrow(homeRepository.findById(protectedDeal.getHomeId()), NOT_EXIST_HOME_ID);
         home.setHomeStatus(HomeStatus.FOR_SALE);
         protectedDeal.getProtectedDealDateTime().setCancelAt(LocalDateTime.now());
         protectedDeal.setDealState(DealState.CANCEL_DURING_DEAL);
+    }
+
+    private void validateMatchDealOwner(ProtectedDeal protectedDeal, Long getterId){
+        if(protectedDeal.getGetterId() != getterId) {
+            throw new NotMatchGetterException("안전거래 임차인과 요청을 보낸 사용자가 다릅니다.");
+        }
     }
 
 

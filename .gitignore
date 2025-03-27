@@ -9,6 +9,7 @@ build/
 # 민감한 파일 무시
 # 디렉토리와 내부 파일 모두 포함
 fl-core/src/main/resources/firebase-key.json
+fl-api/src/test/resources/application-test.yml
 
 
 ### STS ###

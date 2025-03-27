@@ -55,7 +55,6 @@ public class HomeController {
 
     @GetMapping(HOMES_FIND_BY_ID)
     public ResponseEntity<?> findById(@PathVariable final Long homeId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         HomeInformationResponse homeInformationResponse = homeQueryService.findById(homeId);
         SuccessResponse response = new SuccessResponse(true, SuccessHomeMessages.HOME_RETRIEVE_SUCCESS, homeInformationResponse);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -102,7 +101,6 @@ public class HomeController {
         SuccessResponse<Object> response = new SuccessResponse<>(true, SuccessHomeMessages.CITY_HOMES_RETRIEVE_SUCCESS, homes);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 
     @GetMapping(HOMES_FIND_FAVORITE)
     public ResponseEntity<?> findFavoriteHomes(@RequestParam final List<Long> homeIds) {

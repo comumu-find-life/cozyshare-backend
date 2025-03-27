@@ -109,16 +109,12 @@ public interface HomeMapper {
     HomeOverviewResponse toSimpleHomeDto(Home home, User user);
 
 
-
     @Named("mapImageUrls")
     default List<String> mapImageUrls(List<HomeImage> images) {
         return images.stream()
                 .map(HomeImage::getImageUrl)
                 .collect(Collectors.toList());
     }
-
-
-
 
     @Named("mapMainImage")
     default String mapMainImage(List<HomeImage> images) {

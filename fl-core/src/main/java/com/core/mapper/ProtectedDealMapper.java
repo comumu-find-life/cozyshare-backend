@@ -52,17 +52,7 @@ public interface ProtectedDealMapper {
     ProtectedDealResponse toResponse(ProtectedDeal deal, Home home);
 
 
-
-    ProtectedDealOverViewResponse toAdminOverViewResponse(ProtectedDeal entity);
-
     @Mapping(target = "dealId", source = "dealId")
     ProtectedDealGeneratorResponse toGeneratorResponse(Long dealId);
 
-//    default ProviderAccount toProviderAccount(ProtectedDealGeneratorRequest request) {
-//        return ProviderAccount.builder()
-//                .account(request.getAccount())
-//                .accountHolder(request.getAccountHolder())
-//                .bankName(request.getBankName())
-//                .build();
-//    }
 }
