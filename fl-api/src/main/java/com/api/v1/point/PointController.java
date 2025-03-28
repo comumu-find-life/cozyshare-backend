@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import static com.api.auth.service.SecurityContextHelper.getLoginEmailBySecurityContext;
 import static com.api.v1.constants.ApiUrlConstants.*;
 import static com.api.v1.point.SuccessPointMessages.*;
 
@@ -28,7 +29,7 @@ public class PointController {
     public ResponseEntity<?> paymentSuccess(@RequestBody final  PaymentRequest request) throws JsonProcessingException {
         boolean isPayment = paypalService.verifyPayment(request);
         if(isPayment){
-            String email = SecurityContextHolder.getContext().getAuthentication().getName();
+            String email = getLoginEmailBySecurityContext();
             pointService.chargePoint(email, request.getAmount());
             SuccessResponse response = new SuccessResponse(true, CHARGE_SUCCESS, null);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -40,10 +41,9 @@ public class PointController {
 
     @PostMapping(APPLY_WITH_DRAW_URL)
     public ResponseEntity<?> applyWithDraw(@RequestParam final double price) throws InsufficientPointsException {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = getLoginEmailBySecurityContext();
         pointService.applyWithDraw(email, price);
         SuccessResponse response = new SuccessResponse(true, APPLY_WITH_DRAW, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

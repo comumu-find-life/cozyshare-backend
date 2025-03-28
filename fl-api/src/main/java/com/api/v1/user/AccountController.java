@@ -22,7 +22,7 @@ public class AccountController {
 
     @PostMapping(USER_ACCOUNT_REGISTER_URL)
     public ResponseEntity<?> registerAccount(@RequestBody final UserAccountRequest userAccountRequest, @PathVariable final Long userId) {
-        userService.setUserAccount(userAccountRequest, userId);
+        userService.registerUserAccount(userAccountRequest, userId);
         SuccessResponse response = new SuccessResponse(true, MY_ACCOUNT_REGISTER, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

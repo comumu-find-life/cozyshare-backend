@@ -19,18 +19,5 @@ import java.time.Duration;
 @RequiredArgsConstructor
 @EnableCaching
 public class RedisCacheConfig {
-    @Bean
-    public CacheManager cacheManager(RedisConnectionFactory cf) {
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofMinutes(10L));
-
-        return RedisCacheManager
-                .RedisCacheManagerBuilder
-                .fromConnectionFactory(cf)
-                .cacheDefaults(redisCacheConfiguration)
-                .build();
-    }
 
 }

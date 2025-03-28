@@ -22,19 +22,18 @@ public class PointService {
     private final UserRepository userRepository;
     private final UserAccountRepository userAccountRepository;
 
+    public void chargePoint(final String email, final double point) {
+        User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
+        UserAccount userAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(user.getId()), NOT_EXIST_USER_ID);
+        userAccount.increasePoint(point);
+        userAccount.registerPointChargeHistory(point, ChargeType.DEPOSIT);
+    }
+
     public void applyWithDraw(final String email, final double point) throws InsufficientPointsException {
         User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
         UserAccount userAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(user.getId()), NOT_EXIST_USER_ID);
         userAccount.validatePointsSufficiency(point);
         userAccount.registerPointChargeHistory(point, ChargeType.APPLY_WITHDRAW);
         userAccount.decreasePoint(point);
-    }
-
-
-    public void chargePoint(final String email, final double point) {
-        User user = OptionalUtil.getOrElseThrow(userRepository.findByEmail(email), NOT_EXIST_USER_EMAIL);
-        UserAccount userAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(user.getId()), NOT_EXIST_USER_ID);
-        userAccount.increasePoint(point);
-        userAccount.registerPointChargeHistory(point, ChargeType.DEPOSIT);
     }
 }

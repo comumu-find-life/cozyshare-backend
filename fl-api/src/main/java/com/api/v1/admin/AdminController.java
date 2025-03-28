@@ -1,5 +1,6 @@
 package com.api.v1.admin;
 
+import com.core.domain.user.service.UserPaymentService;
 import com.core.domain.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
+    private final UserPaymentService userPaymentService;
 
     @GetMapping
     public String list(final HttpSession session, final Model model) {
-        model.addAttribute("withdraws", userService.findWithDraws());
+        model.addAttribute("withdraws", userPaymentService.findWithDraws());
         return "withdraw/list";
     }
 
@@ -27,12 +28,12 @@ public class AdminController {
             @RequestParam final String token,
             Model model) {
         try {
-            userService.completeWithDraw(userAccountId, pointHistoryId, token);
+            userPaymentService.completeWithDraw(userAccountId, pointHistoryId, token);
             model.addAttribute("successMessage", "환전 처리가 완료되었습니다.");
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", "환전 처리 실패: " + e.getMessage());
         }
-        model.addAttribute("withdraws", userService.findWithDraws());
+        model.addAttribute("withdraws", userPaymentService.findWithDraws());
         return "withdraw/list";
     }
 

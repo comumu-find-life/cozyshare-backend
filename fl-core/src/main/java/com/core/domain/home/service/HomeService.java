@@ -1,7 +1,6 @@
 package com.core.domain.home.service;
 
 import com.core.domain.home.model.*;
-import com.core.domain.user.service.UserService;
 import com.core.mapper.HomeMapper;
 import com.core.domain.home.dto.HomeGeneratorRequest;
 import com.core.domain.home.dto.HomeUpdateRequest;
@@ -31,7 +30,6 @@ public class HomeService {
 
     private final FileHelper fileService;
     private final HomeRepository homeRepository;
-    private final UserService userService;
     private final HomeMapper homeMapper;
     private final HomeImageRepository homeImageRepository;
 

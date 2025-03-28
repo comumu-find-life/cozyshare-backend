@@ -4,8 +4,6 @@ import com.core.domain.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 
 @Entity
 @Getter
@@ -63,7 +61,7 @@ public class User extends BaseTimeEntity {
     @Column(name = "refreshToken", nullable = true)
     private String refreshToken;
 
-    public boolean isExist(){
+    public boolean isExistProfile(){
         return profileUrl != null;
     }
 }

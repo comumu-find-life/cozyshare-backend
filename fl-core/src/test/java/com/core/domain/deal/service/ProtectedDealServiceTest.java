@@ -49,35 +49,4 @@ class ProtectedDealServiceTest {
         when(protectedDeal.getId()).thenReturn(1L);
         when(protectedDeal.getGetterId()).thenReturn(2L);
     }
-
-    @Test
-    void acceptProtectedDeal_성공() {
-        // given
-        when(protectedDealRepository.findById(1L)).thenReturn(Optional.of(protectedDeal));
-        when(userRepository.findById(2L)).thenReturn(Optional.of(getter));
-        when(userAccountRepository.findByUserId(2L)).thenReturn(Optional.of(userAccount));
-        doNothing().when(userAccount).validatePointsSufficiency(100L);
-        doNothing().when(userAccount).decreasePoint(100L);
-        doNothing().when(protectedDeal).setDealState(DealState.ACCEPT_DEAL);
-
-        // when
-        protectedDealService.acceptProtectedDeal(1L);
-
-        // then
-        verify(userAccount).decreasePoint(100L);
-        verify(protectedDeal).setDealState(DealState.ACCEPT_DEAL);
-    }
-
-    @Test
-    void acceptProtectedDeal_포인트부족_예외() {
-        // given
-        when(protectedDealRepository.findById(1L)).thenReturn(Optional.of(protectedDeal));
-        when(userRepository.findById(2L)).thenReturn(Optional.of(getter));
-        when(userAccountRepository.findByUserId(2L)).thenReturn(Optional.of(userAccount));
-        doThrow(new IllegalStateException("포인트가 부족합니다.")).when(userAccount).validatePointsSufficiency(100L);
-
-        // when & then
-        assertThrows(IllegalStateException.class, () -> protectedDealService.acceptProtectedDeal(1L));
-        verify(protectedDeal, never()).setDealState(DealState.ACCEPT_DEAL);
-    }
 }

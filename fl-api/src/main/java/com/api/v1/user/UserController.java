@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import static com.api.v1.constants.ApiUrlConstants.*;
 import static com.api.v1.constants.ResponseMessage.*;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
@@ -63,7 +62,7 @@ public class UserController {
 
     @GetMapping(USERS_CHECK_DUPLICATE_EMAIL)
     public ResponseEntity<?> validateDuplicateEmail(@PathVariable final String email){
-        boolean result = userService.validateDuplicateEmail(email);
+        boolean result = userService.isExistEmail(email);
         SuccessResponse response = new SuccessResponse(true, EMAIL_DUPLICATE_VERIFICATION, result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -116,7 +115,7 @@ public class UserController {
     @DeleteMapping(USERS_FIND_BY_ID)
     public ResponseEntity<?> deleteAccount(@PathVariable final Long userId){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        userService.delete(email, userId);
+        userService.delete(email);
         SuccessResponse response = new SuccessResponse(true, DELETE_ACCOUNT, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -126,5 +125,4 @@ public class UserController {
         SuccessResponse response = new SuccessResponse(true, SIGN_UP_SUCCESS, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

@@ -1,15 +1,15 @@
 package com.core.config;
 
+import com.core.utils.TimerAop;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-/**
- * 테스트 할 때, 실제 애플리케이션 컨텍스트가 아닌 테스트용 configuration 을 사용할때 쓰임
- */
 @TestConfiguration
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class TestConfig {
 
     @PersistenceContext
@@ -18,5 +18,10 @@ public class TestConfig {
     @Bean
     public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
+    }
+
+    @Bean
+    public TimerAop timerAop() {
+        return new TimerAop();
     }
 }

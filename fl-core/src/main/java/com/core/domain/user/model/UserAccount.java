@@ -14,20 +14,26 @@ import static com.core.domain.user.model.PointHistory.createHistory;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user_account")
 public class UserAccount {
 
     private static final String ERROR_NOT_ENOUGH_POINT = "포인트가 부족합니다.";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_account_id", nullable = false)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Column(name = "point", nullable = true)
     private double point;
 
+    @Column(name = "depositor_name", nullable = true)
     private String depositorName;
 
+    @Column(name = "paypal_information", nullable = true)
     private String paypalInformation;
 
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -55,6 +61,4 @@ public class UserAccount {
     public void increasePoint(double point) {
         this.point += point;
     }
-
-
 }

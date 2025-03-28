@@ -37,13 +37,6 @@ public class DirectMessage {
     @Column(name = "image_url", nullable = true)
     private String imageUrl;
 
-    /**
-     * 0 --> 일반 채팅 메시지
-     * 1 --> 안전거래 시작 폼
-     * 2 --> 안전거래 진행 중 품
-     * 3 --> 안전거래 완료 폼
-     * 4 --> 안전거래 취소 폼
-     */
     @Column(name = "is_deal", nullable = true)
     private int isDeal;
 

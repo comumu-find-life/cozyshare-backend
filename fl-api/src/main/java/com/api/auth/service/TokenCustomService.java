@@ -23,7 +23,6 @@ public class TokenCustomService {
                 .orElseThrow(() -> new NotFoundDataException(NOT_EXIST_REFRESH_TOKEN));
         String updateRefreshToken = jwtService.createRefreshToken();
         String updateAccessToken = jwtService.createAccessToken(user.getEmail());
-
         user.setRefreshToken(updateRefreshToken);
         jwtService.sendAccessAndRefreshToken(response, updateAccessToken, updateRefreshToken);
     }

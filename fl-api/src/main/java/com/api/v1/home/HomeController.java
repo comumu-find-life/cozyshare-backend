@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.api.auth.service.SecurityContextHelper.getLoginEmailBySecurityContext;
 import static com.api.v1.constants.ApiUrlConstants.*;
 
 @Slf4j
@@ -55,7 +56,6 @@ public class HomeController {
 
     @GetMapping(HOMES_FIND_BY_ID)
     public ResponseEntity<?> findById(@PathVariable final Long homeId) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         HomeInformationResponse homeInformationResponse = homeQueryService.findById(homeId);
         SuccessResponse response = new SuccessResponse(true, SuccessHomeMessages.HOME_RETRIEVE_SUCCESS, homeInformationResponse);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -103,7 +103,6 @@ public class HomeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
     @GetMapping(HOMES_FIND_FAVORITE)
     public ResponseEntity<?> findFavoriteHomes(@RequestParam final List<Long> homeIds) {
         List<HomeOverviewResponse> favoriteHomes = homeQueryService.findFavoriteHomes(homeIds);
@@ -118,7 +117,7 @@ public class HomeController {
     }
 
     private Long getLoggedInUserId() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = getLoginEmailBySecurityContext();
         UserInformationResponse user = userService.findByEmail(email);
         return user.getId();
     }
