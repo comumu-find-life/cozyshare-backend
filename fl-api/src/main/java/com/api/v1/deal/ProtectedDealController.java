@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.api.auth.service.SecurityContextHelper.getLoginEmailBySecurityContext;
 import static com.api.v1.constants.ApiUrlConstants.*;
 import static com.api.v1.constants.ResponseMessage.*;
 
@@ -84,7 +85,7 @@ public class ProtectedDealController {
     }
 
     private Long getLoggedInUserId() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = getLoginEmailBySecurityContext();
         UserInformationResponse user = userService.findByEmail(email);
         return user.getId();
     }

@@ -26,13 +26,12 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.infra.exception.ExceptionMessages.NOT_EXIST_DEAL_ID;
-import static com.infra.exception.ExceptionMessages.NOT_EXIST_HOME_ID;
-import static com.infra.exception.ExceptionMessages.NOT_EXIST_USER_ID;
+import static com.infra.exception.ExceptionMessages.*;
 
 @Transactional
 @Service
@@ -111,8 +110,10 @@ public class ProtectedDealService {
     public void completeDeal(Long dealId, Long getterId) {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
         validateMatchDealOwner(protectedDeal, getterId);
-        User provider = userRepository.findById(protectedDeal.getProviderId()).get();
-        UserAccount providerAccount = userAccountRepository.findByUserId(protectedDeal.getProviderId()).get();
+
+        User provider = OptionalUtil.getOrElseThrow(userRepository.findById(protectedDeal.getProviderId()), NOT_EXIST_USER_ID);
+        UserAccount providerAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(protectedDeal.getProviderId()), NOT_EXIST_ACCOUNT_ID);
+
         providerAccount.increasePoint(protectedDeal.getDeposit());
         Home home = OptionalUtil.getOrElseThrow(homeRepository.findById(protectedDeal.getHomeId()), NOT_EXIST_HOME_ID);
         home.setHomeStatus(HomeStatus.SOLD_OUT);

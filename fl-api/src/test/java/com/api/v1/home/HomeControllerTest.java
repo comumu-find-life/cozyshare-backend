@@ -13,10 +13,8 @@ import com.core.domain.user.model.User;
 import com.core.domain.user.repository.UserRepository;
 import com.core.domain.user.service.UserService;
 import com.core.mapper.HomeMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infra.utils.SuccessResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.ActiveProfiles;
@@ -40,9 +41,9 @@ import java.util.Optional;
 import static com.api.v1.constants.ApiUrlConstants.*;
 import static com.core.home.dto_helper.HomeDtoHelper.*;
 import static com.core.home.entity_helper.HomeHelper.generateHome;
-import static com.core.user.dto_helper.UserDtoHelper.generateUserInformationResponse;
 import static com.core.user.entity_helper.UserHelper.generateUser;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,46 +57,42 @@ public class HomeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private HomeRepository homeRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private LocationServiceImpl locationService;
-
     @Autowired
     private HomeMapper homeMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private WebApplicationContext context;
 
     @MockBean
     private JwtService jwtService;
-
-    @MockBean
+    @Autowired
     private UserService userService;
-
     @MockBean
     private SecurityFilterChain securityFilterChain;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private WebApplicationContext context;
 
     private String token;
 
     @BeforeEach
     public void setUp() {
         token = "Bearer your-jwt-token";
-        when(userService.findByEmail(anyString())).thenReturn(generateUserInformationResponse());
     }
 
     @Test
-    @WithMockUser
     public void 집_게시글을_저장한다() throws Exception {
         // given
+        User user = userRepository.save(generateUser(1L));
+        Authentication authentication = mock(Authentication.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        when(authentication.getName()).thenReturn(user.getEmail());
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
         HomeGeneratorRequest homeGeneratorRequest = generateHomeGeneratorRequest();
         MockMultipartFile jsonFile = new MockMultipartFile("homeGeneratorRequest", "", "application/json",
                 objectMapper.writeValueAsBytes(homeGeneratorRequest));
@@ -125,7 +122,6 @@ public class HomeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, SuccessHomeMessages.ADDRESS_VALIDATION_SUCCESS, new LatLng(-37.81314649999999,144.9684679)))));
-
     }
 
     @Test
@@ -173,6 +169,6 @@ public class HomeControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
         Optional<Home> updateHome = homeRepository.findById(home.getId());
-        Assertions.assertThat(updateHome.get().getHomeInfo().getBond()).isEqualTo(100);
+        assertThat(updateHome.get().getHomeInfo().getBond()).isEqualTo(100);
     }
 }

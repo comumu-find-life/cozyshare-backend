@@ -36,7 +36,6 @@ services:
       - TZ=Australia/Sydney
     networks:
       - app-network
-
     logging:
       driver: awslogs
       options:

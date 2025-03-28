@@ -7,7 +7,6 @@ import com.core.domain.deal.repository.ProtectedDealRepository;
 import com.core.domain.home.model.Home;
 import com.core.domain.home.repository.HomeRepository;
 import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
 import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
 import com.core.domain.user.service.UserService;
@@ -15,6 +14,7 @@ import com.core.mapper.ProtectedDealMapper;
 import com.core.mapper.UserMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infra.utils.SuccessResponse;
+import org.assertj.core.api.Assertions;
 import org.springframework.security.core.context.SecurityContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,10 +40,8 @@ import static com.api.v1.constants.ApiUrlConstants.*;
 import static com.api.v1.constants.ResponseMessage.*;
 import static com.core.deal.dto_helper.ProtectedDealDtoHelper.generateProtectedDealFindRequest;
 import static com.core.deal.dto_helper.ProtectedDealDtoHelper.generateProtectedDealGeneratorRequest;
-import static com.core.deal.entity_helper.ProtectedDealHelper.generateProtectedDeal;
-import static com.core.deal.entity_helper.ProtectedDealHelper.generateProtectedDealWithGetterId;
+import static com.core.deal.entity_helper.ProtectedDealHelper.*;
 import static com.core.home.entity_helper.HomeHelper.generateHome;
-import static com.core.user.dto_helper.UserDtoHelper.generateUserInformationResponse;
 import static com.core.user.entity_helper.UserHelper.generateUser;
 import static com.core.user.entity_helper.UserHelper.generateUserAccount;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -59,9 +57,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProtectedDealControllerTest {
     @Autowired
     private MockMvc mockMvc;
-
-    @Mock
-    private SecurityContext securityContext;
 
     @Autowired
     private ProtectedDealRepository protectedDealRepository;
@@ -95,6 +90,9 @@ public class ProtectedDealControllerTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Mock
+    private SecurityContext securityContext;
 
     private String token;
 
@@ -182,7 +180,10 @@ public class ProtectedDealControllerTest {
         //given
         Home home = homeRepository.save(generateHome(1L));
         User getter = userRepository.save(generateUser(1L));
-        ProtectedDeal deal = protectedDealRepository.save(generateProtectedDealWithGetterId(home.getId(), getter.getId()));
+        User provider = userRepository.save(generateUser(2L));
+        userAccountRepository.save(generateUserAccount(provider.getId(), 100));
+
+        ProtectedDeal deal = protectedDealRepository.save(generateProtectedDealWithUserIds(home.getId(), getter.getId(), provider.getId()));
         when(userService.findByEmail(anyString())).thenReturn(userMapper.toDto(getter));
         userAccountRepository.save(generateUserAccount(getter.getId(), 10000));
 
@@ -194,6 +195,9 @@ public class ProtectedDealControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, COMPLETE_DEAL, null))));
+
+        //거래 완료 후 임대인 포인트 증가
+        Assertions.assertThat(userAccountRepository.findByUserId(provider.getId()).get().getPoint()).isEqualTo(2100.0);
     }
 
     @Test

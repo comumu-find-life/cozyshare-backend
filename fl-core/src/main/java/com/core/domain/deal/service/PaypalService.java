@@ -29,6 +29,7 @@ public class PaypalService {
     private String mode;
 
     private static final String PAYPAL_API_URL = "https://api-m.paypal.com/v1/payments/payment/";
+    private static final String PAYPAL_ACCESS_TOKEN_URL = "https://api-m.paypal.com/v1/oauth2/token";
 
     public boolean verifyPayment(final PaymentRequest request) throws JsonProcessingException {
         String accessToken = getAccessToken();
@@ -44,7 +45,6 @@ public class PaypalService {
     }
 
     private String getAccessToken() throws JsonProcessingException {
-        String url = "https://api-m.paypal.com/v1/oauth2/token";
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Basic " + encodeBase64(clientId + ":" + clientSecret));
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -52,7 +52,7 @@ public class PaypalService {
         requestBody.add("grant_type", "client_credentials");
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(requestBody, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(PAYPAL_ACCESS_TOKEN_URL, HttpMethod.POST, entity, String.class);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> responseBody = mapper.readValue(response.getBody(), Map.class);
         return (String) responseBody.get("access_token");

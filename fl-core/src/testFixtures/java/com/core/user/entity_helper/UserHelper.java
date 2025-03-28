@@ -4,6 +4,8 @@ import com.core.domain.user.model.SignupType;
 import com.core.domain.user.model.User;
 import com.core.domain.user.model.UserAccount;
 
+import java.util.ArrayList;
+
 public class UserHelper {
     public static User generateUser(Long id) {
         return User.builder()
@@ -20,6 +22,7 @@ public class UserHelper {
                 .userId(userId)
                 .point(point)
                 .depositorName("name")
+                .chargeHistories(new ArrayList<>())
                 .paypalInformation("01083131764")
                 .build();
     }

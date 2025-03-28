@@ -32,6 +32,18 @@ public class ProtectedDealHelper {
                 .build();
     }
 
+    public static ProtectedDeal generateProtectedDealWithUserIds(Long homeId, Long getterId, Long providerId){
+        return ProtectedDeal.builder()
+                .homeId(homeId)
+                .dealState(DealState.REQUEST_DEAL)
+                .dmId(1L)
+                .getterId(getterId)
+                .providerId(providerId)
+                .deposit(2000)
+                .protectedDealDateTime(generateProtectedDealDateTime())
+                .build();
+    }
+
     public static ProtectedDeal generateProtectedDealByDealState(Long homeId, DealState dealState){
         return ProtectedDeal.builder()
                 .homeId(homeId)

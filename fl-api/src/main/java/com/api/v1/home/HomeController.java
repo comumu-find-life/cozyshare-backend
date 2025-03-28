@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static com.api.auth.service.SecurityContextHelper.getLoginEmailBySecurityContext;
 import static com.api.v1.constants.ApiUrlConstants.*;
 
 @Slf4j
@@ -116,7 +117,7 @@ public class HomeController {
     }
 
     private Long getLoggedInUserId() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = getLoginEmailBySecurityContext();
         UserInformationResponse user = userService.findByEmail(email);
         return user.getId();
     }
