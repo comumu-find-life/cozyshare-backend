@@ -55,45 +55,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Transactional
 public class ProtectedDealControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private ProtectedDealRepository protectedDealRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private UserAccountRepository userAccountRepository;
-
     @Autowired
     private HomeRepository homeRepository;
-
     @Autowired
     private ProtectedDealMapper protectedDealMapper;
-
     @Autowired
     private UserMapper userMapper;
-
-    @MockBean
-    private JwtService jwtService;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private SecurityFilterChain securityFilterChain;
-
     @Autowired
     private ObjectMapper objectMapper;
-
     @Autowired
     private WebApplicationContext context;
 
+    @MockBean
+    private JwtService jwtService;
+    @MockBean
+    private UserService userService;
+    @MockBean
+    private SecurityFilterChain securityFilterChain;
     @Mock
     private SecurityContext securityContext;
-
     private String token;
 
     @BeforeEach

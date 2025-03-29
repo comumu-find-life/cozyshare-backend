@@ -26,7 +26,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +100,6 @@ public class ProtectedDealService {
         protectedDeal.getProtectedDealDateTime().setStartAt(LocalDateTime.now());
     }
 
-
     /**
      * 거래 완료 메서드 by getter
      */
@@ -119,7 +117,7 @@ public class ProtectedDealService {
         home.setHomeStatus(HomeStatus.SOLD_OUT);
         protectedDeal.getProtectedDealDateTime().setCompleteAt(LocalDateTime.now());
         protectedDeal.setDealState(DealState.COMPLETE_DEAL);
-        sendCompleteFCM(provider.getFcmToken());
+        fcmHelper.sendNotification(FCMState.SAVE, provider.getFcmToken(), "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
     }
 
     /**
@@ -154,10 +152,5 @@ public class ProtectedDealService {
         if(protectedDeal.getGetterId() != getterId) {
             throw new NotMatchGetterException("안전거래 임차인과 요청을 보낸 사용자가 다릅니다.");
         }
-    }
-
-
-    private void sendCompleteFCM(String fcmToken) {
-        fcmHelper.sendNotification(FCMState.SAVE, fcmToken, "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
     }
 }

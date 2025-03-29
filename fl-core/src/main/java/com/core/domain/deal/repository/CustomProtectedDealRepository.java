@@ -10,8 +10,4 @@ public interface CustomProtectedDealRepository {
     List<ProtectedDeal> findAllByUserId(Long userId);
 
     List<Tuple> findByMultipleParams(Long getterId, Long providerId, Long homeId, Long dmId);
-
-    List<ProtectedDeal> findAllRequestDeposit();
-
-    List<ProtectedDeal> findAllSubmitDeal();
 }

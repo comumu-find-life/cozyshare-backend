@@ -33,25 +33,11 @@ public class CustomProtectedDealRepositoryImpl implements CustomProtectedDealRep
         return query.select(qProtectedDeal, qHome)
                 .from(qProtectedDeal)
                 .join(qHome).on(qProtectedDeal.homeId.eq(qHome.id))
-                .leftJoin(qProtectedDeal.protectedDealDateTime).fetchJoin()  // fetchJoin 추가
+                .leftJoin(qProtectedDeal.protectedDealDateTime).fetchJoin()
                 .where(qProtectedDeal.getterId.eq(getterId),
                         qProtectedDeal.providerId.eq(providerId),
                         qProtectedDeal.homeId.eq(homeId),
                         qProtectedDeal.dmId.eq(dmId))
-                .fetch();
-    }
-
-    @Override
-    public List<ProtectedDeal> findAllRequestDeposit() {
-        return query.selectFrom(qProtectedDeal)
-                .where(qProtectedDeal.dealState.eq(DealState.REQUEST_DEAL))
-                .fetch();
-    }
-
-    @Override
-    public List<ProtectedDeal> findAllSubmitDeal() {
-        return query.selectFrom(qProtectedDeal)
-                .where(qProtectedDeal.dealState.eq(DealState.ACCEPT_DEAL))
                 .fetch();
     }
 }
