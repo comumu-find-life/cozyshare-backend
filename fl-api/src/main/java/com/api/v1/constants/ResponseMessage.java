@@ -25,4 +25,19 @@ public class ResponseMessage {
     public static final String FCM_TOKEN_UPDATE = "fcm 토큰 업데이트";
     public static final String JWT_GENERATOR_MESSAGE = "Jwt 토큰 생성 성공";
     public static final String REQUEST_SIGN_UP_MESSAGE = "회원가입을 진행해야 합니다";
+    public static final String HOME_POST_SUCCESS = "집 게시글 등록 성공";
+    public static final String ADDRESS_VALIDATION_SUCCESS = "주소 반환 성공";
+    public static final String HOME_IMAGE_DELETE_SUCCESS = "집 이미지 삭제 성공";
+    public static final String USER_POSTS_RETRIEVE_SUCCESS = "내 게시글 조회 성공";
+    public static final String HOME_RETRIEVE_SUCCESS = "집 게시글 조회 성공";
+    public static final String HOME_UPDATE_SUCCESS = "집 게시글 수정 성공";
+    public static final String HOME_IMAGE_UPDATE_SUCCESS = "집 게시글 사진 수정 성공";
+    public static final String HOME_SELL_SUCCESS = "집 판매 완료";
+    public static final String ALL_HOMES_RETRIEVE_SUCCESS = "모든 집 정보 조회 성공";
+    public static final String HOME_DELETE_SUCCESS = "delete!";
+    public static final String CITY_HOMES_RETRIEVE_SUCCESS = "city 이름으로 조회 성공";
+    public static final String FAVORITE_HOMES_RETRIEVE_SUCCESS = "찜 목록 집 조회 성공";
+    public static final String CHARGE_SUCCESS = "충전 완료";
+    public static final String CHARGE_FAILED = "충전 완료";
+    public static final String APPLY_WITH_DRAW = "출금 신청 완료";
 }

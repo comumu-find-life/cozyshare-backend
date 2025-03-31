@@ -9,18 +9,15 @@ import com.infra.fcm.FCMHelper;
 import com.infra.fcm.FCMState;
 import com.core.domain.deal.model.DealState;
 import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.deal.model.QProtectedDeal;
 import com.core.domain.deal.repository.ProtectedDealRepository;
 import com.core.domain.home.model.Home;
 import com.core.domain.home.model.HomeStatus;
-import com.core.domain.home.model.QHome;
 import com.core.domain.home.repository.HomeRepository;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.user.model.User;
 import com.core.domain.user.model.UserAccount;
 import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
-import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -72,17 +69,8 @@ public class ProtectedDealService {
      * 안전거래 조회 메서드 by Getter
      */
     public List<ProtectedDealResponse> findProtectedDeal(Long getterId, Long providerId, Long homeId, Long dmId) {
-        List<ProtectedDealResponse> responses = new ArrayList<>();
-        List<Tuple> protectedDeals = protectedDealRepository.findByMultipleParams(getterId, providerId, homeId, dmId);
-        protectedDeals.stream()
-                .forEach(tuple -> {
-                    ProtectedDeal protectedDeal= tuple.get(QProtectedDeal.protectedDeal);
-                    Home home = tuple.get(QHome.home);
-                    responses.add(mapper.toResponse(protectedDeal, home));
-                });
-        return responses;
+        return protectedDealRepository.findProtectedDealsByFilters(getterId, providerId, homeId, dmId);
     }
-
 
     /**
      * 안전 거래 수락 by getter

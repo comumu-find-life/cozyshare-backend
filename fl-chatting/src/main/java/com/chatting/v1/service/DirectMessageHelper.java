@@ -6,7 +6,6 @@ import com.core.domain.user.model.User;
 
 public class DirectMessageHelper {
 
-
     public static DirectMessageRequest createDirectMessageRequest(final String message, final Long senderId, final Long receiverId){
         return  DirectMessageRequest.builder()
                 .message(message)

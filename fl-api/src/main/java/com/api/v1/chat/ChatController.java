@@ -53,5 +53,4 @@ public class ChatController {
         SuccessResponse response = new SuccessResponse(true, FIND_CHATTING_ROOM, directMessageTotalResponse);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
 }

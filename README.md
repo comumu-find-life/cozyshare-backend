@@ -25,179 +25,172 @@
 <details>
 <summary><b>⚒️ 기술 스택</b></summary>
 
-<br />
-
+**개인프로젝트**  
 **Backend** : `Spring Boot`, `JPA`, `QueryDSL`  
 **Database** : `MySQL`, `MongoDB`, `Redis`  
 **Frontend** : `Flutter`  
-**Devops** : `Docker`, `GitAction`, `Aws Ec2`, `Aws RDS`, `Aws S3`, `Aws cloud Watch`  
+**Devops** : `Docker`, `GitAction`, `Aws Ec2`, `Aws RDS`, `Aws S3`, `Aws cloud Watch`
 
 </details>
 
-<details>
-<summary><b>💁‍♂️ 참여 인원 && 기여도</b></summary>
-  
-<br />
-  
-**참여 인원**  
-<br />
-**Backend** : 2명(본인 포함) - (팀원 중 한 명은 중간에 참여를 중단하게 되었다)  
-**Frontend** : 1명(본인 포함)  
-
-**기여도**  
-<br />
-**Backend** : 기여도(90%)  
-**Devops** : 기여도(100%)  
-**Front** : 기여도(100%)  
-
-</details>
 
 <details>
 <summary><b>🗂️ ERD</b></summary>
-  
+
 <br />
-  
+
 <img src="https://github.com/user-attachments/assets/3715eef0-e7a2-4d9c-9e96-e047de632c97" width="650" height="550"/>
 
 </details>
 
 <details>
 <summary><b>⚙️ 시스템 아키텍처</b></summary>
-  
+
 <br />
-  
+
 <img src="https://github.com/user-attachments/assets/bc681591-494a-415d-bf62-81fe9ee62515" width="1290" height="500"/>
+
+**CI/CD 파이프 라인**
+```
+(1) Docker 이미지를 만들어 Docker Hub 에 push 한다.  
+(2) master 브랜치에 병합하면 github/workflow/deploy.yml 파일이 실행된다.
+(3) Docker Hub 에서 이미지를 pull 받아 총 3개의 서버(api, chatting, batch)를 EC2 서버에 배포한다. 
+```
+
 
 </details>
 
 <details>
-<summary><b>📖 개발 기록</b></summary>
+<summary><b>📂 모듈 구조</b></summary>
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+<br />
 
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/153" target="_blank" style="color: #007bff; text-decoration: none;">Cloud Watch 로 로그 모니터링</a></h4>
-  </div>
+<img src="https://github.com/user-attachments/assets/5e2566d0-8b47-408f-9808-b05c1e69dfa3" width="1000" height="500"/>
 
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/155" target="_blank" style="color: #007bff; text-decoration: none;">비관적 락을 이용한 금융기능 동시성 제어</a></h4>
-  </div>
+**fl-api 모듈**
 
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/158" target="_blank" style="color: #007bff; text-decoration: none;">Redis Master-Replica 구조에서의 권한 문제</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/160" target="_blank" style="color: #007bff; text-decoration: none;">STOMP 웹소켓 채팅 기능 구현</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/152" target="_blank" style="color: #007bff; text-decoration: none;">커스텀 Resolver Exception 로 예외 관리하기
-</a></h4>
-  </div>
-  
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/149" target="_blank" style="color: #007bff; text-decoration: none;">Docker EC2 CI/CD 구축</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/150" target="_blank" style="color: #007bff; text-decoration: none;">Docker Redis 배포</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/148" target="_blank" style="color: #007bff; text-decoration: none;">역직렬화 트러블 슈팅</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/151" target="_blank" style="color: #007bff; text-decoration: none;">AWS EC2 CPU 트러블 슈팅</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/143" target="_blank" style="color: #007bff; text-decoration: none;">Redis 를 이용한 성능 개선</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/142" target="_blank" style="color: #007bff; text-decoration: none;">ConcurrentHashMap 이란?</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/141" target="_blank" style="color: #007bff; text-decoration: none;">웹소켓 채팅 기능 읽음/읽지않음 처리</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/127" target="_blank" style="color: #007bff; text-decoration: none;">멀티모듈 테스트 코드 given 줄이기</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/79" target="_blank" style="color: #007bff; text-decoration: none;">MapStruct 로 DTO <-> Entity 변환</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/76" target="_blank" style="color: #007bff; text-decoration: none;">JWT 회원가입/로그인 기능 구현</a></h4>
-  </div>
-
-  <div style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; width: 250px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h4><a href="https://comumu.tistory.com/77" target="_blank" style="color: #007bff; text-decoration: none;">OAuth2.0 로그인 기능 구현</a></h4>
-  </div>
-
-</div>
-
+```
+클라이언트와의 RESTful API 통신을 담당하는 모듈입니다. 애플리케이션의 주요 CRUD API를 관리하며, AWS EC2 환경에 배포됩니다.  
+안정적인 서비스 운영을 위해 보안 및 성능 최적화가 반영된 구조로 설계되었습니다.
+```
+**fl-chatting 모듈**  
+```
+사용자의 채팅 관련 기능을 전담하는 독립적인 모듈입니다. fl-api 모듈과 분리되어 배포되며, 대화 내역 조회 및 메시지 읽음 상태를 확인하고 사용자에게 알림을 전송하는 역할을 수행합니다.   
+확장성과 유지보수성을 고려하여 설계되었습니다.
+```
+**fl-batch 모듈**  
+```
+애플리케이션의 배치 작업을 담당하는 모듈입니다. 현재 임대인과 임차인 간의 계약 시간을 주기적으로 확인하여 FCM 푸시 알림을 전송하는 기능을 포함하고 있습니다.  
+향후 유령 게시글 관리, 금융 트랜잭션 자동화(입출금 처리) 등의 기능이 추가될 예정입니다.
+```
+**fl-core 모듈**  
+```
+애플리케이션의 핵심 도메인을 관리하는 모듈로, 도메인 모델, 리포지토리, 서비스 계층을 포함합니다.  
+루트 애그리게이트(Root Aggregate)를 기반으로 도메인이 분리되어 있으며, DTO와 Entity 간 변환 로직이 구현되어 있습니다.  
+또한, 리포지토리 계층에서 DTO를 활용한 최적화된 조회 기능을 제공합니다.
+```
+**fl-infra 모듈**
+```
+외부 라이브러리와 연동되는 기능 및 커스텀 예외 처리를 담당하는 모듈입니다. 라이브러리 변경 시 해당 모듈에서 구현체를 대체할 수 있도록 설계되었으며,  
+시스템의 유지보수성과 확장성을 고려하여 관리됩니다.
+```
 </details>
 
 
-### 기능 소개
+
+
+### 주요 업무
+
 ----
 
 <details>
-<summary><b>회원가입, 로그인 기능</b></summary>  
+<summary><b>WebSocket 을 이용한 실시간 채팅 기능 구현</b></summary>  
 
-- 사용기술 : `Spring Security`, `OAuth2.0`, `Mail`  
-  
+- 사용기술 : `STOMP`, `WebSocket`, `MongoDB`  
+
 ```
-사용자는 Google, Apple 소셜로그인과 Email 인증을 통해 회원가입/로그인을 진행할 수 있습니다.  
-사용자 인증은 JWT 토큰을 통해 검증되며 회원가입을 진행한 사용자만이 서비스를 이용할 수 있습니다.  
-```
-
-</details>  
-
-<details>
-<summary><b>채팅 기능</b></summary>
-
-- 사용기술 : `Stomp websocket`  
-  
-```
-채팅 기능은 임대인과 임차인이 1:1 방식으로 연결되며 읽음/읽지 않음 처리는  
-WebSocketSessionManager(웹소켓 세션관리 클래스) 를 이용해 사용자의 연결 유무를 판단합니다.  
-또한 채팅 DB 스키마리스(schema-less) 방식의 데이터베이스인 MongoDB 를 사용했습니다.  
-추후 사진, 첨부파일 등의 기능이 추가될 상황을 고려해 유연하게 확장시키기 위해 채팅 DB 를 분리했습니다.  
-
-또한 MongoDB 는 쓰기 성능에 최적화 되어 있어, 대량의 메시지를 빠르게 저장하고 읽을 수 있기 때문에  
-채팅저리에 적합하다 판단했습니다.  
-
+💡 실시간 양방향 통신이 가능해야 하기 때문에 STOMP 웹 소켓을 통해 구현했습니다.
+채팅 데이터는 비정형 데이터에 가까우므로 빠른 조회와 수평적인 확장에 용이한 MongoDB 를 선택해 데이터를 관리합니다.
 ```
 
 </details>  
 
 <details>
-<summary><b>게시글 조회 기능</b></summary>
+<summary><b>Docker 와 Git Actions 을 이용한 CI/CD 파이프라인 구축</b></summary>
 
-- 사용기술 : `JPA`, `QueryDsl`  
-  
+- 사용기술 : `Docker`, `Git Actions`, `Aws EC2` 
+
 ```
-채팅 기능은 임대인과 임차인이 1:1 방식으로 연결되며 읽음/읽지 않음 처리는  
-WebSocketSessionManager(웹소켓 세션관리 클래스) 를 이용해 사용자의 연결 유무를 판단합니다.  
-또한 채팅 DB 스키마리스(schema-less) 방식의 데이터베이스인 MongoDB 를 사용했습니다.  
-추후 사진, 첨부파일 등의 기능이 추가될 상황을 고려해 유연하게 확장시키기 위해 채팅 DB 를 분리했습니다.  
+💡 GitActions 을 사용하면 Github 에서 코드 버전 관리가 이루어지고 코드가 푸시될 때마다 배포가 자동화 된다는 장점이 있습니다.
+ YAML 파일로 간단히 CI/CD 파이프 라인을 설정할 수 있습니다. Jenkis 를 통해 설정도 가능하지만, 복잡한 플러그인 설치 과정이 필요하고 별도의 관리가 필요해 개인 프로젝트에서 효율이 떨어질 수 있다 생각했습니다.
+```
 
-또한 MongoDB 는 쓰기 성능에 최적화 되어 있어, 대량의 메시지를 빠르게 저장하고 읽을 수 있기 때문에  
-채팅저리에 적합하다 판단했습니다.  
+</details>
 
+<details>
+<summary><b>CloudWatch 를 이용한 로그 모니터링</b></summary>
+
+- 사용기술 : `Aws Cloud Watch` 
+
+```
+💡 로그 파일이 Ec2 에 계속 쌓이면 주기적인 관리가 필요하고 서버에 문제가 생겼을때 즉각적으로 대응 할 수 없습니다.
+CloudWatch 를 사용해 EC2 에서 발생하는 로그를 자동으로 수집할 수 있습니다.
+Error 수준의 로그가 발생했을때 Email 로 알림을 보낼 수 있다는 장점이 있습니다.
+```
+
+
+</details>  
+
+<details>
+<summary><b>Redis 를 이용한 조회 기능 개선</b></summary>
+
+- 사용기술 : `Redis`  
+
+
+```
+💡   어떤 데이터를 캐싱 해야할까?
+```
+- 지도를 이용한 집 게시물 조회, 도시 이름을 이용한 집 게시물 조회 등 서로 다른 API 지만 동일한 데이터를 요구합니다. 때문에 가장 많이 조회되는 데이터인 만큼 캐싱을 이용한다면 성능 개선이 효과적으로 될 수 있다 생각했습니다.
+- 데이터의 일관성이 깨질 수 있음을 유의하며 Redis 를 적용했습니다.
+
+</details>  
+
+<details>
+<summary><b>비관적 락을 이용한 금융기능 동시성 제어</b></summary>
+
+- 사용기술 : `Redis`
+
+
+```
+💡 금융 시스템에서 정확성과 일관성이 가장 중요합니다. 때문에 결제 처리, 잔액 업데이트같은 기능은 동시성이 보장되지 않으면 데이터 정합성 오류나 중복 처리 문제가 발생할 수 있습니다.
+ 이를 방지하기 위해 비관적 락(Pessimistic Lock) 을 적용했습니다.
 ```
 
 </details>  
 
+### 트러블 슈팅블 && 개발 기록
+
+----
+
+<h4><a href="https://comumu.tistory.com/148" target="_blank" style="color: #007bff; text-decoration: none;">역직렬화 트러블 슈팅</a></h4>
+<h4><a href="https://comumu.tistory.com/151" target="_blank" style="color: #007bff; text-decoration: none;">AWS EC2 CPU 트러블 슈팅</a></h4>
+<h4><a href="https://comumu.tistory.com/158" target="_blank" style="color: #007bff; text-decoration: none;">Redis Master-Replica 구조에서의 권한 문제</a></h4>
+<h4><a href="https://comumu.tistory.com/79" target="_blank" style="color: #007bff; text-decoration: none;">MapStruct 로 DTO <-> Entity 변환</a></h4>
+<h4><a href="https://comumu.tistory.com/127" target="_blank" style="color: #007bff; text-decoration: none;">멀티모듈 테스트 코드 given 줄이기</a></h4>
+<h4><a href="https://comumu.tistory.com/155" target="_blank" style="color: #007bff; text-decoration: none;">비관적 락을 이용한 금융기능 동시성 제어</a></h4>
+<h4><a href="https://comumu.tistory.com/160" target="_blank" style="color: #007bff; text-decoration: none;">STOMP 웹소켓 채팅 기능 구현</a></h4>
+<h4><a href="https://comumu.tistory.com/141" target="_blank" style="color: #007bff; text-decoration: none;">웹소켓 채팅 기능 읽음/읽지않음 처리</a></h4>
+<h4><a href="https://comumu.tistory.com/142" target="_blank" style="color: #007bff; text-decoration: none;">ConcurrentHashMap 이란?</a></h4>
+<h4><a href="https://comumu.tistory.com/149" target="_blank" style="color: #007bff; text-decoration: none;">Docker EC2 CI/CD 구축</a></h4>
+<h4><a href="https://comumu.tistory.com/150" target="_blank" style="color: #007bff; text-decoration: none;">Docker Redis 배포</a></h4>
+<h4><a href="https://comumu.tistory.com/153" target="_blank" style="color: #007bff; text-decoration: none;">Cloud Watch 로 로그 모니터링</a></h4>
+<h4><a href="https://comumu.tistory.com/143" target="_blank" style="color: #007bff; text-decoration: none;">Redis 를 이용한 성능 개선</a></h4>
+<h4><a href="https://comumu.tistory.com/152" target="_blank" style="color: #007bff; text-decoration: none;">커스텀 Resolver Exception 로 예외 관리하기
+<h4><a href="https://comumu.tistory.com/77" target="_blank" style="color: #007bff; text-decoration: none;">OAuth2.0 로그인 기능 구현</a></h4>
+<h4><a href="https://comumu.tistory.com/76" target="_blank" style="color: #007bff; text-decoration: none;">JWT 회원가입/로그인 기능 구현</a></h4>
 
 ### 서비스 화면
+
 ----
 
 

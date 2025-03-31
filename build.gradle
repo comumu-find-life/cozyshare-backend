@@ -8,8 +8,6 @@ repositories {
     mavenCentral()
 }
 
-
-
 subprojects {
     group = 'comumu'
     version = '0.0.1'
@@ -55,7 +53,7 @@ subprojects {
 project(':fl-api') {
     dependencies {
         implementation project(':fl-core')
-        implementation project(':fl-infra')
+//        implementation project(':fl-infra')
     }
 }
 

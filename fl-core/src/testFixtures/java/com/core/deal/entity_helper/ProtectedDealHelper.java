@@ -20,8 +20,6 @@ public class ProtectedDealHelper {
                 .build();
     }
 
-
-
     public static ProtectedDeal generateProtectedDealWithGetterId(Long homeId, Long getterId){
         return ProtectedDeal.builder()
                 .homeId(homeId)
