@@ -1,4 +1,4 @@
-package com.infra.email;
+package com.infra.email.utils;
 
 import java.util.Random;
 

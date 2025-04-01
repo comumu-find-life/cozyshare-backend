@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static com.infra.email.EmailCodeGenerator.generateVerificationCode;
+import static com.infra.email.utils.EmailCodeGenerator.generateVerificationCode;
 
 
 @Transactional

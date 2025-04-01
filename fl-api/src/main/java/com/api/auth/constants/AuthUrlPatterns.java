@@ -1,4 +1,4 @@
-package com.api.v1.constants;
+package com.api.auth.constants;
 
 
 import static com.api.v1.constants.ApiUrlConstants.V1_BASE_API_URL;

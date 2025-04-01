@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    depends_on:
+      - prometheus
+
+  k6:
+    image: loadimpact/k6:latest
+    container_name: k6
+    command: run /scripts/test.js
+    volumes:
+      - ./test.js:/scripts/test.js
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    driver: bridge

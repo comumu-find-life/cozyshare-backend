@@ -5,6 +5,7 @@ import com.core.domain.chat.dto.DirectMessageTotalResponse;
 import com.core.domain.deal.dto.ProtectedDealResponse;
 import com.core.domain.home.dto.HomeInformationResponse;
 import com.core.domain.user.dto.UserProfileResponse;
+import com.core.mapper.DirectMessageRoomMapper;
 import com.infra.utils.SuccessResponse;
 import com.core.domain.deal.service.ProtectedDealService;
 import com.core.domain.home.service.HomeQueryService;
@@ -30,66 +31,26 @@ public class ChatController {
     private final UserService userService;
     private final HomeQueryService homeQueryService;
     private final ProtectedDealService protectedDealService;
+    private final DirectMessageRoomMapper directMessageRoomMapper;
 
     /**
      * 채팅방에 필요한 정보를 한번에 가져오는 요청
      */
     @PostMapping(CHAT_TOTAL_URL)
     public ResponseEntity<?> getDirectMessageTotalResponse(@RequestBody final DirectMessageTotalRequest request) {
-        UserProfileResponse sender = getSender(request);
-        UserProfileResponse receiver = getReceiver(request);
-        HomeInformationResponse homeInfo = getHomeInformation(request.getHomeId());
+        List<UserProfileResponse> senderReceiver = userService.findSenderReceiver(request.getSenderId(), request.getReceiverId());
+        UserProfileResponse sender = senderReceiver.get(0);
+        UserProfileResponse receiver = senderReceiver.get(1);
+        HomeInformationResponse homeInfo = homeQueryService.findById((request.getHomeId()));
 
-        Long[] roles = determineRoles(homeInfo, sender, receiver);
-        Long getterId = roles[0];
-        Long providerId = roles[1];
+        Long providerId = Long.valueOf(homeInfo.getProviderId());
+        Long getterId = providerId.equals(sender.getId()) ? receiver.getId() : sender.getId();
 
         boolean isAccountExist = userService.isExistAccount(sender.getId());
-        List<ProtectedDealResponse> protectedDeals = getProtectedDeals(request, getterId, providerId);
+        List<ProtectedDealResponse> protectedDeals = protectedDealService.findProtectedDeal(getterId, providerId, request.getHomeId(), request.getRoomId());
 
-        DirectMessageTotalResponse response = buildDirectMessageTotalResponse(sender, receiver, homeInfo, isAccountExist, protectedDeals);
-        return buildSuccessResponse(response, FIND_CHATTING_ROOM);
-    }
-
-    private UserProfileResponse getSender(DirectMessageTotalRequest request) {
-        return userService.findSenderReceiver(request.getSenderId(), request.getReceiverId()).get(0);
-    }
-
-    private UserProfileResponse getReceiver(DirectMessageTotalRequest request) {
-        return userService.findSenderReceiver(request.getSenderId(), request.getReceiverId()).get(1);
-    }
-
-    private HomeInformationResponse getHomeInformation(Long homeId) {
-        return homeQueryService.findById(homeId);
-    }
-
-    private Long[] determineRoles(HomeInformationResponse homeInfo, UserProfileResponse sender, UserProfileResponse receiver) {
-        Long providerId = Long.valueOf(homeInfo.getProviderId());
-        if (providerId.equals(sender.getId())) {
-            return new Long[]{receiver.getId(), sender.getId()};
-        } else {
-            return new Long[]{sender.getId(), receiver.getId()};
-        }
-    }
-
-    private List<ProtectedDealResponse> getProtectedDeals(DirectMessageTotalRequest request, Long getterId, Long providerId) {
-        return protectedDealService.findProtectedDeal(getterId, providerId, request.getHomeId(), request.getRoomId());
-    }
-
-    private DirectMessageTotalResponse buildDirectMessageTotalResponse(UserProfileResponse sender, UserProfileResponse receiver,
-                                                                       HomeInformationResponse homeInfo, boolean isAccountExist,
-                                                                       List<ProtectedDealResponse> protectedDeals) {
-        return DirectMessageTotalResponse.builder()
-                .sender(sender)
-                .receiver(receiver)
-                .homeInformationResponse(homeInfo)
-                .isExistAccount(isAccountExist)
-                .protectedDealResponse(protectedDeals)
-                .build();
-    }
-
-    private ResponseEntity<SuccessResponse> buildSuccessResponse(DirectMessageTotalResponse data, String message) {
-        SuccessResponse response = new SuccessResponse(true, message, data);
+        DirectMessageTotalResponse directMessageTotalResponse = directMessageRoomMapper.toDirectMessageTotalResponse(sender, receiver, homeInfo, isAccountExist, protectedDeals);
+        SuccessResponse response = new SuccessResponse(true, FIND_CHATTING_ROOM, directMessageTotalResponse);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

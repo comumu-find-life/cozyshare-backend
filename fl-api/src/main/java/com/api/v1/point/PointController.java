@@ -10,12 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import static com.api.auth.service.SecurityContextHelper.getLoginEmailBySecurityContext;
 import static com.api.v1.constants.ApiUrlConstants.*;
-import static com.api.v1.point.SuccessPointMessages.*;
+import static com.api.v1.constants.ResponseMessage.*;
 
 @Slf4j
 @RestController

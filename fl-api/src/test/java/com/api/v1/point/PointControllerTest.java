@@ -26,8 +26,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.api.v1.constants.ApiUrlConstants.*;
-import static com.api.v1.point.SuccessPointMessages.APPLY_WITH_DRAW;
-import static com.api.v1.point.SuccessPointMessages.CHARGE_SUCCESS;
+import static com.api.v1.constants.ResponseMessage.APPLY_WITH_DRAW;
+import static com.api.v1.constants.ResponseMessage.CHARGE_SUCCESS;
 import static com.core.point.dto_helper.PointHelper.generatePaymentRequest;
 import static com.core.user.entity_helper.UserHelper.generateUser;
 import static com.core.user.entity_helper.UserHelper.generateUserAccount;

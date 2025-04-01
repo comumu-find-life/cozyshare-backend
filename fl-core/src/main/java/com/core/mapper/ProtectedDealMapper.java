@@ -55,4 +55,6 @@ public interface ProtectedDealMapper {
     @Mapping(target = "dealId", source = "dealId")
     ProtectedDealGeneratorResponse toGeneratorResponse(Long dealId);
 
+
+
 }

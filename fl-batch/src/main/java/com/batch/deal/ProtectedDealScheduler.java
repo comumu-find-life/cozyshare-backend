@@ -24,7 +24,6 @@ public class ProtectedDealScheduler {
         List<ProtectedDeal> todayDeals = protectedDealRepository.findAll().stream()
                 .filter(ProtectedDeal::isDealToday)
                 .toList();
-        System.out.println(todayDeals.size());
         todayDeals.forEach(deal -> {
             try {
                 notificationService.sendCompleteDealNotification(deal);

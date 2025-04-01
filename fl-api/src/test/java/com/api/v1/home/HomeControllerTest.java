@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.api.v1.constants.ApiUrlConstants.*;
+import static com.api.v1.constants.ResponseMessage.*;
 import static com.core.home.dto_helper.HomeDtoHelper.*;
 import static com.core.home.entity_helper.HomeHelper.generateHome;
 import static com.core.user.entity_helper.UserHelper.generateUser;
@@ -121,7 +122,7 @@ public class HomeControllerTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, SuccessHomeMessages.ADDRESS_VALIDATION_SUCCESS, new LatLng(-37.81314649999999,144.9684679)))));
+                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, ADDRESS_VALIDATION_SUCCESS, new LatLng(-37.81314649999999,144.9684679)))));
     }
 
     @Test
@@ -137,7 +138,7 @@ public class HomeControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, SuccessHomeMessages.USER_POSTS_RETRIEVE_SUCCESS, resultHomes))));
+                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, USER_POSTS_RETRIEVE_SUCCESS, resultHomes))));
     }
 
     @Test
@@ -151,7 +152,7 @@ public class HomeControllerTest {
                         .header(HttpHeaders.AUTHORIZATION, token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, SuccessHomeMessages.HOME_RETRIEVE_SUCCESS, resultHome))));
+                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, HOME_RETRIEVE_SUCCESS, resultHome))));
     }
 
     @Test
