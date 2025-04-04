@@ -15,7 +15,7 @@ public class AdminController {
 
     private final UserPaymentService userPaymentService;
 
-    @GetMapping
+    @GetMapping({ "", "/"})
     public String list(final HttpSession session, final Model model) {
         model.addAttribute("withdraws", userPaymentService.findWithDraws());
         return "withdraw/list";
