@@ -1,31 +1,18 @@
 import http from 'k6/http';
-import { check } from 'k6';
-import { Trend } from 'k6/metrics';
-
-export let customResponseTime = new Trend('custom_http_req_duration');
+import { check, sleep } from 'k6';
 
 export let options = {
-  vus: 10,
-  duration: '10s',
-  ext: {
-    loadimpact: {
-      distribution: {
-        "amazon:us": { loadZone: "amazon:us-east-1", percent: 50 },
-        "amazon:eu": { loadZone: "amazon:eu-west-1", percent: 50 }
-      }
-    },
-    prometheus: {
-      // Prometheus exporter 포트는 6565로 설정됩니다.
-      port: '6565'
-    }
-  }
+    vus: 30, // 동시 가상 사용자 수
+    iterations: 1000,
 };
 
 export default function () {
-  let res = http.get('http://localhost:8080/v1/api/homes/overview');
-  customResponseTime.add(res.timings.duration);
+    let res = http.get('http://localhost:8080/v1/api/homes/overview');
 
-  check(res, {
-    'status is 200': (r) => r.status === 200,
-  });
+    check(res, {
+        '응답 코드가 200이다': (r) => r.status === 200,
+        '응답 본문이 비어있지 않다': (r) => r.body.length > 0,
+    });
+
+    sleep(1); // 각 요청 사이에 1초 대기
 }

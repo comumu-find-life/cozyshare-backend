@@ -81,7 +81,7 @@ public class ProtectedDealService {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
         validateMatchDealOwner(protectedDeal, getterId);
         User getter = OptionalUtil.getOrElseThrow(userRepository.findById(getterId), NOT_EXIST_USER_ID);
-        UserAccount userAccount = userAccountRepository.findByUserId(getter.getId()).get();
+        UserAccount userAccount = userAccountRepository.findByIdWithLock(getter.getId()).get();
         userAccount.validatePointsSufficiency(protectedDeal.calculateTotalPrice());
         userAccount.decreasePoint(protectedDeal.calculateTotalPrice());
         protectedDeal.setDealState(DealState.ACCEPT_DEAL);
@@ -98,7 +98,7 @@ public class ProtectedDealService {
         validateMatchDealOwner(protectedDeal, getterId);
 
         User provider = OptionalUtil.getOrElseThrow(userRepository.findById(protectedDeal.getProviderId()), NOT_EXIST_USER_ID);
-        UserAccount providerAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByUserId(protectedDeal.getProviderId()), NOT_EXIST_ACCOUNT_ID);
+        UserAccount providerAccount = OptionalUtil.getOrElseThrow(userAccountRepository.findByIdWithLock(protectedDeal.getProviderId()), NOT_EXIST_ACCOUNT_ID);
 
         providerAccount.increasePoint(protectedDeal.getDeposit());
         Home home = OptionalUtil.getOrElseThrow(homeRepository.findById(protectedDeal.getHomeId()), NOT_EXIST_HOME_ID);
@@ -128,7 +128,7 @@ public class ProtectedDealService {
     public void cancelAfterDeal(Long dealId, Long getterId) {
         ProtectedDeal protectedDeal = OptionalUtil.getOrElseThrow(protectedDealRepository.findById(dealId), NOT_EXIST_DEAL_ID);
         validateMatchDealOwner(protectedDeal, getterId);
-        UserAccount getterAccount = userAccountRepository.findByUserId(protectedDeal.getGetterId()).get();
+        UserAccount getterAccount = userAccountRepository.findByIdWithLock(protectedDeal.getGetterId()).get();
         getterAccount.increasePoint(protectedDeal.getDeposit());
         Home home = OptionalUtil.getOrElseThrow(homeRepository.findById(protectedDeal.getHomeId()), NOT_EXIST_HOME_ID);
         home.setHomeStatus(HomeStatus.FOR_SALE);
