@@ -81,6 +81,7 @@ oauth:
 paypal:
   client-id: ${PAYPAL_CLIENT_ID}
   client-secret: ${PAYPAL_CLIENT_SECRET}
+#  paypal-api-url :
   mode : live
 
 jwt:

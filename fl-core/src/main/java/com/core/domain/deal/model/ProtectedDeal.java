@@ -12,7 +12,11 @@ import lombok.*;
 @NoArgsConstructor
 public class ProtectedDeal extends BaseTimeEntity {
 
-    private static final double feeRate = 0.05;
+    // 500 AUD 이하: 수수료 9%
+    private static final double FEE_RATE_UNDER_500_AUD = 0.09;
+
+    // 500 AUD 이상: 수수료 6%
+    private static final double FEE_RATE_OVER_500_AUD = 0.06;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,13 +47,15 @@ public class ProtectedDeal extends BaseTimeEntity {
     @Column(name = "deal_state", nullable = false)
     private DealState dealState;
 
-
     public double calculateTotalPrice() {
         return deposit + calculateFee();
     }
 
     public double calculateFee() {
-        return Math.round(deposit * feeRate * 100.0) / 100.0;
+        if(deposit <= 500){
+            return Math.round(deposit * FEE_RATE_UNDER_500_AUD * 100.0) / 100.0;
+        }
+        return Math.round(deposit * FEE_RATE_OVER_500_AUD * 100.0) / 100.0;
     }
 
     public boolean isDealToday(){

@@ -49,10 +49,10 @@ public class ApiSecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET, GET_AUTH_WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.POST, POST_AUTH_WHITELIST).permitAll()
-                        .requestMatchers("/admin","/admin/", "/admin/**").permitAll()
+                        .requestMatchers("/paypal/success","/paypal/cancel", "/admin","/admin/", "/admin/**").permitAll()
                         .anyRequest().authenticated()
                 );
-      
+
         http.addFilterAfter(customJsonUsernamePasswordAuthenticationFilter(http), LogoutFilter.class);
         http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomLoginAuthenticationFilter.class);
 
