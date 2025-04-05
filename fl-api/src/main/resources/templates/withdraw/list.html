@@ -4,7 +4,79 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="-GtbyxFZmoYOuwm4Ln6c4m7QCefW7SjCsci-K9lZHIU" />
     <title>출금 신청 내역</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+        .withdraw-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .withdraw-table thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .withdraw-table th, .withdraw-table td {
+            padding: 14px 12px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .withdraw-table tr:nth-child(even) {
+            background-color: #f1f3f5;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            padding: 6px 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 120px;
+        }
+
+        button {
+            padding: 6px 14px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -28,9 +100,8 @@
             <td th:text="${withdraw.chargeAmount}"></td>
             <td th:text="${withdraw.chargeType}"></td>
             <td th:text="${withdraw.historyDateTime}"></td>
-            <!-- 환전 완료 버튼 -->
             <td>
-                <form th:action="@{/account/complete}" method="post" style="display: inline;">
+                <form th:action="@{/admin/complete}" method="post">
                     <input type="hidden" name="userAccountId" th:value="${withdraw.userAccountId}">
                     <input type="hidden" name="pointHistoryId" th:value="${withdraw.pointHistoryId}">
                     <input type="text" name="token" placeholder="토큰 입력" required>

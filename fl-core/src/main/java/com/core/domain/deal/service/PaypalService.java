@@ -25,11 +25,8 @@ public class PaypalService {
     @Value("${paypal.client-secret}")
     private String clientSecret;
 
-    @Value("${paypal.mode}")
-    private String mode;
-
-    private static final String PAYPAL_API_URL = "https://api-m.paypal.com/v1/payments/payment/";
-    private static final String PAYPAL_ACCESS_TOKEN_URL = "https://api-m.paypal.com/v1/oauth2/token";
+    private static final String PAYPAL_API_URL = "https://api-m.sandbox.paypal.com/v1/payments/payment/";
+    private static final String PAYPAL_ACCESS_TOKEN_URL = "https://api-m.sandbox.paypal.com/v1/oauth2/token";
 
     public boolean verifyPayment(final PaymentRequest request) throws JsonProcessingException {
         String accessToken = getAccessToken();

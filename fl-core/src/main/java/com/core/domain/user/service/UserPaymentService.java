@@ -24,7 +24,6 @@ public class UserPaymentService {
     private final UserAccountRepository userAccountRepository;
     @Value("${admin.token}")
     private String secretToken;
-
     /**
      * 환전 완료
      */

@@ -26,7 +26,9 @@ public class PointController {
 
     @PostMapping(CHARGE_POINT_BY_PAYPAL)
     public ResponseEntity<?> paymentSuccess(@RequestBody final  PaymentRequest request) throws JsonProcessingException {
+        System.out.println("11111");
         boolean isPayment = paypalService.verifyPayment(request);
+        System.out.println(isPayment);
         if(isPayment){
             String email = getLoginEmailBySecurityContext();
             pointService.chargePoint(email, request.getAmount());
@@ -37,6 +39,23 @@ public class PointController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+
+    @GetMapping("/paypal/success")
+    public ResponseEntity<String> paypalSuccess(
+            @RequestParam String paymentId,
+            @RequestParam String token,
+            @RequestParam String PayerID
+    ) {
+        return ResponseEntity.ok("success");
+    }
+
+    @GetMapping("/paypal/cancel")
+    public ResponseEntity<String> paypalCancel(
+            @RequestParam(required = false) String token
+    ) {
+        return ResponseEntity.ok("cancelled");
+    }
 
     @PostMapping(APPLY_WITH_DRAW_URL)
     public ResponseEntity<?> applyWithDraw(@RequestParam final double price) throws InsufficientPointsException {
