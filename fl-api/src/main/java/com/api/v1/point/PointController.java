@@ -26,7 +26,6 @@ public class PointController {
 
     @PostMapping(CHARGE_POINT_BY_PAYPAL)
     public ResponseEntity<?> paymentSuccess(@RequestBody final  PaymentRequest request) throws JsonProcessingException {
-        System.out.println("11111");
         boolean isPayment = paypalService.verifyPayment(request);
         System.out.println(isPayment);
         if(isPayment){
