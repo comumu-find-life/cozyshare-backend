@@ -45,7 +45,6 @@ public class DirectMessageApiController {
         return ResponseEntity.ok(new SuccessResponse(true, DIRECT_MESSAGE_UPLOAD_IMAGE_SUCCESS, uploadUrl));
     }
 
-
     @PostMapping(DM_SEND_FIRST_URL)
     public ResponseEntity<?> createDirectMessageRoom(@RequestBody final DirectMessageApplicationRequest dmDto) {
         Long roomId = dmService.createDirectMessageRoom(dmDto);

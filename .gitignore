@@ -10,7 +10,8 @@ build/
 # 디렉토리와 내부 파일 모두 포함
 fl-core/src/main/resources/firebase-key.json
 fl-api/src/test/resources/application-test.yml
-
+fl-core/src/test/resources/application-test.yml
+fl-chatting/src/test/resources/application-test.yml
 
 ### STS ###
 .apt_generated

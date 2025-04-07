@@ -1,22 +1,15 @@
 package com.core.domain.chat;
 
-import com.core.config.EmbeddedMongoTestConfig;
-import com.core.config.TestConfig;
 import com.core.domain.chat.model.DirectMessage;
-import com.core.domain.chat.repository.CustomDirectMessageRepository;
 import com.core.domain.chat.repository.DirectMessageRepository;
-import com.core.domain.chat.repository.impl.CustomDirectMessageRepositoryImpl;
+import com.core.domain.chat.repository.impl.DirectMessageRepositoryImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -29,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataMongoTest
 @ActiveProfiles("test")
-@Import({CustomDirectMessageRepositoryImpl.class})
+@Import({DirectMessageRepositoryImpl.class})
 public class CustomDirectMessageRepositoryTest {
 
     @Autowired
