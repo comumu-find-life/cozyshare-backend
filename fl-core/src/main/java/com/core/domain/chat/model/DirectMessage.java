@@ -31,6 +31,9 @@ public class DirectMessage {
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;
 
+    @Column(name = "is_read", nullable = false)
+    private boolean isRead;
+
     @Column(name = "deal_id", nullable = true)
     private Long dealId;
 
@@ -39,9 +42,6 @@ public class DirectMessage {
 
     @Column(name = "is_deal", nullable = true)
     private int isDeal;
-
-    @Column(name = "is_read", nullable = false)
-    private boolean isRead;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "deal_state", nullable = true)

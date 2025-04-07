@@ -35,6 +35,11 @@
 <summary><b>🗂️ ERD</b></summary>
 
 <br />
+<details>
+
+<summary><b>📝 API 명세서</b></summary>
+<h4><a href="http://52.65.105.204:8080/swagger-ui/index.html#/" target="_blank" style="color: #007bff; text-decoration: none;">API 명세서(Swagger)</a></h4>
+<br />
 
 <img src="<img src="https://github.com/user-attachments/assets/12642643-8ff4-40e3-8cac-014d4b1efc20" width="650" height="550"/>" width="650" height="550"/>
 

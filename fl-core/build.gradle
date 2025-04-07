@@ -25,6 +25,7 @@ bootJar{
 jar{ enabled = true}
 
 dependencies {
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     implementation 'org.projectlombok:lombok:1.18.20'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-aop'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'

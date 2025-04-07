@@ -28,4 +28,16 @@ public final class AuthUrlPatterns {
             V1_BASE_API_URL + "/users/verification/email/send/**",
             V1_BASE_API_URL + "/users/verification/email/confirm/**",
     };
+
+    public static final String[] NOT_AUTH_URL = {
+      "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/paypal/success",
+            "/paypal/cancel",
+            "/admin",
+            "/admin/",
+            "/admin",
+            "/admin/**"
+    };
 }

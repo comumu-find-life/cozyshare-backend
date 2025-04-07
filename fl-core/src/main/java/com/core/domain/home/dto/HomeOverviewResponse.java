@@ -1,16 +1,14 @@
 package com.core.domain.home.dto;
 
 import com.core.domain.home.model.HomeStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 제거 예정 HomeListOvervireResponse로 대체
  */
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class HomeOverviewResponse {
