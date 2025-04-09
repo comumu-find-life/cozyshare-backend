@@ -31,6 +31,7 @@ public class DirectMessage {
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;
 
+    @Setter
     @Column(name = "is_read", nullable = false)
     private boolean isRead;
 

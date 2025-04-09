@@ -13,6 +13,7 @@ public class UserHelper {
                 .email(id + "test123@test.com")
                 .nickname("user" + id)
                 .password("123123")
+                .fcmToken("token")
                 .signupType(SignupType.APPLE)
                 .build();
     }

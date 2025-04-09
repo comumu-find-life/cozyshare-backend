@@ -25,6 +25,13 @@ bootJar{
 jar{ enabled = true}
 
 dependencies {
+    testImplementation 'org.springframework.boot:spring-boot-starter-websocket'
+    testImplementation 'org.springframework:spring-messaging'
+    testImplementation 'org.springframework:spring-websocket'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    testImplementation 'org.webjars:sockjs-client:1.5.1'
+    testImplementation 'org.webjars:stomp-websocket:2.3.4'
     implementation 'org.projectlombok:lombok:1.18.20'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-aop'
     testFixturesImplementation 'org.springframework.boot:spring-boot-starter-test'

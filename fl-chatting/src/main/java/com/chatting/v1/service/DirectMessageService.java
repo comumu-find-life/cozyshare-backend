@@ -1,5 +1,6 @@
 package com.chatting.v1.service;
 
+import com.chatting.v1.session.WebSocketSessionManager;
 import com.infra.exception.FcmException;
 import com.core.mapper.DirectMessageMapper;
 import com.core.mapper.DirectMessageRoomMapper;
@@ -39,6 +40,7 @@ public class DirectMessageService {
     private final DirectMessageRepository dmRepository;
     private final DirectMessageMapper mapper;
     private final DirectMessageRoomMapper directMessageRoomMapper;
+    private final WebSocketSessionManager webSocketSessionManager;
 
     @Transactional
     public Long createDirectMessageRoom(final DirectMessageApplicationRequest request) {
@@ -46,15 +48,20 @@ public class DirectMessageService {
         Long senderId = request.getSenderId();
         Long roomId = saveOrUpdateDirectMessageRoom(Math.min(senderId, receiverId), Math.max(senderId, receiverId), request);
         DirectMessageRequest directMessageRequest = createDirectMessageRequest(request.getMessage(), senderId, receiverId);
-        saveDirectMessageAndPushNotication(toDirectMessage(directMessageRequest)).join(); //비동기 끝나고 실행
+        saveDirectMessageAndPushFcm(roomId, toDirectMessage(directMessageRequest)).join(); //비동기 끝나고 실행
         return roomId;
     }
 
     @Async
-    public CompletableFuture<DirectMessageResponse> saveDirectMessageAndPushNotication(final DirectMessage directMessage) {
+    public CompletableFuture<DirectMessageResponse> saveDirectMessageAndPushFcm(Long roomId, final DirectMessage directMessage) {
         try {
-            DirectMessage save = dmRepository.save(directMessage);
             User receiver = userRepository.findById(directMessage.getReceiverId()).get();
+            if(webSocketSessionManager.isUserInRoom(roomId, receiver.getId())){
+                directMessage.setRead(true);
+                dmRepository.save(directMessage);
+                return null;
+            }
+            DirectMessage save = dmRepository.save(directMessage);
             User sender = userRepository.findById(directMessage.getSenderId()).get();
             String fcmToken = receiver.getFcmToken();
             fcmService.sendNotification(FCMState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());

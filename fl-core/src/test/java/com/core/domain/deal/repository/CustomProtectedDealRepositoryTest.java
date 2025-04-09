@@ -39,7 +39,7 @@ public class CustomProtectedDealRepositoryTest {
     void 자신의_모든_안전거래_내역을_조회한다() {
         //given
         ProtectedDeal protectedDeal1 = protectedDealRepository.save(generateProtectedDeal(1L));
-        ProtectedDeal protectedDeal2 = protectedDealRepository.save(generateProtectedDeal(2L));
+        protectedDealRepository.save(generateProtectedDeal(2L));
 
         //when
         List<ProtectedDeal> allByUserId = protectedDealRepository.findAllByUserId(protectedDeal1.getGetterId());
