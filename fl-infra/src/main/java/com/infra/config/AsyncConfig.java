@@ -33,7 +33,6 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.setMaxPoolSize(MAX_POOL_SIZE);
         executor.setQueueCapacity(QUEUE_CAPACITY);
         executor.initialize();
-
         return executor;
     }
 
@@ -45,7 +44,6 @@ public class AsyncConfig implements AsyncConfigurer {
     static class AsyncUncaughtExceptionHandlerImpl implements AsyncUncaughtExceptionHandler {
         @Override
         public void handleUncaughtException(Throwable ex, Method method, Object... params) {
-
             logger.error(ex.getMessage());
             logger.error("Method name - {}", method.getName());
             for (Object param : params) {

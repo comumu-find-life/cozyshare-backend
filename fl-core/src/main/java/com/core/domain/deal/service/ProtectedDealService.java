@@ -4,7 +4,7 @@ import com.core.mapper.ProtectedDealMapper;
 import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
 import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
 import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.infra.exception.NotMatchGetterException;
+import com.infra.exception.custom.NotMatchGetterException;
 import com.infra.fcm.FCMHelper;
 import com.infra.fcm.FCMState;
 import com.core.domain.deal.model.DealState;

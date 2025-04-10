@@ -1,7 +1,7 @@
 package com.chatting.v1.service;
 
 import com.chatting.v1.session.WebSocketSessionManager;
-import com.infra.exception.FcmException;
+import com.infra.exception.custom.FcmException;
 import com.core.mapper.DirectMessageMapper;
 import com.core.mapper.DirectMessageRoomMapper;
 import com.core.domain.chat.dto.DirectMessageApplicationRequest;

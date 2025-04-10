@@ -50,6 +50,8 @@ jobs:
           echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
           echo "MAIL_USER_NAME=${{ secrets.MAIL_USER_NAME }}" >> .env
           echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
+          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
+          echo "FIREBASE_KEY_NAME=${{ secrets.FIREBASE_KEY_NAME }}" >> .env
 
       - name: Upload .env to EC2
         uses: appleboy/scp-action@master

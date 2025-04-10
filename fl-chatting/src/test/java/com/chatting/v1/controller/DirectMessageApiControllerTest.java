@@ -69,7 +69,6 @@ public class DirectMessageApiControllerTest {
 
     @Test
     void 첫_채팅전송_후_채팅방_생성() throws Exception {
-
         // when
         mockMvc.perform(MockMvcRequestBuilders.post(DM_SEND_FIRST_URL)
                         .contentType(MediaType.APPLICATION_JSON)

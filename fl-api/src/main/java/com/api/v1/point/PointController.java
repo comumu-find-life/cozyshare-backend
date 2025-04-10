@@ -2,7 +2,7 @@ package com.api.v1.point;
 
 import com.core.domain.user.dto.PaymentRequest;
 import com.infra.utils.SuccessResponse;
-import com.infra.exception.InsufficientPointsException;
+import com.infra.exception.custom.InsufficientPointsException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.core.domain.deal.service.PaypalService;
 import com.core.domain.deal.service.PointService;

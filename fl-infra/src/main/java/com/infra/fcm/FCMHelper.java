@@ -1,7 +1,7 @@
 package com.infra.fcm;
 
 import com.google.firebase.messaging.*;
-import com.infra.exception.FcmException;
+import com.infra.exception.custom.FcmException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;

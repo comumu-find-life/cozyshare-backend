@@ -1,6 +1,7 @@
 package com.api.exception;
 
 import com.infra.exception.*;
+import com.infra.exception.custom.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,6 +20,9 @@ import java.nio.charset.StandardCharsets;
 public class ExceptionResolver {
     private static final Logger logger = LogManager.getLogger(ExceptionResolver.class);
 
+    /**
+     * 클라이언트쪽 에러 발생
+     */
     @ExceptionHandler({AuthException.class, NotFoundDataException.class, InvalidDataException.class})
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
@@ -26,6 +30,9 @@ public class ExceptionResolver {
         return new ErrorResponse((ExceptionBase) exception);
     }
 
+    /**
+     * 서버 오류 발생
+     */
     @ExceptionHandler({
             InsufficientPointsException.class,
             GoogleLocationException.class,
