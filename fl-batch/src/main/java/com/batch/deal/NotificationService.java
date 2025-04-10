@@ -1,7 +1,7 @@
 package com.batch.deal;
 
-import com.infra.fcm.FCMHelper;
-import com.infra.fcm.FCMState;
+import com.infra.fcm.NotificationHelper;
+import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.deal.model.ProtectedDeal;
 import com.core.domain.user.model.User;
@@ -15,7 +15,7 @@ import static com.infra.exception.ExceptionMessages.NOT_EXIST_USER_ID;
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
-    private final FCMHelper fcmHelper;
+    private final NotificationHelper notificationHelper;
     private final UserRepository userRepository;
 
     public void sendCompleteDealNotification(final ProtectedDeal protectedDeal)  {
@@ -26,10 +26,10 @@ public class NotificationService {
     }
 
     public void sendAutoCompleteDealNotification(final String fcmToken) {
-        fcmHelper.sendNotification(FCMState.SAVE, fcmToken, COMPLETE_DEAL_TITLE, COMPLETE_DEAL_BODY);
+        notificationHelper.send(NotificationState.SAVE, fcmToken, COMPLETE_DEAL_TITLE, COMPLETE_DEAL_BODY);
     }
 
     private void sendNotification(final User user)  {
-        fcmHelper.sendNotification(FCMState.SAVE, user.getFcmToken(), TODAY_DEAL_TITLE_MESSAGE, TODAY_DEAL_BODY_MESSAGE);
+        notificationHelper.send(NotificationState.SAVE, user.getFcmToken(), TODAY_DEAL_TITLE_MESSAGE, TODAY_DEAL_BODY_MESSAGE);
     }
 }

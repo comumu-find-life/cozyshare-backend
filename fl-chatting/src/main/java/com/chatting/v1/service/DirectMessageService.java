@@ -9,8 +9,8 @@ import com.core.domain.chat.dto.DirectMessageReadRequest;
 import com.core.domain.chat.dto.DirectMessageRequest;
 import com.core.domain.chat.dto.DirectMessageResponse;
 import com.core.domain.chat.dto.DirectMessageRoomListResponse;
-import com.infra.fcm.FCMHelper;
-import com.infra.fcm.FCMState;
+import com.infra.fcm.NotificationHelper;
+import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.chat.model.DirectMessageRoom;
 import com.core.domain.chat.repository.DirectMessageRoomRepository;
@@ -34,7 +34,7 @@ import static com.chatting.v1.service.DirectMessageHelper.createDirectMessageReq
 @RequiredArgsConstructor
 public class DirectMessageService {
 
-    private final FCMHelper fcmService;
+    private final NotificationHelper notificationHelper;
     private final UserRepository userRepository;
     private final DirectMessageRoomRepository directMessageRoomRepository;
     private final DirectMessageRepository dmRepository;
@@ -64,7 +64,7 @@ public class DirectMessageService {
             DirectMessage save = dmRepository.save(directMessage);
             User sender = userRepository.findById(directMessage.getSenderId()).get();
             String fcmToken = receiver.getFcmToken();
-            fcmService.sendNotification(FCMState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
+            notificationHelper.send(NotificationState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
             return CompletableFuture.completedFuture(mapper.toDirectMessageResponse(save));
         } catch (Exception e) {
             throw new FcmException(e.getMessage());

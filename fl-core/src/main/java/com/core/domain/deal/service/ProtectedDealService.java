@@ -6,7 +6,8 @@ import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
 import com.core.domain.deal.dto.ProtectedDealResponse;
 import com.infra.exception.custom.NotMatchGetterException;
 import com.infra.fcm.FCMHelper;
-import com.infra.fcm.FCMState;
+import com.infra.fcm.NotificationHelper;
+import com.infra.fcm.NotificationState;
 import com.core.domain.deal.model.DealState;
 import com.core.domain.deal.model.ProtectedDeal;
 import com.core.domain.deal.repository.ProtectedDealRepository;
@@ -34,7 +35,7 @@ import static com.infra.exception.ExceptionMessages.*;
 @RequiredArgsConstructor
 public class ProtectedDealService {
 
-    private final FCMHelper fcmHelper;
+    private final NotificationHelper notificationHelper;
     private final ProtectedDealRepository protectedDealRepository;
     private final UserAccountRepository userAccountRepository;
     private final UserRepository userRepository;
@@ -105,7 +106,7 @@ public class ProtectedDealService {
         home.setHomeStatus(HomeStatus.SOLD_OUT);
         protectedDeal.getProtectedDealDateTime().setCompleteAt(LocalDateTime.now());
         protectedDeal.setDealState(DealState.COMPLETE_DEAL);
-        fcmHelper.sendNotification(FCMState.SAVE, provider.getFcmToken(), "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
+        notificationHelper.send(NotificationState.SAVE, provider.getFcmToken(), "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
     }
 
     /**
