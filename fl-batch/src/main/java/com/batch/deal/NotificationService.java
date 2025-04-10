@@ -1,6 +1,5 @@
 package com.batch.deal;
 
-import com.infra.fcm.NotificationHelper;
 import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.deal.model.ProtectedDeal;
@@ -15,7 +14,7 @@ import static com.infra.exception.ExceptionMessages.NOT_EXIST_USER_ID;
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
-    private final NotificationHelper notificationHelper;
+    private final com.infra.fcm.NotificationService notificationHelper;
     private final UserRepository userRepository;
 
     public void sendCompleteDealNotification(final ProtectedDeal protectedDeal)  {

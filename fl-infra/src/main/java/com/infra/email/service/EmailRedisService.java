@@ -20,12 +20,12 @@ import static com.infra.email.utils.EmailCodeGenerator.generateVerificationCode;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class EmailRedisService {
-
+public class EmailRedisService implements EmailVerificationService {
 
     private final VerificationCodeRepository verificationCodeRepository;
     private final JavaMailSender mailSender;
 
+    @Override
     public void sendVerificationCode(String email) {
         Optional<VerificationCode> existingCodeOpt = verificationCodeRepository.findById(email);
         if (existingCodeOpt.isPresent()) {
@@ -39,6 +39,17 @@ public class EmailRedisService {
             sendEmail(email, randomCode);
         }
     }
+
+    @Override
+    public boolean validateVerificationCode(String email, String code) {
+        Optional<VerificationCode> storedCodeOpt = verificationCodeRepository.findById(email);
+        if (storedCodeOpt.isEmpty() || !storedCodeOpt.get().getCode().equals(code)) {
+            return false;
+        }
+        verificationCodeRepository.deleteById(email);
+        return true;
+    }
+
 
     private void sendEmail(String toEmail, String verificationCode) {
         String subject = "Cozy Share Sign-Up Verification Code Issuance";
@@ -58,12 +69,6 @@ public class EmailRedisService {
         }
     }
 
-    public boolean checkVerificationCode(String email, String code) {
-        Optional<VerificationCode> storedCodeOpt = verificationCodeRepository.findById(email);
-        if (storedCodeOpt.isEmpty() || !storedCodeOpt.get().getCode().equals(code)) {
-            return false;
-        }
-        verificationCodeRepository.deleteById(email);
-        return true;
-    }
+
+
 }

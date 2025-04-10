@@ -5,8 +5,7 @@ import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
 import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
 import com.core.domain.deal.dto.ProtectedDealResponse;
 import com.infra.exception.custom.NotMatchGetterException;
-import com.infra.fcm.FCMHelper;
-import com.infra.fcm.NotificationHelper;
+import com.infra.fcm.NotificationService;
 import com.infra.fcm.NotificationState;
 import com.core.domain.deal.model.DealState;
 import com.core.domain.deal.model.ProtectedDeal;
@@ -35,7 +34,7 @@ import static com.infra.exception.ExceptionMessages.*;
 @RequiredArgsConstructor
 public class ProtectedDealService {
 
-    private final NotificationHelper notificationHelper;
+    private final NotificationService notificationHelper;
     private final ProtectedDealRepository protectedDealRepository;
     private final UserAccountRepository userAccountRepository;
     private final UserRepository userRepository;

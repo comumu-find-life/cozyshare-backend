@@ -3,8 +3,7 @@ package com.chatting.v1.controller;
 import com.chatting.v1.constants.SuccessDirectMessages;
 import com.chatting.v1.service.DirectMessageService;
 import com.core.domain.chat.dto.*;
-import com.core.domain.chat.repository.DirectMessageRepository;
-import com.infra.file.FileHelper;
+import com.infra.file.FileService;
 import com.infra.utils.SuccessResponse;
 import com.core.domain.chat.model.DirectMessage;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 import static com.chatting.v1.constants.ApiUrlConstants.*;
 import static com.chatting.v1.constants.SuccessDirectMessages.DIRECT_MESSAGE_UPLOAD_IMAGE_SUCCESS;
@@ -29,7 +27,7 @@ import static com.chatting.v1.constants.SuccessDirectMessages.DIRECT_MESSAGE_UPL
 public class DirectMessageApiController {
 
     private final SimpMessagingTemplate template;
-    private final FileHelper fileHelper;
+    private final FileService fileHelper;
     private final DirectMessageService dmService;
 
     @MessageMapping(value = "/chat/message")

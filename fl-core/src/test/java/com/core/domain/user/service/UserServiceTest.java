@@ -8,7 +8,7 @@ import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
 import com.core.domain.user.validation.UserServiceValidation;
 import com.core.mapper.UserMapper;
-import com.infra.file.FileHelper;
+import com.infra.file.FileService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ public class UserServiceTest {
     private UserMapper userMapper;
 
     @Mock
-    private FileHelper fileHelper;
+    private FileService fileHelper;
 
     @Mock
     private UserRepository userRepository;

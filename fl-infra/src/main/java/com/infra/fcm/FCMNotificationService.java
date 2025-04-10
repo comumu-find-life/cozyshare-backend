@@ -3,13 +3,12 @@ package com.infra.fcm;
 import com.google.firebase.messaging.*;
 import com.infra.exception.custom.FcmException;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FCMHelper implements NotificationHelper {
+public class FCMNotificationService implements NotificationService {
 
     private final FirebaseMessaging firebaseMessaging;
 

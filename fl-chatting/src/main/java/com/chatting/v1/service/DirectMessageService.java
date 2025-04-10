@@ -9,7 +9,7 @@ import com.core.domain.chat.dto.DirectMessageReadRequest;
 import com.core.domain.chat.dto.DirectMessageRequest;
 import com.core.domain.chat.dto.DirectMessageResponse;
 import com.core.domain.chat.dto.DirectMessageRoomListResponse;
-import com.infra.fcm.NotificationHelper;
+import com.infra.fcm.NotificationService;
 import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.chat.model.DirectMessageRoom;
@@ -34,7 +34,7 @@ import static com.chatting.v1.service.DirectMessageHelper.createDirectMessageReq
 @RequiredArgsConstructor
 public class DirectMessageService {
 
-    private final NotificationHelper notificationHelper;
+    private final NotificationService notificationHelper;
     private final UserRepository userRepository;
     private final DirectMessageRoomRepository directMessageRoomRepository;
     private final DirectMessageRepository dmRepository;

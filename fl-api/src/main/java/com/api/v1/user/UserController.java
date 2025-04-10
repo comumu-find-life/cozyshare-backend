@@ -1,7 +1,7 @@
 package com.api.v1.user;
 
 import com.api.auth.service.JwtService;
-import com.infra.email.service.EmailRedisService;
+import com.infra.email.service.EmailVerificationService;
 import com.core.domain.user.dto.UserProfileUpdateRequest;
 import com.core.domain.user.dto.UserSignupRequest;
 import com.core.domain.user.dto.UserInformationResponse;
@@ -28,18 +28,18 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private final EmailRedisService emailRedisService;
+    private final EmailVerificationService emailHelper;
 
     @PostMapping(SEND_EMAIL_URL)
     public ResponseEntity<?> sendCheckCode(@PathVariable final String email) {
-        emailRedisService.sendVerificationCode(email);
+        emailHelper.sendVerificationCode(email);
         SuccessResponse response = new SuccessResponse(true, VERIFICATION_CODE_SENT_SUCCESS, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(VERIFICATION_EMAIL_CODE_URL)
     public ResponseEntity<?> verifyCode(@PathVariable final String email, @PathVariable final String code) {
-        boolean result = emailRedisService.checkVerificationCode(email, code);
+        boolean result = emailHelper.validateVerificationCode(email, code);
         SuccessResponse response = new SuccessResponse(true, EMAIL_VERIFICATION_SUCCESS, result);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

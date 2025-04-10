@@ -4,7 +4,7 @@ import com.core.domain.home.model.*;
 import com.core.mapper.HomeMapper;
 import com.core.domain.home.dto.HomeGeneratorRequest;
 import com.core.domain.home.dto.HomeUpdateRequest;
-import com.infra.file.FileHelper;
+import com.infra.file.FileService;
 import com.core.domain.home.repository.HomeImageRepository;
 import com.core.domain.home.repository.HomeRepository;
 import com.infra.utils.OptionalUtil;
@@ -28,7 +28,7 @@ import static com.infra.exception.ExceptionMessages.NOT_EXIST_HOME_ID;
 @RequiredArgsConstructor
 public class HomeService {
 
-    private final FileHelper fileService;
+    private final FileService fileService;
     private final HomeRepository homeRepository;
     private final HomeMapper homeMapper;
     private final HomeImageRepository homeImageRepository;
