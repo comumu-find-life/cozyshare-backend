@@ -105,7 +105,7 @@ public class ProtectedDealService {
         home.setHomeStatus(HomeStatus.SOLD_OUT);
         protectedDeal.getProtectedDealDateTime().setCompleteAt(LocalDateTime.now());
         protectedDeal.setDealState(DealState.COMPLETE_DEAL);
-        notificationHelper.send(NotificationState.SAVE, provider.getFcmToken(), "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
+        notificationHelper.sendNotification(NotificationState.SAVE, provider.getFcmToken(), "The transaction has been completed", "the deposit has been paid. Please check it on MyPage.");
     }
 
     /**

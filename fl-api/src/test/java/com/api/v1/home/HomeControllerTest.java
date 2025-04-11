@@ -1,10 +1,7 @@
 package com.api.v1.home;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.home.dto.HomeGeneratorRequest;
-import com.core.domain.home.dto.HomeInformationResponse;
-import com.core.domain.home.dto.HomeOverviewResponse;
-import com.core.domain.home.dto.HomeUpdateRequest;
+import com.core.domain.home.dto.*;
 import com.core.domain.home.model.Home;
 import com.core.domain.home.model.LatLng;
 import com.core.domain.home.repository.HomeRepository;
@@ -100,14 +97,13 @@ public class HomeControllerTest {
         MockMultipartFile image1 = new MockMultipartFile("images", "image1.jpg", "image/jpeg", "image1".getBytes());
         MockMultipartFile image2 = new MockMultipartFile("images", "image2.jpg", "image/jpeg", "image2".getBytes());
 
-        // when
+        // when && then
         mockMvc.perform(MockMvcRequestBuilders.multipart(HOMES_BASE_URL)
                         .file(jsonFile)
                         .file(image1)
                         .file(image2)
                         .header(HttpHeaders.AUTHORIZATION, token)
                         .contentType(MediaType.MULTIPART_FORM_DATA))
-                //then
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -122,7 +118,7 @@ public class HomeControllerTest {
                 // then
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, ADDRESS_VALIDATION_SUCCESS, new LatLng(-37.81314649999999,144.9684679)))));
+                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, ADDRESS_VALIDATION_SUCCESS, new LatLng(-27.7292388,153.2223104)))));
     }
 
     @Test

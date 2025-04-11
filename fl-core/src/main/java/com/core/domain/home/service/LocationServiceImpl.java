@@ -3,6 +3,8 @@ package com.core.domain.home.service;
 import com.core.domain.home.dto.HomeAddressGeneratorRequest;
 import com.core.domain.home.model.LatLng;
 import com.core.domain.home.model.LocationUtil;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.infra.exception.custom.GoogleLocationException;
 import com.infra.exception.custom.InvalidDataException;
 import com.google.gson.JsonObject;
@@ -43,17 +45,30 @@ public class LocationServiceImpl implements LocationService {
             String response = restTemplate.getForObject(uri, String.class);
             JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
             validateAddress(jsonObject);
-            JsonObject location = jsonObject.getAsJsonArray("results").get(0)
-                    .getAsJsonObject().getAsJsonObject("geometry")
-                    .getAsJsonObject("location");
-            double lat = location.get("lat").getAsDouble();
-            double lng = location.get("lng").getAsDouble();
+            JsonArray results = jsonObject.getAsJsonArray("results");
+            for (JsonElement resultElem : results) {
+                JsonObject result = resultElem.getAsJsonObject();
+                String locationType = result
+                        .getAsJsonObject("geometry")
+                        .get("location_type").getAsString();
 
-            return new LatLng(lat, lng);
+                if ("ROOFTOP".equals(locationType)) {
+                    JsonObject location = result
+                            .getAsJsonObject("geometry")
+                            .getAsJsonObject("location");
+                    double lat = location.get("lat").getAsDouble();
+                    double lng = location.get("lng").getAsDouble();
+                    return new LatLng(lat, lng);
+                }
+            }
+            // "ROOFTOP" 결과가 없으면 예외
+            throw new GoogleLocationException("정확한 주소 결과(ROOFTOP)를 찾을 수 없습니다.");
+
         } catch (Exception e) {
             throw new GoogleLocationException("주소 조회 실패");
         }
     }
+
 
 
     private void validateAddress(JsonObject jsonObject)  {

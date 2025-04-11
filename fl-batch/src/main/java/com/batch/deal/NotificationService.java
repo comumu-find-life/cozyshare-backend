@@ -25,10 +25,10 @@ public class NotificationService {
     }
 
     public void sendAutoCompleteDealNotification(final String fcmToken) {
-        notificationHelper.send(NotificationState.SAVE, fcmToken, COMPLETE_DEAL_TITLE, COMPLETE_DEAL_BODY);
+        notificationHelper.sendNotification(NotificationState.SAVE, fcmToken, COMPLETE_DEAL_TITLE, COMPLETE_DEAL_BODY);
     }
 
     private void sendNotification(final User user)  {
-        notificationHelper.send(NotificationState.SAVE, user.getFcmToken(), TODAY_DEAL_TITLE_MESSAGE, TODAY_DEAL_BODY_MESSAGE);
+        notificationHelper.sendNotification(NotificationState.SAVE, user.getFcmToken(), TODAY_DEAL_TITLE_MESSAGE, TODAY_DEAL_BODY_MESSAGE);
     }
 }

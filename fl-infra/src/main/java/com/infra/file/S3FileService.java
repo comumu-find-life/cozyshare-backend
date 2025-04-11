@@ -16,13 +16,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
-public class S3FileHelper implements FileHelper {
+public class S3FileService implements FileService {
     private final AmazonS3 amazonS3;
 
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
 
-    public S3FileHelper(final AmazonS3 amazonS3) {
+    public S3FileService(final AmazonS3 amazonS3) {
         this.amazonS3 = amazonS3;
     }
 

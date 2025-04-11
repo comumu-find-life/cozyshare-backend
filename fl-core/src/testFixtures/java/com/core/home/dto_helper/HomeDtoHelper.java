@@ -30,12 +30,12 @@ public class HomeDtoHelper {
 
     public static HomeAddressGeneratorRequest generateHomeAddressGeneratorRequest() {
         return HomeAddressGeneratorRequest.builder()
-                .postCode(2000)
-                .state("3000")
-                .city("Melbourne")
-                .streetName("Collins St")
+                .postCode(4207)
+                .state("QLD")
+                .city("Yatala")
+                .streetName("Old Pacific Hwy")
                 .detailAddress("401ho")
-                .streetCode("123")
+                .streetCode("10")
                 .latitude(100)
                 .longitude(100)
                 .build();

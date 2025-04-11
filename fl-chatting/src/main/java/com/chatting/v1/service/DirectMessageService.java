@@ -64,7 +64,7 @@ public class DirectMessageService {
             DirectMessage save = dmRepository.save(directMessage);
             User sender = userRepository.findById(directMessage.getSenderId()).get();
             String fcmToken = receiver.getFcmToken();
-            notificationHelper.send(NotificationState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
+            notificationHelper.sendNotification(NotificationState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
             return CompletableFuture.completedFuture(mapper.toDirectMessageResponse(save));
         } catch (Exception e) {
             throw new FcmException(e.getMessage());

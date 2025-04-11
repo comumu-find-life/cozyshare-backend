@@ -14,7 +14,7 @@ public class FCMNotificationService implements NotificationService {
 
     @Async
     @Override
-    public void send(final NotificationState notificationState, final String token, final String title, final String content) {
+    public void sendNotification(final NotificationState notificationState, final String token, final String title, final String content) {
         try {
             Message message = createMessage(notificationState, token, title, content);
             firebaseMessaging.send(message);
@@ -22,7 +22,6 @@ public class FCMNotificationService implements NotificationService {
             throw new FcmException("fcm 전송 실패");
         }
     }
-
 
     private Message createMessage(final NotificationState fcmState, final String token, final String title, final String content) {
         return Message.builder()
