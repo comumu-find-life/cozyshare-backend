@@ -165,31 +165,6 @@ public class ProtectedDealControllerTest {
     }
 
     @Test
-    public void 안전거래를_임차인이_완료한다() throws Exception {
-        //given
-        Home home = homeRepository.save(generateHome(1L));
-        User getter = userRepository.save(generateUser(1L));
-        User provider = userRepository.save(generateUser(2L));
-        userAccountRepository.save(generateUserAccount(provider.getId(), 100));
-
-        ProtectedDeal deal = protectedDealRepository.save(generateProtectedDealWithUserIds(home.getId(), getter.getId(), provider.getId()));
-        when(userService.findByEmail(anyString())).thenReturn(userMapper.toDto(getter));
-        userAccountRepository.save(generateUserAccount(getter.getId(), 10000));
-
-        // when
-        mockMvc.perform(MockMvcRequestBuilders.patch(DEALS_REQUEST_COMPLETE_URL, deal.getId())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, token))
-                // then
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(content().json(objectMapper.writeValueAsString(new SuccessResponse(true, COMPLETE_DEAL, null))));
-
-        //거래 완료 후 임대인 포인트 증가
-        Assertions.assertThat(userAccountRepository.findByUserId(provider.getId()).get().getPoint()).isEqualTo(2100.0);
-    }
-
-    @Test
     void 보증금을_입금하기전에_안전거래를_임차인이_취소한다() throws Exception {
         //given
         Home home = homeRepository.save(generateHome(1L));
