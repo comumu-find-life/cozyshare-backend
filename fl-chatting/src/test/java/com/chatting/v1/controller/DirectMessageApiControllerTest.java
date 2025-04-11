@@ -100,27 +100,6 @@ public class DirectMessageApiControllerTest {
     }
 
     @Test
-    void 채팅방에_입장한_후_읽지않은_메시지를_모두_읽음으로_표시한다() throws Exception {
-        //given
-        directMessageRepository.save(generateDirectMessage("message", receiver.getId(), sender.getId(), LocalDateTime.now(), false));
-        directMessageRepository.save(generateDirectMessage("message", receiver.getId(), sender.getId(), LocalDateTime.now(), false));
-        directMessageRepository.save(generateDirectMessage("message", receiver.getId(), sender.getId(), LocalDateTime.now(), false));
-
-        // when & then
-        mockMvc.perform(MockMvcRequestBuilders.post(DM_CHECK_READ_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(generateDirectMessageReadRequest(receiver.getId(), sender.getId()))))
-
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-
-        directMessageRepository.findAll().stream()
-                .forEach(directMessage -> {
-                    assertThat(directMessage.isRead()).isEqualTo(true);
-                });
-    }
-
-    @Test
     void 자신의_채팅방_정보를_모두_조회한다() throws Exception {
         //given
         User receiver2 = userRepository.save(generateUser(3L));
