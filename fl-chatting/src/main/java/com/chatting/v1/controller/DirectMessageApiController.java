@@ -3,7 +3,7 @@ package com.chatting.v1.controller;
 import com.chatting.v1.constants.SuccessDirectMessages;
 import com.chatting.v1.service.DirectMessageService;
 import com.core.domain.chat.dto.*;
-import com.infra.file.FileHelper;
+import com.infra.file.FileService;
 import com.infra.utils.SuccessResponse;
 import com.core.domain.chat.model.DirectMessage;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +27,14 @@ import static com.chatting.v1.constants.SuccessDirectMessages.DIRECT_MESSAGE_UPL
 public class DirectMessageApiController {
 
     private final SimpMessagingTemplate template;
-    private final FileHelper fileHelper;
+    private final FileService fileHelper;
     private final DirectMessageService dmService;
 
     @MessageMapping(value = "/chat/message")
     public void sendMessage(final DirectMessageRequest directMessageRequest)  {
         DirectMessage directMessage = dmService.toDirectMessage(directMessageRequest);
         DirectMessageResponse directMessageResponse = dmService.toDirectMessageResponse(directMessage);
-        dmService.saveDirectMessageAndPushNotication(directMessage);
+        dmService.saveDirectMessageAndPushFcm(directMessageRequest.getRoomId(), directMessage);
         template.convertAndSend("/sub/chat/room/" + directMessageRequest.getRoomId(), directMessageResponse);
     }
 
@@ -44,7 +44,6 @@ public class DirectMessageApiController {
         fileHelper.fileUpload(file, uploadUrl);
         return ResponseEntity.ok(new SuccessResponse(true, DIRECT_MESSAGE_UPLOAD_IMAGE_SUCCESS, uploadUrl));
     }
-
 
     @PostMapping(DM_SEND_FIRST_URL)
     public ResponseEntity<?> createDirectMessageRoom(@RequestBody final DirectMessageApplicationRequest dmDto) {
@@ -63,7 +62,7 @@ public class DirectMessageApiController {
     @PostMapping(DM_CHECK_READ_URL)
     public ResponseEntity<?> checkReadMessage(@RequestBody final DirectMessageReadRequest directMessageReadRequest){
         dmService.checkReadMessages(directMessageReadRequest);
-        SuccessResponse response = new SuccessResponse(true, "", null);
+        SuccessResponse response = new SuccessResponse(true, SuccessDirectMessages.DIRECT_MESSAGE_ALL_READ, null);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

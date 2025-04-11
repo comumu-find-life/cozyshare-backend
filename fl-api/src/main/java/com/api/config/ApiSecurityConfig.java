@@ -23,8 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
-import static com.api.auth.constants.AuthUrlPatterns.GET_AUTH_WHITELIST;
-import static com.api.auth.constants.AuthUrlPatterns.POST_AUTH_WHITELIST;
+import static com.api.auth.constants.AuthUrlPatterns.*;
 
 
 @Configuration
@@ -46,10 +45,9 @@ public class ApiSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.GET, GET_AUTH_WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.POST, POST_AUTH_WHITELIST).permitAll()
-                        .requestMatchers("/paypal/success","/paypal/cancel", "/admin","/admin/", "/admin/**").permitAll()
+                        .requestMatchers(NOT_AUTH_URL).permitAll()
                         .anyRequest().authenticated()
                 );
 

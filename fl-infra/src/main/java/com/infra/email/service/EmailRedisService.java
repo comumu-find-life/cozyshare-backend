@@ -1,9 +1,8 @@
 package com.infra.email.service;
 
-
 import com.infra.email.model.VerificationCode;
 import com.infra.email.repository.VerificationCodeRepository;
-import com.infra.exception.InvalidDataException;
+import com.infra.exception.custom.InvalidDataException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -16,54 +15,52 @@ import java.util.Optional;
 
 import static com.infra.email.utils.EmailCodeGenerator.generateVerificationCode;
 
-
-@Transactional
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class EmailRedisService {
+public class EmailRedisService implements EmailVerificationService {
 
+    private static final String EMAIL_SUBJECT = "Cozy Share Sign-Up Verification Code Issuance";
+    private static final String EMAIL_BODY_TEMPLATE = "Verification Code: %s";
 
     private final VerificationCodeRepository verificationCodeRepository;
     private final JavaMailSender mailSender;
 
+    @Override
     public void sendVerificationCode(String email) {
-        Optional<VerificationCode> existingCodeOpt = verificationCodeRepository.findById(email);
-        if (existingCodeOpt.isPresent()) {
-            String randomCode = generateVerificationCode();
-            VerificationCode newCode = new VerificationCode(email, randomCode);
-            verificationCodeRepository.save(newCode);
-        } else {
-            String randomCode = generateVerificationCode();
-            VerificationCode newCode = new VerificationCode(email, randomCode);
-            verificationCodeRepository.save(newCode);
-            sendEmail(email, randomCode);
+        String code = generateVerificationCode();
+        VerificationCode verificationCode = new VerificationCode(email, code);
+        verificationCodeRepository.save(verificationCode);
+
+        // 이메일이 최초 요청인 경우에만 이메일 전송
+        if (verificationCodeRepository.findById(email).isEmpty()) {
+            sendEmail(email, code);
         }
     }
 
-    private void sendEmail(String toEmail, String verificationCode) {
-        String subject = "Cozy Share Sign-Up Verification Code Issuance";
-        String body = "Verification Code:" + verificationCode;
+    @Override
+    public boolean validateVerificationCode(String email, String code) {
+        return verificationCodeRepository.findById(email)
+                .filter(stored -> stored.getCode().equals(code))
+                .map(valid -> {
+                    verificationCodeRepository.deleteById(email);
+                    return true;
+                })
+                .orElse(false);
+    }
 
+    private void sendEmail(String toEmail, String verificationCode) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setTo(toEmail);
-            helper.setSubject(subject);
-            helper.setText(body, true);
+            helper.setSubject(EMAIL_SUBJECT);
+            helper.setText(String.format(EMAIL_BODY_TEMPLATE, verificationCode), true);
 
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new InvalidDataException(e.getMessage());
+            throw new InvalidDataException("이메일 전송 실패: " + e.getMessage());
         }
-    }
-
-    public boolean checkVerificationCode(String email, String code) {
-        Optional<VerificationCode> storedCodeOpt = verificationCodeRepository.findById(email);
-        if (storedCodeOpt.isEmpty() || !storedCodeOpt.get().getCode().equals(code)) {
-            return false;
-        }
-        verificationCodeRepository.deleteById(email);
-        return true;
     }
 }

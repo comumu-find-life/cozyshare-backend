@@ -1,6 +1,6 @@
 package com.api.auth.handler;
 
-import com.infra.exception.AuthException;
+import com.infra.exception.custom.AuthException;
 import com.infra.exception.ErrorResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

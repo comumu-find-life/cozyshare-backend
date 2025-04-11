@@ -6,7 +6,7 @@ import com.core.domain.user.model.User;
 import com.core.domain.user.model.UserAccount;
 import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
-import com.infra.exception.InsufficientPointsException;
+import com.infra.exception.custom.InsufficientPointsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

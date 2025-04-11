@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class CustomDirectMessageRepositoryImpl implements CustomDirectMessageRepository {
+public class DirectMessageRepositoryImpl implements CustomDirectMessageRepository {
 
     private final MongoTemplate mongoTemplate;
 

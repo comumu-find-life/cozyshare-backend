@@ -1,12 +1,12 @@
 package com.infra.fcm;
 
-public enum FCMState {
+public enum NotificationState {
     SAVE("save"),
     NOT_SAVE("notSave");
 
     private final String value;
 
-    FCMState(String value) {
+    NotificationState(String value) {
         this.value = value;
     }
 

@@ -2,7 +2,7 @@ package com.infra.file;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.infra.exception.S3UploadException;
+import com.infra.exception.custom.S3UploadException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -16,13 +16,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Service
-public class S3FileHelper implements FileHelper {
+public class S3FileService implements FileService {
     private final AmazonS3 amazonS3;
 
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
 
-    public S3FileHelper(final AmazonS3 amazonS3) {
+    public S3FileService(final AmazonS3 amazonS3) {
         this.amazonS3 = amazonS3;
     }
 

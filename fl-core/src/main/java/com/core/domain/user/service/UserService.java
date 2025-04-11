@@ -1,7 +1,7 @@
 package com.core.domain.user.service;
 
 import com.core.domain.user.validation.UserServiceValidation;
-import com.infra.file.FileHelper;
+import com.infra.file.FileService;
 import com.core.mapper.UserMapper;
 import com.core.domain.user.dto.UserAccountRequest;
 import com.core.domain.user.dto.UserProfileUpdateRequest;
@@ -9,17 +9,13 @@ import com.core.domain.user.dto.UserSignupRequest;
 import com.core.domain.user.dto.UserAccountResponse;
 import com.core.domain.user.dto.UserInformationResponse;
 import com.core.domain.user.dto.UserProfileResponse;
-import com.core.domain.user.dto.WithDrawHistoryResponse;
 import com.core.domain.chat.repository.DirectMessageRoomRepository;
-import com.core.domain.user.model.ChargeType;
-import com.core.domain.user.model.PointHistory;
 import com.core.domain.user.model.User;
 import com.core.domain.user.model.UserAccount;
 import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
 import com.infra.utils.OptionalUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +33,7 @@ import static com.infra.exception.ExceptionMessages.NOT_EXIST_USER_ID;
 public class UserService {
 
     private final UserMapper userMapper;
-    private final FileHelper fileService;
+    private final FileService fileService;
     private final UserRepository userRepository;
     private final DirectMessageRoomRepository directMessageRoomRepository;
     private final UserAccountRepository userAccountRepository;

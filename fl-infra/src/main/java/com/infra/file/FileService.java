@@ -2,7 +2,7 @@ package com.infra.file;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface FileHelper {
+public interface FileService {
     String toUrls(final MultipartFile file);
 
     void fileUpload(final MultipartFile file, final String url);

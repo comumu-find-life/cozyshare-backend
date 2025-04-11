@@ -62,7 +62,6 @@ public class HomeQueryService {
         return homeRepository.findByHomeIds(homeIds);
     }
 
-
     /**
      * 도시 이름으로 판매중인 집 게시글 조회
      */

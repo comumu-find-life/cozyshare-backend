@@ -1,6 +1,6 @@
 package com.infra.utils;
 
-import com.infra.exception.NotFoundDataException;
+import com.infra.exception.custom.NotFoundDataException;
 
 import java.util.Optional;
 

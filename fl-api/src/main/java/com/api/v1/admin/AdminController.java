@@ -1,13 +1,15 @@
 package com.api.v1.admin;
 
 import com.core.domain.user.service.UserPaymentService;
-import com.core.domain.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * admin 관련 기능이 많아지면 추후 모듈 분리
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -15,8 +17,8 @@ public class AdminController {
 
     private final UserPaymentService userPaymentService;
 
-    @GetMapping({ "", "/"})
-    public String list(final HttpSession session, final Model model) {
+    @GetMapping({"", "/"})
+    public String findWithdrawRequests(final HttpSession session, final Model model) {
         model.addAttribute("withdraws", userPaymentService.findWithDraws());
         return "withdraw/list";
     }

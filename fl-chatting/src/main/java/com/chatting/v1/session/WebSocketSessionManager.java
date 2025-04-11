@@ -1,4 +1,4 @@
-package com.chatting.v1.service;
+package com.chatting.v1.session;
 
 import org.springframework.stereotype.Component;
 

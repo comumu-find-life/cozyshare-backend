@@ -1,7 +1,7 @@
 package com.core.domain.user.validation;
 
 import com.core.domain.user.repository.UserRepository;
-import com.infra.exception.InvalidDataException;
+import com.infra.exception.custom.InvalidDataException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

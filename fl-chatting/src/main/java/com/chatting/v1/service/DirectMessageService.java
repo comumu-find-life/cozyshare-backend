@@ -1,6 +1,7 @@
 package com.chatting.v1.service;
 
-import com.infra.exception.FcmException;
+import com.chatting.v1.session.WebSocketSessionManager;
+import com.infra.exception.custom.FcmException;
 import com.core.mapper.DirectMessageMapper;
 import com.core.mapper.DirectMessageRoomMapper;
 import com.core.domain.chat.dto.DirectMessageApplicationRequest;
@@ -8,8 +9,8 @@ import com.core.domain.chat.dto.DirectMessageReadRequest;
 import com.core.domain.chat.dto.DirectMessageRequest;
 import com.core.domain.chat.dto.DirectMessageResponse;
 import com.core.domain.chat.dto.DirectMessageRoomListResponse;
-import com.infra.fcm.FCMHelper;
-import com.infra.fcm.FCMState;
+import com.infra.fcm.NotificationService;
+import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
 import com.core.domain.chat.model.DirectMessageRoom;
 import com.core.domain.chat.repository.DirectMessageRoomRepository;
@@ -33,12 +34,13 @@ import static com.chatting.v1.service.DirectMessageHelper.createDirectMessageReq
 @RequiredArgsConstructor
 public class DirectMessageService {
 
-    private final FCMHelper fcmService;
+    private final NotificationService notificationHelper;
     private final UserRepository userRepository;
     private final DirectMessageRoomRepository directMessageRoomRepository;
     private final DirectMessageRepository dmRepository;
     private final DirectMessageMapper mapper;
     private final DirectMessageRoomMapper directMessageRoomMapper;
+    private final WebSocketSessionManager webSocketSessionManager;
 
     @Transactional
     public Long createDirectMessageRoom(final DirectMessageApplicationRequest request) {
@@ -46,18 +48,23 @@ public class DirectMessageService {
         Long senderId = request.getSenderId();
         Long roomId = saveOrUpdateDirectMessageRoom(Math.min(senderId, receiverId), Math.max(senderId, receiverId), request);
         DirectMessageRequest directMessageRequest = createDirectMessageRequest(request.getMessage(), senderId, receiverId);
-        saveDirectMessageAndPushNotication(toDirectMessage(directMessageRequest)).join(); //비동기 끝나고 실행
+        saveDirectMessageAndPushFcm(roomId, toDirectMessage(directMessageRequest)).join(); //비동기 끝나고 실행
         return roomId;
     }
 
     @Async
-    public CompletableFuture<DirectMessageResponse> saveDirectMessageAndPushNotication(final DirectMessage directMessage) {
+    public CompletableFuture<DirectMessageResponse> saveDirectMessageAndPushFcm(Long roomId, final DirectMessage directMessage) {
         try {
-            DirectMessage save = dmRepository.save(directMessage);
             User receiver = userRepository.findById(directMessage.getReceiverId()).get();
+            if(webSocketSessionManager.isUserInRoom(roomId, receiver.getId())){
+                directMessage.setRead(true);
+                dmRepository.save(directMessage);
+                return null;
+            }
+            DirectMessage save = dmRepository.save(directMessage);
             User sender = userRepository.findById(directMessage.getSenderId()).get();
             String fcmToken = receiver.getFcmToken();
-            fcmService.sendNotification(FCMState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
+            notificationHelper.sendNotification(NotificationState.NOT_SAVE, fcmToken, sender.getNickname(), directMessage.getMessage());
             return CompletableFuture.completedFuture(mapper.toDirectMessageResponse(save));
         } catch (Exception e) {
             throw new FcmException(e.getMessage());
