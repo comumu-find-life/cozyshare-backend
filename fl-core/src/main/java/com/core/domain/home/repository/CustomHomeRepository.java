@@ -15,7 +15,7 @@ public interface CustomHomeRepository {
 
     List<Home> findByUserId(final Long userId);
 
-    Optional<HomeInformationResponse> findHomeAndUserById(final Long homeId);
+    Optional<HomeInformationResponse> findHomeInformationById(final Long homeId);
 
     List<HomeOverviewResponse> findByHomeIds(final List<Long> homeIds);
 }

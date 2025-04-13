@@ -29,7 +29,7 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
 
 
     @Override
-    public Optional<HomeInformationResponse> findHomeAndUserById(Long homeId) {
+    public Optional<HomeInformationResponse> findHomeInformationById(Long homeId) {
         Tuple tuple = query
                 .select(qHome, qUser)
                 .distinct()
@@ -42,15 +42,16 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
         if (tuple == null) {
             return Optional.empty();
         }
+        System.out.println("tuple =");
         Home home = tuple.get(0, Home.class);
         User user = tuple.get(1, User.class);
         return Optional.ofNullable(HomeMapper.INSTANCE.toHomeInformation(home, user));
     }
 
     @Override
-    public List<Home> findByUserId(Long userIdx) {
+    public List<Home> findByUserId(Long userId) {
         List<Home> homes = query.selectFrom(qHome)
-                .where(qHome.userId.eq(userIdx))
+                .where(qHome.userId.eq(userId ))
                 .fetch();
         return homes;
     }
@@ -65,49 +66,33 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
                 .where(qHome.id.in(homeIds))
                 .fetch();
 
-        Set<Home> uniqueHomes = new HashSet<>();
-        tuples.stream()
-                .map(tuple -> {
-                    Home home = tuple.get(0, Home.class);
-                    User user = tuple.get(1, User.class);
-                    uniqueHomes.add(home);
-                    return HomeMapper.INSTANCE.toSimpleHomeDto(home, user);
-                })
-                .collect(Collectors.toList());
+        Map<Long, HomeOverviewResponse> responseMap = new LinkedHashMap<>();
 
-        return uniqueHomes.stream()
-                .map(home -> {
-                    User user = query.select(qUser)
-                            .from(qUser)
-                            .where(qUser.id.eq(home.getUserId()))
-                            .fetchFirst();
-                    return HomeMapper.INSTANCE.toSimpleHomeDto(home, user);
-                })
-                .collect(Collectors.toList());
+        for (Tuple tuple : tuples) {
+            Home home = tuple.get(qHome);
+            User user = tuple.get(qUser);
+            if (!responseMap.containsKey(home.getId())) {
+                HomeOverviewResponse response = HomeMapper.INSTANCE.toOverviewResponse(home, user);
+                responseMap.put(home.getId(), response);
+            }
+        }
+
+        return new ArrayList<>(responseMap.values());
     }
 
     @Override
     public List<HomeOverviewResponse> findAllSellHome() {
-        Set<Long> seenHomeIds = new HashSet<>();
-        List<Tuple> tuples = query.select(qHome, qUser)
+        Set<Long> seenIds = new HashSet<>();
+        return query.select(qHome, qUser)
                 .from(qHome)
                 .join(qUser).on(qHome.userId.eq(qUser.id))
                 .leftJoin(qHome.images, qHomeImage).fetchJoin()
                 .where(qHome.homeStatus.eq(HomeStatus.FOR_SALE))
                 .fetch()
                 .stream()
-                .filter(tuple -> {
-                    Home home = tuple.get(QHome.home);
-                    return seenHomeIds.add(home.getId());
-                })
-                .toList();
-
-        return tuples.stream()
-                .map(tuple -> {
-                    Home home = tuple.get(QHome.home);
-                    User user = tuple.get(QUser.user);
-                    return HomeMapper.INSTANCE.toSimpleHomeDto(home, user);
-                })
+                .filter(tuple -> seenIds.add(tuple.get(qHome).getId()))
+                .map(tuple -> HomeMapper.INSTANCE.toOverviewResponse(
+                        tuple.get(qHome), tuple.get(qUser)))
                 .toList();
     }
 
@@ -117,7 +102,6 @@ public class CustomHomeRepositoryImpl implements com.core.domain.home.repository
                 .where(qHome.homeStatus.eq(HomeStatus.FOR_SALE))
                 .where(qHome.homeAddress.city.like("%" + cityName +"%"))
                 .fetch();
-
         return homes;
     }
 }

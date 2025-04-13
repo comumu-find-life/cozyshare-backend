@@ -89,6 +89,9 @@ public interface HomeMapper {
     @Mapping(target = "canParking", source = "home.homeInfo.canParking")
     HomeInformationResponse toHomeInformation(Home home, User user);
 
+    @Mapping(target = "home", source = "home")
+    @Mapping(target = "imageUrl", source = "url")
+    HomeImage toHomeImage(Home home, String url);
     /**
      * Home 을 리스트로 보여줄 DTO 변환
      */
@@ -106,7 +109,7 @@ public interface HomeMapper {
     @Mapping(target = "homeStatus", source = "home.homeStatus")
     @Mapping(target = "userIdx", source = "user.id")
     @Mapping(target = "userName", source = "user.nickname")
-    HomeOverviewResponse toSimpleHomeDto(Home home, User user);
+    HomeOverviewResponse toOverviewResponse(Home home, User user);
 
 
     @Named("mapImageUrls")
