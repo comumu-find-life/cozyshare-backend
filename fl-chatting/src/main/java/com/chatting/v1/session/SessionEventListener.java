@@ -16,9 +16,9 @@ public class SessionEventListener {
     @EventListener
     public void handleSessionConnected(final SessionConnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
-        Long roomId = Long.valueOf(headerAccessor.getNativeHeader("roomId").get(0)); // 채팅방 ID
-        Long userId = Long.valueOf(headerAccessor.getNativeHeader("userId").get(0)); // 사용자 ID
-        sessionManager.addSession(headerAccessor.getSessionId(), roomId, userId); //
+        Long roomId = Long.valueOf(headerAccessor.getNativeHeader("roomId").get(0));
+        Long userId = Long.valueOf(headerAccessor.getNativeHeader("userId").get(0));
+        sessionManager.addSession(headerAccessor.getSessionId(), roomId, userId);
     }
 
     @EventListener
