@@ -45,6 +45,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           source: .env
           target: /home/ubuntu/
+          verbose: true
 
       # EC2에 docker-compose.yml 업로드
       - name: Upload docker-compose.yml to EC2
