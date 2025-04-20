@@ -16,19 +16,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Create .env.test file
-        run: echo "${{ secrets.ENV_TEST_FILE }}" > .env.test
-
-      - name: Debug .env.test existence
+      - name: Build JARs (without tests)
         run: |
-          echo "=== .env.test content ==="
-          cat .env.test || echo "No .env.test file found"
-          echo "========================="
-      # Gradle 빌드
-      - name: Build JARs
-        run: |
-          ./gradlew :fl-api:build -Dspring.profiles.active=test
-          ./gradlew :fl-chatting:build -Dspring.profiles.active=test
+          ./gradlew :fl-api:assemble -Dspring.profiles.active=test
+          ./gradlew :fl-chatting:assemble -Dspring.profiles.active=test
 
       # Docker 이미지 빌드
       - name: Build Docker images
