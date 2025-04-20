@@ -19,11 +19,11 @@ jobs:
       - name: Create .env.test file
         run: echo "${{ secrets.ENV_TEST_FILE }}" > .env.test
 
-      - name: Debug .env.test existence
+      - name: Copy .env.test to subprojects
         run: |
-          echo "=== .env.test content ==="
-          cat .env.test || echo "No .env.test file found"
-          echo "========================="
+          cp .env.test fl-api/.env.test
+          cp .env.test fl-chatting/.env.test
+
       # Gradle 빌드
       - name: Build JARs
         run: |
