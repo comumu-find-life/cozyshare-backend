@@ -98,4 +98,5 @@ domain:
 
 firebase:
   project-id: ${FIREBASE_PROJECT_ID}
-  key-name: ${FIREBASE_KEY_NAME}
+    key-url: ${FIREBASE_KEY_URL}
+    key-name: ${FIREBASE_KEY_NAME}
