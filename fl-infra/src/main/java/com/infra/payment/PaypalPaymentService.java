@@ -1,23 +1,19 @@
-package com.core.domain.deal.service;
+package com.infra.payment;
 
-import com.core.domain.user.dto.PaymentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import org.springframework.http.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
-public class PaypalService {
+public class PaypalPaymentService implements PaymentService{
 
     @Value("${paypal.client-id}")
     private String clientId;
@@ -25,14 +21,19 @@ public class PaypalService {
     @Value("${paypal.client-secret}")
     private String clientSecret;
 
-    private static final String PAYPAL_API_URL = "https://api-m.paypal.com/v1/payments/payment/";
-    private static final String PAYPAL_ACCESS_TOKEN_URL = "https://api-m.paypal.com/v1/oauth2/token";
+    @Value("${paypal.paypal-api-url}")
+    private String paypalApiUrl;
 
-    public boolean verifyPayment(final PaymentRequest request) throws JsonProcessingException {
+    @Value("${paypal.paypal-access-token-url}")
+    private String paypalAccessTokenURL;
+
+
+    @Override
+    public boolean validatePayment(String paymentId, String payerId, String token, double amount) throws JsonProcessingException {
         String accessToken = getAccessToken();
-        String url = PAYPAL_API_URL + request.getPaymentId() + "/execute";
+        String url = paypalApiUrl + paymentId + "/execute";
         Map<String, String> paymentDetails = new HashMap<>();
-        paymentDetails.put("payer_id", request.getPayerId());
+        paymentDetails.put("payer_id", payerId);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + accessToken);
         HttpEntity<Map<String, String>> entity = new HttpEntity<>(paymentDetails, headers);
@@ -49,7 +50,7 @@ public class PaypalService {
         requestBody.add("grant_type", "client_credentials");
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(requestBody, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(PAYPAL_ACCESS_TOKEN_URL, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(paypalAccessTokenURL, HttpMethod.POST, entity, String.class);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> responseBody = mapper.readValue(response.getBody(), Map.class);
         return (String) responseBody.get("access_token");

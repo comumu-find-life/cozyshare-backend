@@ -24,7 +24,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -128,7 +127,7 @@ public class HomeControllerTest {
         Home saveHome1 = homeRepository.save(generateHome(user.getId()));
         Home saveHome2 = homeRepository.save(generateHome(user.getId()));
 
-        List<HomeOverviewResponse> resultHomes = List.of(homeMapper.toSimpleHomeDto(saveHome1, user), homeMapper.toSimpleHomeDto(saveHome2, user));
+        List<HomeOverviewResponse> resultHomes = List.of(homeMapper.toOverviewResponse(saveHome1, user), homeMapper.toOverviewResponse(saveHome2, user));
 
         mockMvc.perform(MockMvcRequestBuilders.get(HOMES_FIND_BY_USER_ID, user.getId())
                         .header(HttpHeaders.AUTHORIZATION, token))

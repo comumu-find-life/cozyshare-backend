@@ -38,6 +38,10 @@ public class Home extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private HomeStatus homeStatus;
 
+    public void addImages(List<HomeImage> images){
+        this.images.addAll(images);
+    }
+
     public String getMainImage(){
         return images.get(0).getImageUrl();
     }
@@ -52,9 +56,5 @@ public class Home extends BaseTimeEntity {
 
     public void setImages(List<HomeImage> images) {
         this.images = images;
-    }
-
-    public void addImages(List<HomeImage> images){
-        this.images.addAll(images);
     }
 }

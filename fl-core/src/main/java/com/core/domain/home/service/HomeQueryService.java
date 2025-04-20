@@ -30,7 +30,7 @@ public class HomeQueryService {
     private final HomeMapper homeMapper;
 
     public HomeInformationResponse findById(final Long id) {
-        return OptionalUtil.getOrElseThrow(homeRepository.findHomeAndUserById(id),NOT_EXIST_HOME_ID);
+        return OptionalUtil.getOrElseThrow(homeRepository.findHomeInformationById(id),NOT_EXIST_HOME_ID);
     }
 
     /**
@@ -50,7 +50,7 @@ public class HomeQueryService {
         User user = OptionalUtil.getOrElseThrow(userRepository.findById(userId), NOT_EXIST_USER_ID);
         List<Home> homes = homeRepository.findByUserId(userId);
         homes.forEach(home -> {
-            response.add(homeMapper.toSimpleHomeDto(home, user));
+            response.add(homeMapper.toOverviewResponse(home, user));
         });
         return response;
     }
@@ -71,7 +71,7 @@ public class HomeQueryService {
                 .map(home -> {
                     User user = userRepository.findById(home.getUserId())
                             .orElseThrow(() -> new EntityNotFoundException(NOT_EXIST_USER_ID + home.getUserId()));
-                    return homeMapper.toSimpleHomeDto(home, user);
+                    return homeMapper.toOverviewResponse(home, user);
                 })
                 .collect(Collectors.toList());
     }

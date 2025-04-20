@@ -1,10 +1,10 @@
 package com.api.v1.point;
 
 import com.core.domain.user.dto.PaymentRequest;
+import com.infra.payment.PaymentService;
 import com.infra.utils.SuccessResponse;
 import com.infra.exception.custom.InsufficientPointsException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.core.domain.deal.service.PaypalService;
 import com.core.domain.deal.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +21,12 @@ import static com.api.v1.constants.ResponseMessage.*;
 @RequiredArgsConstructor
 public class PointController {
 
-    private final PaypalService paypalService;
+    private final PaymentService paymentService;
     private final PointService pointService;
 
     @PostMapping(CHARGE_POINT_BY_PAYPAL)
     public ResponseEntity<?> paymentSuccess(@RequestBody final  PaymentRequest request) throws JsonProcessingException {
-        boolean isPayment = paypalService.verifyPayment(request);
-        System.out.println(isPayment);
+        boolean isPayment = paymentService.validatePayment(request.getPaymentId(), request.getPayerId(), request.getToken(), request.getAmount());
         if(isPayment){
             String email = getLoginEmailBySecurityContext();
             pointService.chargePoint(email, request.getAmount());
