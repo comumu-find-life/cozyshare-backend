@@ -93,6 +93,7 @@ paypal:
 
 firebase:
   project-id: ${FIREBASE_PROJECT_ID}
+  key-url: ${FIREBASE_KEY_URL}
   key-name: ${FIREBASE_KEY_NAME}
 
 jwt:
