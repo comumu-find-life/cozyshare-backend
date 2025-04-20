@@ -26,32 +26,8 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       # 4. .env 파일 생성
-      - name: Create .env file from GitHub secret
-        run: |
-          echo "FL_DB_URL=${{ secrets.FL_RDS_DB_URL }}" >> .env
-          echo "FL_DB_USER_NAME=${{ secrets.FL_DB_USER_NAME }}" >> .env
-          echo "FL_DB_PASSWROD=${{ secrets.FL_DB_PASSWROD }}" >> .env
-          echo "FL_CHAT_DB_USER_NAME=${{ secrets.FL_CHAT_DB_USER_NAME }}" >> .env
-          echo "FL_CHAT_DOMAIN_BASE_URL=${{ secrets.FL_CHAT_DOMAIN_BASE_URL }}" >> .env
-          echo "FL_CHAT_DB_URL=${{ secrets.FL_CHAT_DB_URL }}" >> .env
-          echo "FL_MAP_API_KEY=${{ secrets.FL_MAP_API_KEY }}" >> .env
-          echo "AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}" >> .env
-          echo "ANDROID_OAUTH_CLIENT_KEY=${{ secrets.ANDROID_OAUTH_CLIENT_KEY }}" >> .env
-          echo "IOS_OAUTH_CLIENT_KEY=${{ secrets.IOS_OAUTH_CLIENT_KEY }}" >> .env
-          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> .env
-          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> .env
-          echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> .env
-          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
-          echo "FL_DOMAIN_BASE=${{ secrets.FL_DOMAIN_BASE }}" >> .env
-          echo "FL_CHAT_DIRECT_MESSAGE=${{ secrets.FL_CHAT_DIRECT_MESSAGE }}" >> .env
-          echo "FL_CHAT_PUBLISH=${{ secrets.FL_CHAT_PUBLISH }}" >> .env
-          echo "FL_CHAT_SUBSCRIBE=${{ secrets.FL_CHAT_SUBSCRIBE }}" >> .env
-          echo "ADMIN_TOKEN=${{ secrets.ADMIN_TOKEN }}" >> .env
-          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
-          echo "MAIL_USER_NAME=${{ secrets.MAIL_USER_NAME }}" >> .env
-          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
-          echo "FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}" >> .env
-          echo "FIREBASE_KEY_NAME=${{ secrets.FIREBASE_KEY_NAME }}" >> .env
+      - name: Create .env from secret
+        run: echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Upload .env to EC2
         uses: appleboy/scp-action@master
