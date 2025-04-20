@@ -53,6 +53,7 @@ jobs:
           source: .env
           target: /home/ubuntu/
       # firebase-key.json 복호화용 Step
+      # firebase-key.json 복호화 및 권한 설정
       - name: SSH to EC2 and decode Firebase key
         uses: appleboy/ssh-action@master
         with:
@@ -65,6 +66,9 @@ jobs:
             # .env에서 FIREBASE_KEY_BASE64 읽어서 복호화
             export $(grep FIREBASE_KEY_BASE64 .env | xargs)
             echo "$FIREBASE_KEY_BASE64" | base64 -d > ./firebase-key.json
+
+            # firebase-key.json 파일 권한 설정 (읽기 권한 부여)
+            sudo chmod 644 /home/ubuntu/firebase-key.json
 
             echo "[✔] firebase-key.json 복호화 및 생성 완료"
       # EC2에 docker-compose.yml 업로드
