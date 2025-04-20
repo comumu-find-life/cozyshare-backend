@@ -26,6 +26,19 @@ jar {
     }
 }
 
+tasks.withType(Test).configureEach {
+    def envFile = rootProject.file(".env.test")
+    if (envFile.exists()) {
+        envFile.readLines().each { line ->
+            if (line && !line.startsWith("#") && line.contains("=")) {
+                def (key, value) = line.split("=", 2)
+                environment key.trim(), value.trim()
+            }
+        }
+    }
+    useJUnitPlatform()
+}
+
 version 'unspecified'
 
 repositories {
