@@ -52,7 +52,21 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           source: .env
           target: /home/ubuntu/
+      # firebase-key.json 복호화용 Step
+      - name: SSH to EC2 and decode Firebase key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu
 
+            # .env에서 FIREBASE_KEY_BASE64 읽어서 복호화
+            export $(grep FIREBASE_KEY_BASE64 .env | xargs)
+            echo "$FIREBASE_KEY_BASE64" | base64 -d > ./firebase-key.json
+
+            echo "[✔] firebase-key.json 복호화 및 생성 완료"
       # EC2에 docker-compose.yml 업로드
       - name: Upload docker-compose.yml to EC2
         uses: appleboy/scp-action@master
@@ -105,90 +119,3 @@ jobs:
 
             # docker-compose 재시작
             sudo docker-compose up -d
-
-
-#name: Deploy to EC2
-#
-#on:
-#  push:
-#    branches:
-#      - fl-master
-#
-#jobs:
-#  deploy:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      # 1. 코드 체크아웃
-#      - name: Checkout code
-#        uses: actions/checkout@v3
-#
-#      # 2. Docker 빌드 설정
-#      - name: Set up Docker
-#        uses: docker/setup-buildx-action@v2
-#
-#      # 3. Docker Hub 로그인
-#      - name: Log in to Docker Hub
-#        uses: docker/login-action@v2
-#        with:
-#          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-#          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-#
-#      # 4. .env 파일 생성
-#      - name: Create .env from secret
-#        run: echo "${{ secrets.ENV_FILE }}" > .env
-#
-#      - name: Upload .env to EC2
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.EC2_PUBLIC_IP }}
-#          username: ubuntu
-#          port: 22
-#          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-#          source: ./.env
-#          target: /home/ubuntu/
-#          debug: true
-#          protocol: tcp
-#          timeout: 30s
-#          command_timeout: 10m
-#          tar_exec: tar
-#          proxy_port: 22
-#          proxy_timeout: 30s
-#
-#      - name: Upload docker-compose.yml to EC2
-#        uses: appleboy/scp-action@master
-#        with:
-#          host: ${{ secrets.EC2_PUBLIC_IP }}
-#          username: ubuntu
-#          port: 22
-#          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-#          source: ./docker-compose.yml
-#          target: /home/ubuntu/
-#          debug: true
-#          protocol: tcp
-#          timeout: 30s
-#          command_timeout: 10m
-#          tar_exec: tar
-#          proxy_port: 22
-#          proxy_timeout: 30s
-#
-#      - name: SSH to EC2 and deploy using docker-compose
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.EC2_PUBLIC_IP }}
-#          username: ubuntu
-#          port: 22
-#          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-#          script: |
-#            # EC2에서 실행 중인 Docker 컨테이너 내리기
-#            sudo docker-compose down
-#            sudo docker stop $(sudo docker ps -aq)  # 모든 실행 중인 컨테이너 중지
-#
-#            # Redis 서버 중지 (Redis가 Docker 외부에서 실행 중이라면)
-#            sudo systemctl stop redis
-#
-#
-#            cd /home/ubuntu/
-#            sudo docker-compose down
-#            sudo docker-compose pull
-#            sudo docker-compose up -d
