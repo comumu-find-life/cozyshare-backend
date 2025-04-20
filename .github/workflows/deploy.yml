@@ -19,8 +19,8 @@ jobs:
       # Gradle 빌드
       - name: Build JARs
         run: |
-          ./gradlew :fl-api:build
-          ./gradlew :fl-chatting:build
+          ./gradlew :fl-api:build -Dspring.profiles.active=test
+          ./gradlew :fl-chatting:build -Dspring.profiles.active=test
 
       # Docker 이미지 빌드
       - name: Build Docker images
