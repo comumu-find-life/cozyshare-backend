@@ -16,6 +16,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Create .env.test file
+        run: echo "${{ secrets.ENV_TEST_FILE }}" > .env.test
+
       # Gradle 빌드
       - name: Build JARs
         run: |
