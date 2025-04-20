@@ -1,13 +1,14 @@
 package com.api.v1.point;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.deal.service.PaypalService;
+import com.core.domain.deal.service.PointService;
 import com.core.domain.user.model.User;
 import com.core.domain.user.model.UserAccount;
 import com.core.domain.user.repository.UserAccountRepository;
 import com.core.domain.user.repository.UserRepository;
 import com.core.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.infra.payment.PaymentService;
 import com.infra.utils.SuccessResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +51,7 @@ class PointControllerTest {
     @Autowired private ObjectMapper objectMapper;
 
     @MockBean private JwtService jwtService;
-    @MockBean private PaypalService paypalService;
+    @MockBean private PaymentService paymentService;
     @MockBean private UserService userService;
     @MockBean private SecurityFilterChain securityFilterChain;
 
@@ -82,7 +83,7 @@ class PointControllerTest {
         // Given
         User user = createUserWithAccount(1L, 0);
         setUpSecurityContext(user);
-        when(paypalService.verifyPayment(any())).thenReturn(true);
+        when(paymentService.validatePayment(any(), any(), any(), anyDouble())).thenReturn(true);
 
         // When
         mockMvc.perform(post(CHARGE_POINT_BY_PAYPAL)
@@ -105,7 +106,7 @@ class PointControllerTest {
         // Given
         User user = createUserWithAccount(1L, 1000);
         setUpSecurityContext(user);
-        when(paypalService.verifyPayment(any())).thenReturn(true);
+        when(paymentService.validatePayment(any(), any(), any(), anyDouble())).thenReturn(true);
 
         // When
         mockMvc.perform(post(APPLY_WITH_DRAW_URL)

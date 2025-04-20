@@ -39,7 +39,6 @@ public class CustomHomeRepositoryImplTest {
         User user = userRepository.save(generateUser(1L));
         Home home = homeRepository.save(generateHome(user.getId()));
 
-
         //when
         Optional<HomeInformationResponse> homeAndUserById = homeRepository.findHomeInformationById(home.getId());
 
