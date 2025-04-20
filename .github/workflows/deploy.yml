@@ -60,8 +60,9 @@ jobs:
           host: ${{ secrets.EC2_PUBLIC_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          envs: FIREBASE_KEY_BASE64  # 🔥 여기 추가!
           script: |
+            FIREBASE_KEY_BASE64="${{ secrets.FIREBASE_KEY_BASE64 }}"
+
             echo "[i] Firebase Key 길이: ${#FIREBASE_KEY_BASE64}"
 
             if [ -z "$FIREBASE_KEY_BASE64" ]; then
