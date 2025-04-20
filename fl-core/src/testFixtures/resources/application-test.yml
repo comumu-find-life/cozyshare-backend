@@ -9,47 +9,26 @@ spring:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
-  servlet:
-    multipart:
-      max-file-size: 1000MB
-      max-request-size: 1000MB
-
-  logging:
-    level:
-      root: error
-      com.api.exception: error
-      me.selvernine: ERROR
-      com.google.firebase: ERROR
-      com.google.api: ERROR
-      org.hibernate: error
   data:
-    elasticsearch:
-      repositories:
-        enabled: true
-      uris: http://localhost:9200
-      username: elastic   # (보안 설정된 경우)
-      password: sin981023@
     mongodb:
-      uri: ${FL_CHAT_DB_URL}
-      database: ${FL_CHAT_DB_USER_NAME}
+      uri: mongodb://localhost:27017
+      database: local
+
   datasource:
-    initialization-mode: never
+    initialization-mode: create
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${FL_DB_URL}
-    username: ${FL_DB_USER_NAME}
-    password: ${FL_DB_PASSWROD}
+    url: jdbc:mysql://localhost:3306/fl_test?serverTimezone=Asia/Seoul
+    username: root
+    password: sin981023@
   redis:
-    host: ${REDIS_HOST}
+    host: localhost
     port: 6379
 
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${MAIL_USER_NAME}
-    password: ${MAIL_PASSWORD}
+    username: simmim1768@gmail.com
+    password: vectgfslbunvlhoz
 
     properties:
       mail:
@@ -74,6 +53,9 @@ aws:
     bucket:
       name: cozyshare-s3-bucket
 
+server:
+  port: 8082
+
 admin:
   token: ${ADMIN_TOKEN}
 
@@ -89,11 +71,7 @@ paypal:
   client-secret: ${PAYPAL_CLIENT_SECRET}
   paypal-api-url: ${PAYPAL_API_URL}
   paypal-access-token-url: ${PAYPAL_ACCESS_TOKEN_URL}
-  mode : ${PAYPAL_MODE}
-
-firebase:
-  project-id: ${FIREBASE_PROJECT_ID}
-  key-name: ${FIREBASE_KEY_NAME}
+  mode: ${PAYPAL_MODE}
 
 jwt:
   secretKey: ${JWT_KEY}
@@ -109,3 +87,15 @@ thread:
     core-pool-size: 4
     queue-capacity: 50
     max-pool-size: 8
+
+
+domain:
+#  base: ${FL_CHAT_DOMAIN_BASE_URL}
+  chat:
+    directMessage: /dm
+    publish: /pub
+    subscribe: /sub
+
+firebase:
+  project-id: ${FIREBASE_PROJECT_ID}
+  key-name: ${FIREBASE_KEY_NAME}

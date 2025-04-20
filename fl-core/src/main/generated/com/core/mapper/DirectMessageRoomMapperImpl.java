@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-18T03:44:33+0900",
-    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
+    date = "2025-04-20T17:02:29+0900",
+    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
 public class DirectMessageRoomMapperImpl implements DirectMessageRoomMapper {

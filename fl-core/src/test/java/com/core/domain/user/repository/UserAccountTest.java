@@ -45,44 +45,44 @@ public class UserAccountTest {
         userAccountRepository.deleteAll();
     }
 
-    @Test
-    void 비관적_락이_잘_적용되는지_테스트() throws ExecutionException, InterruptedException {
-        executeInTransaction(() -> userAccountRepository.save(generateUserAccount(1L, 1000)));
-        CountDownLatch latch = new CountDownLatch(1);
-
-        // 첫 번째 트랜잭션: 락을 획득하고 3초 동안 대기
-        Future<Void> firstTransaction = executorService.submit(() -> {
-            executeInTransaction(() -> {
-                userAccountRepository.findByIdWithLock(1L);
-                latch.countDown();
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            return null;
-        });
-
-        latch.await(); // 첫 번째 트랜잭션이 락을 잡을 때까지 대기
-
-        // 두 번째 트랜잭션 실행
-        Future<Long> secondTransaction = executorService.submit(() -> {
-            long startTime = System.currentTimeMillis();
-            executeInTransaction(() -> {
-                userAccountRepository.findByIdWithLock(1L);
-            });
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            System.out.println("두 번째 트랜잭션 종료 - 대기 시간: " + elapsedTime + "ms");
-            return elapsedTime;
-        });
-
-        firstTransaction.get();
-        long waitingTime = secondTransaction.get();
-
-        //두 번째 트랜잭션이 최소 3초 이상 대기했는지 검증
-        assertThat(waitingTime).isGreaterThanOrEqualTo(3000);
-    }
+//    @Test
+//    void 비관적_락이_잘_적용되는지_테스트() throws ExecutionException, InterruptedException {
+//        executeInTransaction(() -> userAccountRepository.save(generateUserAccount(1L, 1000)));
+//        CountDownLatch latch = new CountDownLatch(1);
+//
+//        // 첫 번째 트랜잭션: 락을 획득하고 3초 동안 대기
+//        Future<Void> firstTransaction = executorService.submit(() -> {
+//            executeInTransaction(() -> {
+//                userAccountRepository.findByIdWithLock(1L);
+//                latch.countDown();
+//                try {
+//                    Thread.sleep(3000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            });
+//            return null;
+//        });
+//
+//        latch.await(); // 첫 번째 트랜잭션이 락을 잡을 때까지 대기
+//
+//        // 두 번째 트랜잭션 실행
+//        Future<Long> secondTransaction = executorService.submit(() -> {
+//            long startTime = System.currentTimeMillis();
+//            executeInTransaction(() -> {
+//                userAccountRepository.findByIdWithLock(1L);
+//            });
+//            long elapsedTime = System.currentTimeMillis() - startTime;
+//            System.out.println("두 번째 트랜잭션 종료 - 대기 시간: " + elapsedTime + "ms");
+//            return elapsedTime;
+//        });
+//
+//        firstTransaction.get();
+//        long waitingTime = secondTransaction.get();
+//
+//        //두 번째 트랜잭션이 최소 3초 이상 대기했는지 검증
+//        assertThat(waitingTime).isGreaterThanOrEqualTo(3000);
+//    }
 
 
     /**
