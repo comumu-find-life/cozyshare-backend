@@ -74,6 +74,8 @@ services:
       - "8080:8080"
     env_file:
       - /home/ubuntu/.env
+    volumes:
+      - /home/ubuntu/firebase-key.json:/app/firebase-key.json
     environment:
       - TZ=Australia/Sydney
       - REDIS_HOST=redis-master  # Redis Master 사용
@@ -105,6 +107,8 @@ services:
       - redis-master
     networks:
       - app-network
+    volumes:
+      - /home/ubuntu/firebase-key.json:/app/firebase-key.json
     logging:
       driver: awslogs
       options:
