@@ -31,7 +31,10 @@ jobs:
         run: |
           docker save minseok2000/cozy-api -o cozy-api.tar
           docker save minseok2000/cozy-chatting -o cozy-chatting.tar
-
+      - name: Fix permissions of tar files
+        run: |
+          chmod 644 cozy-api.tar
+          chmod 644 cozy-chatting.tar
       # 디버깅: 파일 목록 확인
       - name: List files in the working directory
         run: ls -alh
