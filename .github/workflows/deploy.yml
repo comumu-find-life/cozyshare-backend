@@ -60,17 +60,21 @@ jobs:
           host: ${{ secrets.EC2_PUBLIC_IP }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          envs: FIREBASE_KEY_BASE64  # 🔥 여기 추가!
           script: |
-            cd /home/ubuntu
+            echo "[i] Firebase Key 길이: ${#FIREBASE_KEY_BASE64}"
 
-            # .env에서 FIREBASE_KEY_BASE64 읽어서 복호화
-            export $(grep FIREBASE_KEY_BASE64 .env | xargs)
-            echo "$FIREBASE_KEY_BASE64" | base64 -d > ./firebase-key.json
+            if [ -z "$FIREBASE_KEY_BASE64" ]; then
+              echo "[!] FIREBASE_KEY_BASE64 값이 비어 있음"; exit 1
+            fi
 
-            # firebase-key.json 파일 권한 설정 (읽기 권한 부여)
+            echo "$FIREBASE_KEY_BASE64" | base64 -d > /home/ubuntu/firebase-key.json || {
+              echo "[!] base64 디코딩 실패"; exit 1
+            }
+
             sudo chmod 644 /home/ubuntu/firebase-key.json
-
             echo "[✔] firebase-key.json 복호화 및 생성 완료"
+
       # EC2에 docker-compose.yml 업로드
       - name: Upload docker-compose.yml to EC2
         uses: appleboy/scp-action@master
