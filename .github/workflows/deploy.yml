@@ -45,7 +45,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           source: .env
           target: /home/ubuntu/
-          verbose: true
 
       # EC2에 docker-compose.yml 업로드
       - name: Upload docker-compose.yml to EC2
@@ -66,6 +65,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
           source: "cozy-api.tar cozy-chatting.tar"
           target: /home/ubuntu/
+          verbose: true
 
       # EC2에 SSH 접속 후 배포
       - name: SSH to EC2 and deploy
