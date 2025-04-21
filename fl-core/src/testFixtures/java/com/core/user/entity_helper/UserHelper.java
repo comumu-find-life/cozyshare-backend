@@ -1,8 +1,8 @@
 package com.core.user.entity_helper;
 
-import com.core.domain.user.model.SignupType;
-import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
+import com.core.user.model.SignupType;
+import com.core.user.model.User;
+import com.core.user.model.UserAccount;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
 package com.api.auth.service;
 
 import com.infra.utils.OptionalUtil;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

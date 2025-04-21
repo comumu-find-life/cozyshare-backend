@@ -1,6 +1,6 @@
 package com.api.v1.admin;
 
-import com.core.domain.user.service.UserPaymentService;
+import com.core.user.service.UserPaymentService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

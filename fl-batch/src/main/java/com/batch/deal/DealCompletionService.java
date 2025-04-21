@@ -1,14 +1,14 @@
 package com.batch.deal;
 
-import com.core.domain.deal.model.DealState;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.home.model.Home;
-import com.core.domain.home.model.HomeStatus;
-import com.core.domain.home.repository.HomeRepository;
-import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
-import com.core.domain.user.repository.UserAccountRepository;
-import com.core.domain.user.repository.UserRepository;
+import com.core.deal.model.DealState;
+import com.core.deal.model.ProtectedDeal;
+import com.core.home.model.Home;
+import com.core.home.model.HomeStatus;
+import com.core.home.repository.HomeRepository;
+import com.core.user.model.User;
+import com.core.user.model.UserAccount;
+import com.core.user.repository.UserAccountRepository;
+import com.core.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

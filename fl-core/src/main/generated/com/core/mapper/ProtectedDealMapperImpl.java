@@ -1,16 +1,16 @@
 package com.core.mapper;
 
-import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
-import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
-import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.home.model.Home;
+import com.core.deal.dto.ProtectedDealGeneratorRequest;
+import com.core.deal.dto.ProtectedDealGeneratorResponse;
+import com.core.deal.dto.ProtectedDealResponse;
+import com.core.deal.model.ProtectedDeal;
+import com.core.home.model.Home;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T21:16:39+0900",
+    date = "2025-04-22T03:53:18+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -30,7 +30,7 @@ public class ProtectedDealMapperImpl implements ProtectedDealMapper {
         protectedDeal.providerId( request.getProviderId() );
         protectedDeal.deposit( request.getDeposit() );
 
-        protectedDeal.dealState( com.core.domain.deal.model.DealState.REQUEST_DEAL );
+        protectedDeal.dealState( com.core.deal.model.DealState.REQUEST_DEAL );
         protectedDeal.protectedDealDateTime( createProtectedDealDateTime(request.getDealAt()) );
 
         return protectedDeal.build();

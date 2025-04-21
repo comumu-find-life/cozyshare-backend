@@ -1,17 +1,16 @@
 package com.api.v1.deal;
 
-import com.core.domain.deal.dto.ProtectedDealFindRequest;
-import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
-import com.core.domain.deal.dto.ProtectedDealGeneratorResponse;
-import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.core.domain.user.dto.UserInformationResponse;
-import com.core.domain.user.service.UserService;
+import com.core.deal.dto.ProtectedDealFindRequest;
+import com.core.deal.dto.ProtectedDealGeneratorRequest;
+import com.core.deal.dto.ProtectedDealGeneratorResponse;
+import com.core.deal.dto.ProtectedDealResponse;
+import com.core.user.dto.UserInformationResponse;
+import com.core.user.service.UserService;
 import com.infra.utils.SuccessResponse;
-import com.core.domain.deal.service.ProtectedDealService;
+import com.core.deal.service.ProtectedDealService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

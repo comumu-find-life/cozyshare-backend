@@ -1,11 +1,11 @@
 package com.api.v1.point;
 
-import com.core.domain.user.dto.PaymentRequest;
+import com.core.user.dto.PaymentRequest;
 import com.infra.payment.PaymentService;
 import com.infra.utils.SuccessResponse;
 import com.infra.exception.custom.InsufficientPointsException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.core.domain.deal.service.PointService;
+import com.core.deal.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.core.home.entity_helper;
 
-import com.core.domain.home.model.*;
-import com.core.domain.user.model.Gender;
+import com.core.user.model.Gender;
+import com.core.home.model.*;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,14 @@
 package com.core.mapper;
 
-import com.core.domain.chat.dto.DirectMessageRequest;
-import com.core.domain.chat.dto.DirectMessageResponse;
-import com.core.domain.chat.model.DirectMessage;
+import com.core.chat.dto.DirectMessageRequest;
+import com.core.chat.dto.DirectMessageResponse;
+import com.core.chat.model.DirectMessage;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T21:16:40+0900",
+    date = "2025-04-22T03:53:18+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component

@@ -1,23 +1,24 @@
 package com.core.mapper;
 
-import com.core.domain.home.dto.HomeAddressGeneratorRequest;
-import com.core.domain.home.dto.HomeGeneratorRequest;
-import com.core.domain.home.dto.HomeInformationResponse;
-import com.core.domain.home.dto.HomeOverviewResponse;
-import com.core.domain.home.dto.HomeUpdateRequest;
-import com.core.domain.home.model.Home;
-import com.core.domain.home.model.HomeAddress;
-import com.core.domain.home.model.HomeImage;
-import com.core.domain.home.model.HomeInfo;
-import com.core.domain.home.model.HomeType;
-import com.core.domain.user.model.Gender;
-import com.core.domain.user.model.User;
+import com.core.home.dto.HomeAddressGeneratorRequest;
+import com.core.home.dto.HomeGeneratorRequest;
+import com.core.home.dto.HomeInformationResponse;
+import com.core.home.dto.HomeOverviewResponse;
+import com.core.home.dto.HomeUpdateRequest;
+import com.core.home.model.Home;
+import com.core.home.model.HomeAddress;
+import com.core.home.model.HomeDocument;
+import com.core.home.model.HomeImage;
+import com.core.home.model.HomeInfo;
+import com.core.home.model.HomeType;
+import com.core.user.model.Gender;
+import com.core.user.model.User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T21:16:39+0900",
+    date = "2025-04-22T03:53:17+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -36,7 +37,7 @@ public class HomeMapperImpl implements HomeMapper {
             home.homeAddress( toAddressEntity( homeDto.getHomeAddress() ) );
         }
         home.userId( userId );
-        home.homeStatus( com.core.domain.home.model.HomeStatus.FOR_SALE );
+        home.homeStatus( com.core.home.model.HomeStatus.FOR_SALE );
 
         return home.build();
     }
@@ -184,6 +185,41 @@ public class HomeMapperImpl implements HomeMapper {
         }
 
         return homeOverviewResponse.build();
+    }
+
+    @Override
+    public HomeDocument homeToHomeDocument(Home home, User user) {
+        if ( home == null && user == null ) {
+            return null;
+        }
+
+        HomeDocument.HomeDocumentBuilder homeDocument = HomeDocument.builder();
+
+        if ( home != null ) {
+            homeDocument.id( home.getId() );
+            homeDocument.address( mapSimpleAddress( home.getHomeAddress() ) );
+            homeDocument.latitude( homeHomeAddressLatitude( home ) );
+            homeDocument.longitude( homeHomeAddressLongitude( home ) );
+            homeDocument.mainImage( mapMainImage( home.getImages() ) );
+            homeDocument.rent( homeHomeInfoRent( home ) );
+            homeDocument.bond( homeHomeInfoBond( home ) );
+            homeDocument.bill( homeHomeInfoBill( home ) );
+            homeDocument.bedroomCount( homeHomeInfoBedroomCount( home ) );
+            homeDocument.bathRoomCount( homeHomeInfoBathRoomCount( home ) );
+            HomeType type = homeHomeInfoType( home );
+            if ( type != null ) {
+                homeDocument.type( type.name() );
+            }
+            if ( home.getHomeStatus() != null ) {
+                homeDocument.homeStatus( home.getHomeStatus().name() );
+            }
+        }
+        if ( user != null ) {
+            homeDocument.userId( user.getId() );
+            homeDocument.userName( user.getNickname() );
+        }
+
+        return homeDocument.build();
     }
 
     private double homeHomeAddressLatitude(Home home) {

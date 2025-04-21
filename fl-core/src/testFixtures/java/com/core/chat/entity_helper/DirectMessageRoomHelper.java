@@ -1,7 +1,7 @@
 package com.core.chat.entity_helper;
 
-import com.core.domain.chat.model.DirectMessageRoom;
-import com.core.domain.user.model.User;
+import com.core.chat.model.DirectMessageRoom;
+import com.core.user.model.User;
 
 public class DirectMessageRoomHelper {
     public static DirectMessageRoom generateDirectMessageRoom(User user1, User user2){

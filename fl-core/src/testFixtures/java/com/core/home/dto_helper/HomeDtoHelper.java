@@ -1,10 +1,10 @@
 package com.core.home.dto_helper;
 
-import com.core.domain.home.dto.HomeAddressGeneratorRequest;
-import com.core.domain.home.dto.HomeGeneratorRequest;
-import com.core.domain.home.dto.HomeUpdateRequest;
-import com.core.domain.home.model.HomeType;
-import com.core.domain.user.model.Gender;
+import com.core.home.dto.HomeAddressGeneratorRequest;
+import com.core.home.dto.HomeGeneratorRequest;
+import com.core.home.dto.HomeUpdateRequest;
+import com.core.home.model.HomeType;
+import com.core.user.model.Gender;
 
 public class HomeDtoHelper {
 

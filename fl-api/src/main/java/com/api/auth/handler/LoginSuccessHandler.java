@@ -1,8 +1,8 @@
 package com.api.auth.handler;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,14 +1,14 @@
 package com.core.mapper;
 
-import com.core.domain.chat.dto.DirectMessageRoomInfoResponse;
-import com.core.domain.chat.dto.DirectMessageRoomListResponse;
-import com.core.domain.chat.dto.DirectMessageTotalResponse;
-import com.core.domain.chat.model.DirectMessageRoom;
-import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.core.domain.home.dto.HomeInformationResponse;
-import com.core.domain.user.dto.UserProfileResponse;
-import com.core.domain.user.model.User;
-import com.core.domain.chat.model.DirectMessage;
+import com.core.chat.dto.DirectMessageRoomInfoResponse;
+import com.core.chat.dto.DirectMessageRoomListResponse;
+import com.core.chat.dto.DirectMessageTotalResponse;
+import com.core.chat.model.DirectMessageRoom;
+import com.core.deal.dto.ProtectedDealResponse;
+import com.core.home.dto.HomeInformationResponse;
+import com.core.user.dto.UserProfileResponse;
+import com.core.user.model.User;
+import com.core.chat.model.DirectMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

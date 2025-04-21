@@ -1,8 +1,8 @@
 package com.core.mapper;
 
-import com.core.domain.chat.dto.DirectMessageRequest;
-import com.core.domain.chat.dto.DirectMessageResponse;
-import com.core.domain.chat.model.DirectMessage;
+import com.core.chat.dto.DirectMessageRequest;
+import com.core.chat.dto.DirectMessageResponse;
+import com.core.chat.model.DirectMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

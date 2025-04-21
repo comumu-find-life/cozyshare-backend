@@ -1,20 +1,20 @@
 package com.core.mapper;
 
-import com.core.domain.user.dto.UserAccountRequest;
-import com.core.domain.user.dto.UserAccountResponse;
-import com.core.domain.user.dto.UserInformationByAdminResponse;
-import com.core.domain.user.dto.UserInformationResponse;
-import com.core.domain.user.dto.UserProfileResponse;
-import com.core.domain.user.dto.UserProfileUpdateRequest;
-import com.core.domain.user.dto.UserSignupRequest;
-import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
+import com.core.user.dto.UserAccountRequest;
+import com.core.user.dto.UserAccountResponse;
+import com.core.user.dto.UserInformationByAdminResponse;
+import com.core.user.dto.UserInformationResponse;
+import com.core.user.dto.UserProfileResponse;
+import com.core.user.dto.UserProfileUpdateRequest;
+import com.core.user.dto.UserSignupRequest;
+import com.core.user.model.User;
+import com.core.user.model.UserAccount;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-20T21:16:39+0900",
+    date = "2025-04-22T03:53:17+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -38,7 +38,7 @@ public class UserMapperImpl implements UserMapper {
         user.nationality( dto.getNationality() );
         user.introduce( dto.getIntroduce() );
 
-        user.userState( com.core.domain.user.model.UserState.ACTIVE );
+        user.userState( com.core.user.model.UserState.ACTIVE );
 
         return user.build();
     }

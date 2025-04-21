@@ -1,7 +1,7 @@
 package com.core.chat.entity_helper;
 
-import com.core.domain.chat.model.DirectMessage;
-import com.core.domain.deal.model.DealState;
+import com.core.chat.model.DirectMessage;
+import com.core.deal.model.DealState;
 
 import java.time.LocalDateTime;
 

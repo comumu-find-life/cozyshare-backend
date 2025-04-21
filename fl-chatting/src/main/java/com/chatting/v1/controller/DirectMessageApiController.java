@@ -2,10 +2,10 @@ package com.chatting.v1.controller;
 
 import com.chatting.v1.constants.SuccessDirectMessages;
 import com.chatting.v1.service.DirectMessageService;
-import com.core.domain.chat.dto.*;
+import com.core.chat.dto.*;
 import com.infra.file.FileService;
 import com.infra.utils.SuccessResponse;
-import com.core.domain.chat.model.DirectMessage;
+import com.core.chat.model.DirectMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

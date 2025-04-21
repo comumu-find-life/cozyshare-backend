@@ -5,14 +5,16 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @AutoConfiguration
 @Configuration
-@EnableMongoRepositories(basePackages = {"com.core.domain"})
-@EntityScan(basePackages = "com.core.domain")
-@EnableJpaRepositories(basePackages = "com.core.domain")
+@EnableMongoRepositories(basePackages = {"com.core"})
+@EntityScan(basePackages = "com.core")
+@EnableJpaRepositories(basePackages = "com.core")
 @ComponentScan(basePackages = "com.core")
+@EnableElasticsearchRepositories(basePackages = "com.core")
 public class CoreAutoConfiguration {
 }

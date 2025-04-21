@@ -1,12 +1,9 @@
 package com.core.mapper;
 
-import com.core.domain.user.dto.UserAccountRequest;
-import com.core.domain.user.dto.UserProfileUpdateRequest;
-import com.core.domain.user.dto.UserSignupRequest;
-import com.core.domain.user.dto.*;
-import com.core.domain.user.model.PointHistory;
-import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
+import com.core.user.dto.*;
+import com.core.user.model.PointHistory;
+import com.core.user.model.User;
+import com.core.user.model.UserAccount;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -26,7 +23,7 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "profileUrl", ignore = true)
-    @Mapping(target = "userState", expression = "java(com.core.domain.user.model.UserState.ACTIVE)")
+    @Mapping(target = "userState", expression = "java(com.core.user.model.UserState.ACTIVE)")
     User toEntity(UserSignupRequest dto);
 
     UserInformationResponse toDto(User user);
