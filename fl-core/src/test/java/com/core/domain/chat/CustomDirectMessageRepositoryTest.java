@@ -1,8 +1,8 @@
 package com.core.domain.chat;
 
-import com.core.domain.chat.model.DirectMessage;
-import com.core.domain.chat.repository.DirectMessageRepository;
-import com.core.domain.chat.repository.impl.DirectMessageRepositoryImpl;
+import com.core.chat.model.DirectMessage;
+import com.core.chat.repository.DirectMessageRepository;
+import com.core.chat.repository.impl.DirectMessageRepositoryImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

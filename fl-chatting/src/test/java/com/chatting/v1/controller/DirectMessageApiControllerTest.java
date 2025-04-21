@@ -1,12 +1,10 @@
 package com.chatting.v1.controller;
 
 import com.chatting.v1.config.ChattingTestApplication;
-import com.core.domain.chat.model.DirectMessageRoom;
-import com.core.domain.chat.repository.DirectMessageRepository;
-import com.core.domain.chat.repository.DirectMessageRoomRepository;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.core.chat.repository.DirectMessageRepository;
+import com.core.chat.repository.DirectMessageRoomRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +23,6 @@ import java.time.LocalDateTime;
 import static com.chatting.v1.constants.ApiUrlConstants.*;
 import static com.core.chat.entity_helper.DirectMessageHelper.generateDirectMessage;
 import static com.core.chat.dto_helper.DirectMessageDtoHelper.generateDirectMessageApplicationRequest;
-import static com.core.chat.dto_helper.DirectMessageDtoHelper.generateDirectMessageReadRequest;
 import static com.core.chat.entity_helper.DirectMessageRoomHelper.generateDirectMessageRoom;
 import static com.core.user.entity_helper.UserHelper.generateUser;
 import static org.assertj.core.api.Assertions.assertThat;

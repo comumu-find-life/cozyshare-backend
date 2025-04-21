@@ -1,7 +1,7 @@
 package com.api.auth.service;
 
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import com.infra.exception.custom.NotFoundDataException;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

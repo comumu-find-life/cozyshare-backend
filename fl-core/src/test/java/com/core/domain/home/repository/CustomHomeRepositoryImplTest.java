@@ -1,11 +1,12 @@
 package com.core.domain.home.repository;
 
-import com.core.domain.home.dto.HomeInformationResponse;
-import com.core.domain.home.dto.HomeOverviewResponse;
-import com.core.domain.home.model.Home;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.home.dto.HomeInformationResponse;
+import com.core.home.dto.HomeOverviewResponse;
+import com.core.home.model.Home;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import com.core.config.TestConfig;
+import com.core.home.repository.HomeRepository;
 import com.core.utils.TimerAop;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

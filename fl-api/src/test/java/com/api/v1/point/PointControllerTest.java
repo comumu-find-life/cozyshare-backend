@@ -1,12 +1,11 @@
 package com.api.v1.point;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.deal.service.PointService;
-import com.core.domain.user.model.User;
-import com.core.domain.user.model.UserAccount;
-import com.core.domain.user.repository.UserAccountRepository;
-import com.core.domain.user.repository.UserRepository;
-import com.core.domain.user.service.UserService;
+import com.core.user.model.User;
+import com.core.user.model.UserAccount;
+import com.core.user.repository.UserAccountRepository;
+import com.core.user.repository.UserRepository;
+import com.core.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.infra.payment.PaymentService;
 import com.infra.utils.SuccessResponse;

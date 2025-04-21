@@ -1,7 +1,7 @@
 package com.core.deal.dto_helper;
 
-import com.core.domain.deal.dto.ProtectedDealFindRequest;
-import com.core.domain.deal.dto.ProtectedDealGeneratorRequest;
+import com.core.deal.dto.ProtectedDealFindRequest;
+import com.core.deal.dto.ProtectedDealGeneratorRequest;
 
 import java.time.LocalDateTime;
 

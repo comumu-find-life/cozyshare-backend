@@ -1,18 +1,17 @@
 package com.api.v1.home;
 
-import com.core.domain.home.dto.*;
-import com.core.domain.user.dto.UserInformationResponse;
-import com.core.domain.user.service.UserService;
+import com.core.user.dto.UserInformationResponse;
+import com.core.user.service.UserService;
+import com.core.home.dto.*;
 import com.infra.utils.SuccessResponse;
-import com.core.domain.home.service.HomeQueryService;
-import com.core.domain.home.service.HomeService;
-import com.core.domain.home.service.LocationService;
-import com.core.domain.home.model.LatLng;
+import com.core.home.service.HomeQueryService;
+import com.core.home.service.HomeService;
+import com.core.home.service.LocationService;
+import com.core.home.model.LatLng;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

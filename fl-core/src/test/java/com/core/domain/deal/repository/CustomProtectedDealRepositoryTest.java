@@ -1,13 +1,12 @@
 package com.core.domain.deal.repository;
 
 import com.core.config.TestConfig;
-import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.home.model.Home;
-import com.core.domain.home.repository.HomeRepository;
-import com.core.mapper.ProtectedDealMapper;
+import com.core.deal.dto.ProtectedDealResponse;
+import com.core.deal.model.ProtectedDeal;
+import com.core.deal.repository.ProtectedDealRepository;
+import com.core.home.model.Home;
+import com.core.home.repository.HomeRepository;
 import com.core.utils.TimerAop;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

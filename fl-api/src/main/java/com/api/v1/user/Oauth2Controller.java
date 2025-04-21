@@ -1,13 +1,13 @@
 package com.api.v1.user;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.user.model.LoginResponse;
-import com.core.domain.user.dto.GoogleAuthRequest;
+import com.core.user.model.LoginResponse;
+import com.core.user.dto.GoogleAuthRequest;
 import com.infra.utils.SuccessResponse;
 import com.nimbusds.jose.JOSEException;
-import com.core.domain.user.service.AppleAuthService;
-import com.core.domain.user.service.GoogleAuthService;
-import com.core.domain.user.service.UserService;
+import com.core.user.service.AppleAuthService;
+import com.core.user.service.GoogleAuthService;
+import com.core.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

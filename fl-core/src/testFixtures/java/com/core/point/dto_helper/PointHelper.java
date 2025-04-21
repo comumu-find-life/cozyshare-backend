@@ -1,6 +1,6 @@
 package com.core.point.dto_helper;
 
-import com.core.domain.user.dto.PaymentRequest;
+import com.core.user.dto.PaymentRequest;
 
 public class PointHelper {
 

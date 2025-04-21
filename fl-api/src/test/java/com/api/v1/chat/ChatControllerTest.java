@@ -1,17 +1,15 @@
 package com.api.v1.chat;
 
 import com.api.auth.service.JwtService;
-import com.core.domain.chat.dto.DirectMessageTotalRequest;
-import com.core.domain.chat.dto.DirectMessageTotalResponse;
-import com.core.domain.chat.repository.DirectMessageRoomRepository;
-import com.core.domain.deal.dto.ProtectedDealResponse;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.deal.repository.ProtectedDealRepository;
-import com.core.domain.home.model.Home;
-import com.core.domain.home.repository.HomeRepository;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
-import com.core.domain.user.service.UserService;
+import com.core.chat.dto.DirectMessageTotalRequest;
+import com.core.chat.dto.DirectMessageTotalResponse;
+import com.core.chat.repository.DirectMessageRoomRepository;
+import com.core.deal.model.ProtectedDeal;
+import com.core.deal.repository.ProtectedDealRepository;
+import com.core.home.model.Home;
+import com.core.home.repository.HomeRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import com.core.mapper.HomeMapper;
 import com.core.mapper.ProtectedDealMapper;
 import com.core.mapper.UserMapper;
@@ -34,17 +32,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static com.api.v1.constants.ApiUrlConstants.CHAT_TOTAL_URL;
-import static com.api.v1.constants.ApiUrlConstants.DEALS_READ;
 import static com.api.v1.constants.ResponseMessage.FIND_CHATTING_ROOM;
-import static com.api.v1.constants.ResponseMessage.FIND_PROTECTED_DEAL;
 import static com.core.chat.dto_helper.DirectMessageDtoHelper.generateDirectMessageTotalRequest;
-import static com.core.deal.dto_helper.ProtectedDealDtoHelper.generateProtectedDealFindRequest;
-import static com.core.deal.entity_helper.ProtectedDealHelper.generateProtectedDeal;
 import static com.core.deal.entity_helper.ProtectedDealHelper.generateProtectedDealWithUserIds;
 import static com.core.home.entity_helper.HomeHelper.generateHome;
 import static com.core.user.entity_helper.UserHelper.generateUser;

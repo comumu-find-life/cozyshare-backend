@@ -2,8 +2,8 @@ package com.api.auth.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.core.domain.user.model.LoginResponse;
-import com.core.domain.user.repository.UserRepository;
+import com.core.user.model.LoginResponse;
+import com.core.user.repository.UserRepository;
 import com.infra.exception.custom.AuthException;
 import com.infra.exception.ErrorResponseCode;
 import com.fasterxml.jackson.databind.ObjectMapper;

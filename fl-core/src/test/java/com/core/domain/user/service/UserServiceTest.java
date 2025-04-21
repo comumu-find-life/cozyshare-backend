@@ -1,12 +1,13 @@
 package com.core.domain.user.service;
 
-import com.core.domain.chat.repository.DirectMessageRoomRepository;
-import com.core.domain.user.dto.UserProfileResponse;
-import com.core.domain.user.dto.UserSignupRequest;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserAccountRepository;
-import com.core.domain.user.repository.UserRepository;
-import com.core.domain.user.validation.UserServiceValidation;
+import com.core.chat.repository.DirectMessageRoomRepository;
+import com.core.user.dto.UserProfileResponse;
+import com.core.user.dto.UserSignupRequest;
+import com.core.user.model.User;
+import com.core.user.repository.UserAccountRepository;
+import com.core.user.repository.UserRepository;
+import com.core.user.service.UserService;
+import com.core.user.validation.UserServiceValidation;
 import com.core.mapper.UserMapper;
 import com.infra.file.FileService;
 import org.assertj.core.api.Assertions;

@@ -1,9 +1,9 @@
 package com.core.user.dto_helper;
 
-import com.core.domain.user.dto.UserInformationResponse;
-import com.core.domain.user.dto.UserSignupRequest;
-import com.core.domain.user.model.Gender;
-import com.core.domain.user.model.SignupType;
+import com.core.user.dto.UserInformationResponse;
+import com.core.user.dto.UserSignupRequest;
+import com.core.user.model.Gender;
+import com.core.user.model.SignupType;
 
 public class UserDtoHelper {
 

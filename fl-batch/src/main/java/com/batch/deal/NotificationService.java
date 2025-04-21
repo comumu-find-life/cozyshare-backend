@@ -2,9 +2,9 @@ package com.batch.deal;
 
 import com.infra.fcm.NotificationState;
 import com.infra.utils.OptionalUtil;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.deal.model.ProtectedDeal;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

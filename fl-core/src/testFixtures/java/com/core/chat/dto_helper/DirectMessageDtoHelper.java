@@ -1,6 +1,6 @@
 package com.core.chat.dto_helper;
 
-import com.core.domain.chat.dto.*;
+import com.core.chat.dto.*;
 
 import java.time.LocalDateTime;
 

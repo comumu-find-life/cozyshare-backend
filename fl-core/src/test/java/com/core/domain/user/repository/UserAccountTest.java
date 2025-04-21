@@ -1,12 +1,11 @@
 package com.core.domain.user.repository;
 
 import com.core.config.TestConfig;
-import com.core.domain.user.model.UserAccount;
+import com.core.user.repository.UserAccountRepository;
 import com.core.utils.TimerAop;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,10 +16,8 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.util.Optional;
 import java.util.concurrent.*;
 
-import static com.core.user.entity_helper.UserHelper.generateUserAccount;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest

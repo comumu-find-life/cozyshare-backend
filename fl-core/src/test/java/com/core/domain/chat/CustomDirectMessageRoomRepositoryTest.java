@@ -1,9 +1,9 @@
 package com.core.domain.chat;
 
-import com.core.domain.chat.model.DirectMessageRoom;
-import com.core.domain.chat.repository.DirectMessageRoomRepository;
-import com.core.domain.user.model.User;
-import com.core.domain.user.repository.UserRepository;
+import com.core.chat.model.DirectMessageRoom;
+import com.core.chat.repository.DirectMessageRoomRepository;
+import com.core.user.model.User;
+import com.core.user.repository.UserRepository;
 import com.core.config.TestConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

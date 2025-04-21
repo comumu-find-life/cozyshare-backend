@@ -7,7 +7,7 @@ import com.api.auth.handler.LoginFailureHandler;
 import com.api.auth.handler.LoginSuccessHandler;
 import com.api.auth.service.JwtService;
 import com.api.auth.service.TokenCustomService;
-import com.core.domain.user.repository.UserRepository;
+import com.core.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

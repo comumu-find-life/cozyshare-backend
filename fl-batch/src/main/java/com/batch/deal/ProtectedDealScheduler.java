@@ -1,7 +1,7 @@
 package com.batch.deal;
 
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.deal.repository.ProtectedDealRepository;
+import com.core.deal.model.ProtectedDeal;
+import com.core.deal.repository.ProtectedDealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

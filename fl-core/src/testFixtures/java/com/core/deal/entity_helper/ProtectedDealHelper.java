@@ -1,8 +1,8 @@
 package com.core.deal.entity_helper;
 
-import com.core.domain.deal.model.DealState;
-import com.core.domain.deal.model.ProtectedDeal;
-import com.core.domain.deal.model.ProtectedDealDateTime;
+import com.core.deal.model.DealState;
+import com.core.deal.model.ProtectedDeal;
+import com.core.deal.model.ProtectedDealDateTime;
 
 import java.time.LocalDateTime;
 
