@@ -10,6 +10,7 @@ import com.core.home.model.HomeAddress;
 import com.core.home.model.HomeDocument;
 import com.core.home.model.HomeImage;
 import com.core.home.model.HomeInfo;
+import com.core.home.model.HomeStatus;
 import com.core.home.model.HomeType;
 import com.core.user.model.Gender;
 import com.core.user.model.User;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-22T03:53:17+0900",
+    date = "2025-04-25T02:36:56+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -204,7 +205,7 @@ public class HomeMapperImpl implements HomeMapper {
             homeDocument.rent( homeHomeInfoRent( home ) );
             homeDocument.bond( homeHomeInfoBond( home ) );
             homeDocument.bill( homeHomeInfoBill( home ) );
-            homeDocument.bedroomCount( homeHomeInfoBedroomCount( home ) );
+            homeDocument.bedRoomCount( homeHomeInfoBedroomCount( home ) );
             homeDocument.bathRoomCount( homeHomeInfoBathRoomCount( home ) );
             HomeType type = homeHomeInfoType( home );
             if ( type != null ) {
@@ -220,6 +221,34 @@ public class HomeMapperImpl implements HomeMapper {
         }
 
         return homeDocument.build();
+    }
+
+    @Override
+    public HomeOverviewResponse homeDocumentToHomeOverviewResponse(HomeDocument homeDocument) {
+        if ( homeDocument == null ) {
+            return null;
+        }
+
+        HomeOverviewResponse.HomeOverviewResponseBuilder homeOverviewResponse = HomeOverviewResponse.builder();
+
+        homeOverviewResponse.id( homeDocument.getId() );
+        homeOverviewResponse.address( homeDocument.getAddress() );
+        homeOverviewResponse.latitude( homeDocument.getLatitude() );
+        homeOverviewResponse.longitude( homeDocument.getLongitude() );
+        homeOverviewResponse.mainImage( homeDocument.getMainImage() );
+        homeOverviewResponse.rent( homeDocument.getRent() );
+        homeOverviewResponse.bond( homeDocument.getBond() );
+        homeOverviewResponse.bill( homeDocument.getBill() );
+        homeOverviewResponse.bedroomCount( homeDocument.getBedRoomCount() );
+        homeOverviewResponse.bathRoomCount( homeDocument.getBathRoomCount() );
+        homeOverviewResponse.type( homeDocument.getType() );
+        if ( homeDocument.getHomeStatus() != null ) {
+            homeOverviewResponse.homeStatus( Enum.valueOf( HomeStatus.class, homeDocument.getHomeStatus() ) );
+        }
+        homeOverviewResponse.userIdx( homeDocument.getId() );
+        homeOverviewResponse.userName( homeDocument.getUserName() );
+
+        return homeOverviewResponse.build();
     }
 
     private double homeHomeAddressLatitude(Home home) {

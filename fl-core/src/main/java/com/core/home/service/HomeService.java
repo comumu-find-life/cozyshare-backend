@@ -1,7 +1,6 @@
 package com.core.home.service;
 
 import com.core.home.model.*;
-import com.core.home.repository.HomeElasticRepository;
 import com.core.mapper.HomeMapper;
 import com.core.home.dto.HomeGeneratorRequest;
 import com.core.home.dto.HomeUpdateRequest;
@@ -36,7 +35,7 @@ public class HomeService {
     private final FileService fileService;
     private final HomeRepository homeRepository;
     private final UserRepository userRepository;
-    private final HomeElasticRepository homeElasticRepository;
+    //private final HomeElasticRepository homeElasticRepository;
     private final HomeMapper homeMapper;
     private final HomeImageRepository homeImageRepository;
 
@@ -45,12 +44,13 @@ public class HomeService {
         User user = getUser(userId);
         Home home = createHomeEntity(userId, request, files, latLng);
         Home savedHome = saveHome(home);
-        indexHomeInElasticsearch(savedHome, user);
+        //indexHomeInElasticsearch(savedHome, user);
         return savedHome.getId();
     }
 
     @Transactional
     public Long update(final HomeUpdateRequest homeUpdateDto) {
+        //todo Elastic 수정 로직 추가
         Home home = findHomeById(homeUpdateDto.getHomeId());
         homeMapper.updateHomeFromDto(homeUpdateDto, home.getHomeInfo());
         homeMapper.updateAddressFromDto(homeUpdateDto.getHomeAddress(), home.getHomeAddress());
@@ -60,6 +60,7 @@ public class HomeService {
 
     @Transactional
     public void updateHomeImages(final Long homeId, final List<MultipartFile> files) {
+        //todo Elastic 수정 로직 추가
         Home home = findHomeById(homeId);
         if (hasFiles(files)) {
             home.addImages(uploadHomeImages(home, files));
@@ -80,6 +81,7 @@ public class HomeService {
 
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     public void delete(final Long homeId) {
+        //todo Elastic 수정 로직 추가
         Home home = findHomeById(homeId);
         homeRepository.delete(home);
     }
@@ -88,6 +90,7 @@ public class HomeService {
     @Transactional
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     public void changeStatus(final Long homeId, final String status) {
+        //todo Elastic 수정 로직 추가
         HomeStatus homeStatus = HomeStatus.fromString(status);
         Home home = findHomeById(homeId);
         home.setStatus(homeStatus);
@@ -121,7 +124,7 @@ public class HomeService {
 
     private void indexHomeInElasticsearch(Home home, User user) {
         HomeDocument document = homeMapper.homeToHomeDocument(home, user);
-        homeElasticRepository.save(document);
+        //homeElasticRepository.save(document);
     }
 
     private List<HomeImage> uploadHomeImages(final Home home, final List<MultipartFile> files) {

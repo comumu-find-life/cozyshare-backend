@@ -26,23 +26,6 @@ public interface HomeMapper {
     @Mapping(target = "homeInfo", source = "homeDto", qualifiedByName = "mapHomeInfo")
     Home toEntity(HomeGeneratorRequest homeDto, Long userId);
 
-    @Named("mapHomeInfo")
-    default HomeInfo mapHomeInfo(HomeGeneratorRequest homeGeneratorRequest){
-        return HomeInfo.builder()
-                .canParking(homeGeneratorRequest.isCanParking())
-                .bathRoomCount(homeGeneratorRequest.getBathRoomCount())
-                .bedroomCount(homeGeneratorRequest.getBedroomCount())
-                .residentCount(homeGeneratorRequest.getResidentCount())
-                .options(homeGeneratorRequest.getOptions())
-                .bond(homeGeneratorRequest.getBond())
-                .bill(homeGeneratorRequest.getBill())
-                .rent(homeGeneratorRequest.getRent())
-                .introduce(homeGeneratorRequest.getIntroduce())
-                .gender(homeGeneratorRequest.getGender())
-                .type(homeGeneratorRequest.getType())
-                .build();
-    }
-
     /**
      * HomeAddress 엔티티 변환
      */
@@ -89,9 +72,8 @@ public interface HomeMapper {
     @Mapping(target = "home", source = "home")
     @Mapping(target = "imageUrl", source = "url")
     HomeImage toHomeImage(Home home, String url);
-    /**
-     * Home 을 리스트로 보여줄 DTO 변환
-     */
+
+
     @Mapping(target = "id", source = "home.id")
     @Mapping(target = "address", source = "home.homeAddress", qualifiedByName = "mapSimpleAddress")
     @Mapping(target = "latitude", source = "home.homeAddress.latitude")
@@ -125,6 +107,40 @@ public interface HomeMapper {
     HomeDocument homeToHomeDocument(Home home, User user);
 
 
+    @Mapping(target = "id", source = "homeDocument.id")
+    @Mapping(target = "address", source = "homeDocument.address")
+    @Mapping(target = "latitude", source = "homeDocument.latitude")
+    @Mapping(target = "longitude", source = "homeDocument.longitude")
+    @Mapping(target = "mainImage", source = "homeDocument.mainImage")
+    @Mapping(target = "rent", source = "homeDocument.rent")
+    @Mapping(target = "bond", source = "homeDocument.bond")
+    @Mapping(target = "bill", source = "homeDocument.bill")
+    @Mapping(target = "bedroomCount", source = "homeDocument.bedRoomCount")
+    @Mapping(target = "bathRoomCount", source = "homeDocument.bathRoomCount")
+    @Mapping(target = "type", source = "homeDocument.type")
+    @Mapping(target = "homeStatus", source = "homeDocument.homeStatus")
+    @Mapping(target = "userIdx", source = "homeDocument.id")
+    @Mapping(target = "userName", source = "homeDocument.userName")
+    HomeOverviewResponse homeDocumentToHomeOverviewResponse(HomeDocument homeDocument);
+
+    @Named("mapHomeInfo")
+    default HomeInfo mapHomeInfo(HomeGeneratorRequest homeGeneratorRequest){
+        return HomeInfo.builder()
+                .canParking(homeGeneratorRequest.isCanParking())
+                .bathRoomCount(homeGeneratorRequest.getBathRoomCount())
+                .bedroomCount(homeGeneratorRequest.getBedroomCount())
+                .residentCount(homeGeneratorRequest.getResidentCount())
+                .options(homeGeneratorRequest.getOptions())
+                .bond(homeGeneratorRequest.getBond())
+                .bill(homeGeneratorRequest.getBill())
+                .rent(homeGeneratorRequest.getRent())
+                .introduce(homeGeneratorRequest.getIntroduce())
+                .gender(homeGeneratorRequest.getGender())
+                .type(homeGeneratorRequest.getType())
+                .build();
+    }
+
+
     @Named("mapImageUrls")
     default List<String> mapImageUrls(List<HomeImage> images) {
         return images.stream()
@@ -147,6 +163,4 @@ public interface HomeMapper {
         sb.append(homeAddress.getPostCode());
         return sb.toString();
     }
-
-
 }
