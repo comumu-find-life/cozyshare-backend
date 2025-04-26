@@ -52,7 +52,6 @@ spring:
     port: 587
     username: ${MAIL_USER_NAME}
     password: ${MAIL_PASSWORD}
-
     properties:
       mail:
         smtp:
