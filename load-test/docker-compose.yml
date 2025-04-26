@@ -35,3 +35,4 @@ services:
 networks:
   monitoring:
     driver: bridge
+    load-test/test.js

@@ -1,5 +1,6 @@
 package com.api.v1.home;
 
+import com.core.home.service.HomeElasticService;
 import com.core.user.dto.UserInformationResponse;
 import com.core.user.service.UserService;
 import com.core.home.dto.*;
@@ -26,6 +27,7 @@ import static com.api.v1.constants.ResponseMessage.*;
 @RequiredArgsConstructor
 public class HomeController {
 
+    private final HomeElasticService homeElasticService;
     private final HomeQueryService homeQueryService;
     private final HomeService homeService;
     private final LocationService locationService;
@@ -91,14 +93,14 @@ public class HomeController {
 
     @GetMapping(HOMES_FIND_ALL)
     public ResponseEntity<?> findAll() {
-        HomeOverviewWrapper allHomes = homeQueryService.findAllHomes();
+        HomeOverviewWrapper allHomes = homeElasticService.findAllSellHomes();
         SuccessResponse response = new SuccessResponse(true, ALL_HOMES_RETRIEVE_SUCCESS, allHomes.getHomes());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping(HOMES_FIND_BY_CITY)
     public ResponseEntity<?> findByCity(@RequestParam final String city) {
-        List<HomeOverviewResponse> homes = homeQueryService.findByCity(city);
+        List<HomeOverviewResponse> homes = homeElasticService.findByCity(city);
         SuccessResponse<Object> response = new SuccessResponse<>(true, CITY_HOMES_RETRIEVE_SUCCESS, homes);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
