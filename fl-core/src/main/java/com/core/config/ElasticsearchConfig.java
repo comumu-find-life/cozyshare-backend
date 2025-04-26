@@ -1,26 +1,21 @@
-//package com.core.config;
-//
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.data.elasticsearch.client.ClientConfiguration;
-//import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
-//
-//@Configuration
-//public class ElasticsearchConfig extends ElasticsearchConfiguration {
-//    @Value("${spring.data.elasticsearch.username}")
-//    private String username;
-//
-//    @Value("${spring.data.elasticsearch.password}")
-//    private String password;
-//
-//    @Value("${spring.data.elasticsearch.uris}")
-//    private String[] esHost;
-//
-//    @Override
-//    public ClientConfiguration clientConfiguration() {
-//        return ClientConfiguration.builder()
-//                .connectedTo(esHost)
-//                .withBasicAuth(username, password)
-//                .build();
-//    }
-//}
+package com.core.config;
+
+import org.apache.http.HttpHost;
+import org.elasticsearch.client.RestClient;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class ElasticsearchConfig {
+
+    @Value("${spring.data.elasticsearch.uris}")
+    private String elasticsearchURL;
+
+    @Bean
+    public RestClient restClient() {
+        return RestClient.builder(
+                new HttpHost(elasticsearchURL, 9200, "http")
+        ).build();
+    }
+}
