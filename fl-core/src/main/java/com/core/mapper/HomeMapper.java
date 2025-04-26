@@ -1,6 +1,5 @@
 package com.core.mapper;
 
-
 import com.core.home.dto.HomeAddressGeneratorRequest;
 import com.core.home.dto.HomeGeneratorRequest;
 import com.core.home.dto.HomeUpdateRequest;
@@ -26,28 +25,14 @@ public interface HomeMapper {
     @Mapping(target = "homeInfo", source = "homeDto", qualifiedByName = "mapHomeInfo")
     Home toEntity(HomeGeneratorRequest homeDto, Long userId);
 
-    /**
-     * HomeAddress 엔티티 변환
-     */
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "latitude", ignore = true)
     @Mapping(target = "longitude", ignore = true)
     HomeAddress toAddressEntity(HomeAddressGeneratorRequest homeAddressDto);
 
-    /**
-     * 집 정보 수정
-     */
-    void updateHomeFromDto(HomeUpdateRequest dto, @MappingTarget HomeInfo entity);
-
-    /**
-     * 집 주소 수정
-     */
     @Mapping(target = "id", ignore = true)
     void updateAddressFromDto(HomeAddressGeneratorRequest dto, @MappingTarget HomeAddress entity);
 
-    /**
-     * Home 게시글을 보여줄 DTO 변환
-     */
     @Mapping(target = "providerId", source = "user.id")
     @Mapping(target = "homeId", source = "home.id")
     @Mapping(target = "latitude", source = "home.homeAddress.latitude")
@@ -106,7 +91,6 @@ public interface HomeMapper {
     @Mapping(target = "userName", source = "user.nickname")
     HomeDocument homeToHomeDocument(Home home, User user);
 
-
     @Mapping(target = "id", source = "homeDocument.id")
     @Mapping(target = "address", source = "homeDocument.address")
     @Mapping(target = "latitude", source = "homeDocument.latitude")
@@ -122,6 +106,10 @@ public interface HomeMapper {
     @Mapping(target = "userIdx", source = "homeDocument.id")
     @Mapping(target = "userName", source = "homeDocument.userName")
     HomeOverviewResponse homeDocumentToHomeOverviewResponse(HomeDocument homeDocument);
+
+
+    void updateHomeFromDto(HomeUpdateRequest dto, @MappingTarget HomeInfo entity);
+
 
     @Named("mapHomeInfo")
     default HomeInfo mapHomeInfo(HomeGeneratorRequest homeGeneratorRequest){

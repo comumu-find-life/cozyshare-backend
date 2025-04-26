@@ -115,16 +115,12 @@ jobs:
           script: |
             cd /home/ubuntu
 
-            # 기존 컨테이너 정지
             sudo docker-compose down || true
             sudo docker stop $(sudo docker ps -q) || true
 
-            # 기존 Redis 서비스 정지 (OS-level Redis가 있다면)
             sudo systemctl stop redis || true
 
-            # tar 파일로부터 이미지 로드
             sudo docker load -i cozy-api.tar
             sudo docker load -i cozy-chatting.tar
 
-            # docker-compose 재시작
             sudo docker-compose up -d

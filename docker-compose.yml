@@ -5,66 +5,6 @@ networks:
     driver: bridge
 
 services:
-  redis-master:
-    image: redis:7.0
-    container_name: redis-master
-    hostname: redis-master
-    ports:
-      - "6379:6379"
-    environment:
-      - TZ=Australia/Sydney
-    networks:
-      - app-network
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ap-southeast-2
-        awslogs-group: cozysharelogs
-        awslogs-stream: redis-master
-        awslogs-create-group: "true"
-
-  redis-slave-1:
-    image: redis:7.0
-    container_name: redis-slave-1
-    hostname: redis-slave-1
-    command: redis-server --replicaof redis-master 6379
-    ports:
-      - "6380:6379"
-    depends_on:
-      - redis-master
-    environment:
-      - TZ=Australia/Sydney
-    networks:
-      - app-network
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ap-southeast-2
-        awslogs-group: cozysharelogs
-        awslogs-stream: redis-slave-1
-        awslogs-create-group: "true"
-
-  redis-slave-2:
-    image: redis:7.0
-    container_name: redis-slave-2
-    hostname: redis-slave-2
-    command: redis-server --replicaof redis-master 6379
-    ports:
-      - "6381:6379"
-    depends_on:
-      - redis-master
-    environment:
-      - TZ=Australia/Sydney
-    networks:
-      - app-network
-    logging:
-      driver: awslogs
-      options:
-        awslogs-region: ap-southeast-2
-        awslogs-group: cozysharelogs
-        awslogs-stream: redis-slave-2
-        awslogs-create-group: "true"
-
   fl-api:
     image: minseok2000/cozy-api
     container_name: fl-api
@@ -78,9 +18,6 @@ services:
       - /home/ubuntu/firebase-key.json:/app/firebase-key.json
     environment:
       - TZ=Australia/Sydney
-      - REDIS_HOST=redis-master  # Redis Master 사용
-    depends_on:
-      - redis-master
     networks:
       - app-network
     logging:
@@ -102,9 +39,6 @@ services:
       - /home/ubuntu/.env
     environment:
       - TZ=Australia/Sydney
-      - REDIS_HOST=redis-master  # Redis Master 사용
-    depends_on:
-      - redis-master
     networks:
       - app-network
     volumes:
@@ -128,9 +62,6 @@ services:
       - /home/ubuntu/.env
     environment:
       - TZ=Australia/Sydney
-      - REDIS_HOST=redis-master  # Redis Master 사용
-    depends_on:
-      - redis-master
     networks:
       - app-network
     logging:

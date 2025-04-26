@@ -10,7 +10,6 @@ import com.core.home.model.HomeAddress;
 import com.core.home.model.HomeDocument;
 import com.core.home.model.HomeImage;
 import com.core.home.model.HomeInfo;
-import com.core.home.model.HomeStatus;
 import com.core.home.model.HomeType;
 import com.core.user.model.Gender;
 import com.core.user.model.User;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-25T02:36:56+0900",
+    date = "2025-04-26T07:49:16+0900",
     comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.12.jar, environment: Java 17.0.6 (Amazon.com Inc.)"
 )
 @Component
@@ -59,29 +58,6 @@ public class HomeMapperImpl implements HomeMapper {
         homeAddress.streetCode( homeAddressDto.getStreetCode() );
 
         return homeAddress.build();
-    }
-
-    @Override
-    public void updateHomeFromDto(HomeUpdateRequest dto, HomeInfo entity) {
-        if ( dto == null ) {
-            return;
-        }
-
-        entity.setCanParking( dto.isCanParking() );
-        if ( dto.getBathRoomCount() != null ) {
-            entity.setBathRoomCount( dto.getBathRoomCount() );
-        }
-        if ( dto.getBedroomCount() != null ) {
-            entity.setBedroomCount( dto.getBedroomCount() );
-        }
-        entity.setResidentCount( dto.getResidentCount() );
-        entity.setOptions( dto.getOptions() );
-        entity.setBond( dto.getBond() );
-        entity.setIntroduce( dto.getIntroduce() );
-        entity.setBill( dto.getBill() );
-        entity.setRent( dto.getRent() );
-        entity.setGender( dto.getGender() );
-        entity.setType( dto.getType() );
     }
 
     @Override
@@ -211,9 +187,7 @@ public class HomeMapperImpl implements HomeMapper {
             if ( type != null ) {
                 homeDocument.type( type.name() );
             }
-            if ( home.getHomeStatus() != null ) {
-                homeDocument.homeStatus( home.getHomeStatus().name() );
-            }
+            homeDocument.homeStatus( home.getHomeStatus() );
         }
         if ( user != null ) {
             homeDocument.userId( user.getId() );
@@ -242,13 +216,34 @@ public class HomeMapperImpl implements HomeMapper {
         homeOverviewResponse.bedroomCount( homeDocument.getBedRoomCount() );
         homeOverviewResponse.bathRoomCount( homeDocument.getBathRoomCount() );
         homeOverviewResponse.type( homeDocument.getType() );
-        if ( homeDocument.getHomeStatus() != null ) {
-            homeOverviewResponse.homeStatus( Enum.valueOf( HomeStatus.class, homeDocument.getHomeStatus() ) );
-        }
+        homeOverviewResponse.homeStatus( homeDocument.getHomeStatus() );
         homeOverviewResponse.userIdx( homeDocument.getId() );
         homeOverviewResponse.userName( homeDocument.getUserName() );
 
         return homeOverviewResponse.build();
+    }
+
+    @Override
+    public void updateHomeFromDto(HomeUpdateRequest dto, HomeInfo entity) {
+        if ( dto == null ) {
+            return;
+        }
+
+        entity.setCanParking( dto.isCanParking() );
+        if ( dto.getBathRoomCount() != null ) {
+            entity.setBathRoomCount( dto.getBathRoomCount() );
+        }
+        if ( dto.getBedroomCount() != null ) {
+            entity.setBedroomCount( dto.getBedroomCount() );
+        }
+        entity.setResidentCount( dto.getResidentCount() );
+        entity.setOptions( dto.getOptions() );
+        entity.setBond( dto.getBond() );
+        entity.setIntroduce( dto.getIntroduce() );
+        entity.setBill( dto.getBill() );
+        entity.setRent( dto.getRent() );
+        entity.setGender( dto.getGender() );
+        entity.setType( dto.getType() );
     }
 
     private double homeHomeAddressLatitude(Home home) {

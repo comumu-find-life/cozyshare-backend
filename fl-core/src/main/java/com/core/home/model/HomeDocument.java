@@ -16,19 +16,25 @@ public class HomeDocument {
     @Id
     private Long id;
 
+    @Field(name = "address")
     private String address;
 
+    @Field(name = "latitude")
     private double latitude;
 
+    @Field(name = "longitude")
     private double longitude;
 
     @Field(name = "main_image")
     private String mainImage;
 
+    @Field(name = "rent")
     private Integer rent;
 
+    @Field(name = "bond")
     private Integer bond;
 
+    @Field(name = "bill")
     private Integer bill;
 
     @Field(name = "bed_room_count")
@@ -37,6 +43,7 @@ public class HomeDocument {
     @Field(name = "bath_room_count")
     private Integer bathRoomCount;
 
+    @Field(name = "type")
     private String type;
 
     @Field(name = "user_id")
@@ -45,5 +52,8 @@ public class HomeDocument {
     @Field(name = "user_name")
     private String userName;
 
-    private String homeStatus;
+    @Setter
+    @Field(name = "home_status")
+    private HomeStatus homeStatus;
+
 }
