@@ -1,3 +1,4 @@
+
 spring:
   jpa:
     properties:
@@ -31,13 +32,13 @@ spring:
       uri: ${FL_CHAT_DB_URL}
       database: ${FL_CHAT_DB_USER_NAME}
 
-    elasticsearch:
-      repositories:
-        enabled: true
-      client:
-        reactive: false
-        sniff: false
-      uris: ${ELASTIC_SEARCH_HOST}
+#    elasticsearch:
+#      repositories:
+#        enabled: true
+#      client:
+#        reactive: false
+#        sniff: false
+#      uris: ${ELASTIC_SEARCH_HOST}
 
 
 

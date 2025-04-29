@@ -1,7 +1,6 @@
 package com.core.home.service;
 
 import com.core.home.model.*;
-import com.core.home.repository.HomeElasticRepository;
 import com.core.mapper.HomeMapper;
 import com.core.home.dto.HomeGeneratorRequest;
 import com.core.home.dto.HomeUpdateRequest;
@@ -32,11 +31,10 @@ import static com.infra.exception.ExceptionMessages.NOT_EXIST_USER_ID;
 @RequiredArgsConstructor
 public class HomeService {
 
-    private final HomeElasticService homeElasticService;
     private final FileService fileService;
     private final HomeRepository homeRepository;
     private final UserRepository userRepository;
-    private final HomeElasticRepository homeElasticRepository;
+    //private final HomeElasticRepository homeElasticRepository;
     private final HomeMapper homeMapper;
     private final HomeImageRepository homeImageRepository;
 
@@ -45,7 +43,6 @@ public class HomeService {
         User user = findUser(userId);
         Home home = createHomeEntity(userId, request, files, latLng);
         Home savedHome = saveHome(home);
-        homeElasticService.saveHomeToElastic(home, user);
         return savedHome.getId();
     }
 
@@ -54,7 +51,6 @@ public class HomeService {
         Home home = findHomeById(homeUpdateDto.getHomeId());
         homeMapper.updateHomeFromDto(homeUpdateDto, home.getHomeInfo());
         homeMapper.updateAddressFromDto(homeUpdateDto.getHomeAddress(), home.getHomeAddress());
-        homeElasticService.saveHomeToElastic(home, findUser(home.getUserId()));
         return home.getId();
     }
 
@@ -63,7 +59,6 @@ public class HomeService {
         if (hasFiles(files)) {
             Home home = findHomeById(homeId);
             home.addImages(uploadHomeImages(home, files));
-            homeElasticService.saveHomeToElastic(home, findUser(home.getUserId()));
         }
     }
 
@@ -81,9 +76,8 @@ public class HomeService {
 
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     public void delete(final Long homeId) {
-        homeElasticService.deleteHomeFromElastic(homeId);
-        HomeDocument homeDocument = OptionalUtil.getOrElseThrow(homeElasticRepository.findById(homeId), NOT_EXIST_HOME_ID);
-        homeElasticRepository.delete(homeDocument);
+        //HomeDocument homeDocument = OptionalUtil.getOrElseThrow(homeElasticRepository.findById(homeId), NOT_EXIST_HOME_ID);
+        //homeElasticRepository.delete(homeDocument);
         Home home = findHomeById(homeId);
         homeRepository.delete(home);
     }
@@ -92,21 +86,24 @@ public class HomeService {
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     public void changeStatus(final Long homeId, final String status) {
         HomeStatus homeStatus = HomeStatus.fromString(status);
-        homeElasticService.updateHomeStatus(homeId, homeStatus);
         Home home = findHomeById(homeId);
         home.setStatus(homeStatus);
+    }
+
+    private Home saveHome(Home home) {
+        return homeRepository.save(home);
     }
 
     private Home findHomeById(final Long homeId) {
         return homeRepository.findById(homeId).orElseThrow(() -> new EntityNotFoundException(ExceptionMessages.NOT_EXIST_HOME_ID));
     }
 
-    private boolean hasFiles(final List<MultipartFile> files) {
-        return !files.isEmpty() && !files.get(0).getOriginalFilename().isEmpty();
-    }
-
     private User findUser(final Long userId) {
         return OptionalUtil.getOrElseThrow(userRepository.findById(userId), NOT_EXIST_USER_ID);
+    }
+
+    private boolean hasFiles(final List<MultipartFile> files) {
+        return !files.isEmpty() && !files.get(0).getOriginalFilename().isEmpty();
     }
 
     private Home createHomeEntity(Long userId, HomeGeneratorRequest request, List<MultipartFile> files, LatLng latLng) {
@@ -114,10 +111,6 @@ public class HomeService {
         if (hasFiles(files)) home.setImages(uploadHomeImages(home, files));
         home.setLatLng(latLng.getLat(), latLng.getLng());
         return home;
-    }
-
-    private Home saveHome(Home home) {
-        return homeRepository.save(home);
     }
 
     private List<HomeImage> uploadHomeImages(final Home home, final List<MultipartFile> files) {

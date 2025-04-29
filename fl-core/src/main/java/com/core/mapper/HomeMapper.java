@@ -75,39 +75,6 @@ public interface HomeMapper {
     @Mapping(target = "userName", source = "user.nickname")
     HomeOverviewResponse toOverviewResponse(Home home, User user);
 
-    @Mapping(target = "id", source = "home.id")
-    @Mapping(target = "address", source = "home.homeAddress", qualifiedByName = "mapSimpleAddress")
-    @Mapping(target = "latitude", source = "home.homeAddress.latitude")
-    @Mapping(target = "longitude", source = "home.homeAddress.longitude")
-    @Mapping(target = "mainImage", source = "home.images", qualifiedByName = "mapMainImage")
-    @Mapping(target = "rent", source = "home.homeInfo.rent")
-    @Mapping(target = "bond", source = "home.homeInfo.bond")
-    @Mapping(target = "bill", source = "home.homeInfo.bill")
-    @Mapping(target = "bedRoomCount", source = "home.homeInfo.bedroomCount")
-    @Mapping(target = "bathRoomCount", source = "home.homeInfo.bathRoomCount")
-    @Mapping(target = "type", source = "home.homeInfo.type")
-    @Mapping(target = "homeStatus", source = "home.homeStatus")
-    @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "userName", source = "user.nickname")
-    HomeDocument homeToHomeDocument(Home home, User user);
-
-    @Mapping(target = "id", source = "homeDocument.id")
-    @Mapping(target = "address", source = "homeDocument.address")
-    @Mapping(target = "latitude", source = "homeDocument.latitude")
-    @Mapping(target = "longitude", source = "homeDocument.longitude")
-    @Mapping(target = "mainImage", source = "homeDocument.mainImage")
-    @Mapping(target = "rent", source = "homeDocument.rent")
-    @Mapping(target = "bond", source = "homeDocument.bond")
-    @Mapping(target = "bill", source = "homeDocument.bill")
-    @Mapping(target = "bedroomCount", source = "homeDocument.bedRoomCount")
-    @Mapping(target = "bathRoomCount", source = "homeDocument.bathRoomCount")
-    @Mapping(target = "type", source = "homeDocument.type")
-    @Mapping(target = "homeStatus", source = "homeDocument.homeStatus")
-    @Mapping(target = "userIdx", source = "homeDocument.id")
-    @Mapping(target = "userName", source = "homeDocument.userName")
-    HomeOverviewResponse homeDocumentToHomeOverviewResponse(HomeDocument homeDocument);
-
-
     void updateHomeFromDto(HomeUpdateRequest dto, @MappingTarget HomeInfo entity);
 
 
