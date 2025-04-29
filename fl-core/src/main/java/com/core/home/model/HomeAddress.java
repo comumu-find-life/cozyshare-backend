@@ -12,6 +12,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "home_address", indexes = {@Index(name = "idx_city", columnList = "city")})
 public class HomeAddress extends BaseTimeEntity {
 
     @Id
