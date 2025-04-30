@@ -15,6 +15,7 @@ import java.util.Optional;
 public class CustomDirectMessageRoomRepositoryImpl implements CustomDirectMessageRoomRepository {
 
     private final JPAQueryFactory queryFactory;
+    private final QDirectMessageRoom directMessageRoom = QDirectMessageRoom.directMessageRoom;
 
     @Autowired
     public CustomDirectMessageRoomRepositoryImpl(EntityManager em) {
@@ -23,7 +24,6 @@ public class CustomDirectMessageRoomRepositoryImpl implements CustomDirectMessag
 
     @Override
     public Optional<DirectMessageRoom> findByUser1IdAndUser2Id(Long user1Id, Long user2Id) {
-        QDirectMessageRoom directMessageRoom = QDirectMessageRoom.directMessageRoom;
 
         DirectMessageRoom room = queryFactory
                 .selectFrom(directMessageRoom)
@@ -36,7 +36,6 @@ public class CustomDirectMessageRoomRepositoryImpl implements CustomDirectMessag
 
     @Override
     public List<DirectMessageRoom> findByUser1IdOrUser2Id(Long userId) {
-        QDirectMessageRoom directMessageRoom = QDirectMessageRoom.directMessageRoom;
         return queryFactory
                 .selectFrom(directMessageRoom)
                 .where(directMessageRoom.user1.id.eq(userId)
@@ -46,7 +45,6 @@ public class CustomDirectMessageRoomRepositoryImpl implements CustomDirectMessag
 
     @Override
     public void deleteAllByUserId(Long userId) {
-        QDirectMessageRoom directMessageRoom = QDirectMessageRoom.directMessageRoom;
         queryFactory
                 .delete(directMessageRoom)
                 .where(directMessageRoom.user1.id.eq(userId)

@@ -4,6 +4,9 @@ import com.core.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * 채팅방 정보를 나타내는 엔티티
+ */
 @Entity
 @Getter
 @Builder

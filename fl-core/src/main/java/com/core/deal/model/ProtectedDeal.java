@@ -4,6 +4,9 @@ import com.core.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * 안전거래 정보를 나타내는 엔티티
+ */
 @Entity
 @Getter
 @Builder
