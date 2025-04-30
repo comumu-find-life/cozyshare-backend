@@ -24,15 +24,14 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
 
     private final JPAQueryFactory query;
     private final QHome qHome = QHome.home;
-    private final QHomeImage qHomeImage = QHomeImage.homeImage;
     private final QUser qUser = QUser.user;
+    private final QHomeImage qHomeImage = QHomeImage.homeImage;
 
 
     @Override
     public Optional<HomeInformationResponse> findHomeInformationById(Long homeId) {
         Tuple tuple = query
                 .select(qHome, qUser)
-                .distinct()
                 .from(qHome)
                 .join(qUser).on(qHome.userId.eq(qUser.id))
                 .join(qHome.images, qHomeImage).fetchJoin()
@@ -42,9 +41,8 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
         if (tuple == null) {
             return Optional.empty();
         }
-        System.out.println("tuple =");
-        Home home = tuple.get(0, Home.class);
-        User user = tuple.get(1, User.class);
+        Home home = tuple.get(qHome);
+        User user = tuple.get(qUser);
         return Optional.ofNullable(HomeMapper.INSTANCE.toHomeInformation(home, user));
     }
 
