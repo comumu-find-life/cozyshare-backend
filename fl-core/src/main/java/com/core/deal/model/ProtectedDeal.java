@@ -13,6 +13,11 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "protected_deal", indexes = {
+        @Index(name = "idx_getter_provider_home_dm", columnList = "getter_id, provider_id, home_id, dm_id"),
+        @Index(name = "idx_home_id", columnList = "home_id"),
+        @Index(name = "idx_dm_id", columnList = "dm_id")
+})
 public class ProtectedDeal extends BaseTimeEntity {
 
     // 500 AUD 이하: 수수료 9%
@@ -68,5 +73,4 @@ public class ProtectedDeal extends BaseTimeEntity {
     public boolean isPossibleAutoComplete(){
         return protectedDealDateTime.isFiveDaysPassed() && (dealState.equals(DealState.ACCEPT_DEAL));
     }
-
 }

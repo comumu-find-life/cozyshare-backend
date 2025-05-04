@@ -42,7 +42,7 @@ public class ProtectedDealService {
     private final ProtectedDealMapper mapper;
 
     /**
-     * 안전 거래 생성 메서드 (by provider)
+     * 안전 거래 생성 메서드 (by 임대인)
      */
     public ProtectedDealGeneratorResponse saveProtectedDeal(ProtectedDealGeneratorRequest request) {
         ProtectedDeal deal = mapper.toEntity(request);
@@ -66,14 +66,14 @@ public class ProtectedDealService {
     }
 
     /**
-     * 안전거래 조회 메서드 by Getter
+     * 안전거래 조회 메서드 by 임차인
      */
     public List<ProtectedDealResponse> findProtectedDeal(Long getterId, Long providerId, Long homeId, Long dmId) {
         return protectedDealRepository.findProtectedDealsByFilters(getterId, providerId, homeId, dmId);
     }
 
     /**
-     * 안전 거래 수락 by getter
+     * 안전 거래 수락 by 임차인
      */
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     @Transactional
@@ -89,7 +89,7 @@ public class ProtectedDealService {
     }
 
     /**
-     * 거래 완료 메서드 by getter
+     * 거래 완료 메서드 by 임차인
      */
     @CacheEvict(value = "homeOverviewCache", key = "'allHomes'", allEntries = true)
     @Transactional
@@ -122,7 +122,7 @@ public class ProtectedDealService {
     }
 
     /**
-     * 안전 거래 생성 후 취소 메서드 (by getter)
+     * 안전 거래 생성 후 취소 메서드 (by 임차인)
      */
     @Transactional
     public void cancelAfterDeal(Long dealId, Long getterId) {

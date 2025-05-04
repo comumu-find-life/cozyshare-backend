@@ -39,21 +39,4 @@ public class FirebaseConfig {
             return FirebaseMessaging.getInstance(app);
         }
     }
-
-//    @Bean
-//    FirebaseMessaging firebaseMessaging() throws IOException {
-//        ClassPathResource resource = new ClassPathResource(keyName);
-//        InputStream refreshToken = resource.getInputStream();
-//        FirebaseOptions options = FirebaseOptions.builder()
-//                .setCredentials(GoogleCredentials.fromStream(refreshToken))
-//                .setProjectId(projectId)
-//                .build();
-//        FirebaseApp app;
-//        if (FirebaseApp.getApps().isEmpty()) {
-//            app = FirebaseApp.initializeApp(options);
-//        } else {
-//            app = FirebaseApp.getInstance();
-//        }
-//        return FirebaseMessaging.getInstance(app);
-//    }
 }

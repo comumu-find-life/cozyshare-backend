@@ -8,11 +8,16 @@ import com.core.user.repository.UserRepository;
 import com.core.config.TestConfig;
 import com.core.home.repository.HomeRepository;
 import com.core.utils.TimerAop;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -84,7 +89,7 @@ public class CustomHomeRepositoryImplTest {
         homeRepository.save(generateHome(user.getId()));
 
         //when
-        List<Home> homes = homeRepository.findByCity("city");
+        List<Home> homes = homeRepository.findByCity("city name");
 
         //then
         assertThat(homes.size()).isEqualTo(1);
@@ -104,4 +109,15 @@ public class CustomHomeRepositoryImplTest {
         assertThat(byUserId.size()).isEqualTo(2);
     }
 
+    @Test
+    void 집_페이징_조회_테스트() {
+        //when
+        long start = System.currentTimeMillis(); // 시작 시간 측정
+        List<HomeOverviewResponse> sellHomePage = homeRepository.findSellHomePage(PageRequest.of(1999,15));
+        long end = System.currentTimeMillis(); // 종료 시간 측정
+
+        //then
+        System.out.println("findSellHomePage 실행 시간: " + (end - start) + "ms");
+        Assertions.assertThat(sellHomePage.size()).isEqualTo(15);
+    }
 }

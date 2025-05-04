@@ -31,8 +31,6 @@ public class EmailRedisService implements EmailVerificationService {
         String code = generateVerificationCode();
         VerificationCode verificationCode = new VerificationCode(email, code);
         verificationCodeRepository.save(verificationCode);
-
-        // 이메일이 최초 요청인 경우에만 이메일 전송
         if (verificationCodeRepository.findById(email).isEmpty()) {
             sendEmail(email, code);
         }

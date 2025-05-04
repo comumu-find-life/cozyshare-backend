@@ -35,10 +35,10 @@ public class HomeQueryService {
     }
 
     /**
-     * 모든 집 게시글 조회
+     * 판매중인 모든 집 게시글 조회
      */
     @Cacheable(value = "homeOverviewCache", key = "'allHomes'")
-    public HomeOverviewWrapper findAllHomes() {
+    public HomeOverviewWrapper findAllHomesForSale() {
         List<HomeOverviewResponse> homeOverviewResponses = homeRepository.findAllSellHome();
         return new HomeOverviewWrapper(homeOverviewResponses);
     }

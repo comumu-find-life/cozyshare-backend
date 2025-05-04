@@ -20,6 +20,9 @@ public class AccountController {
 
     private final UserService userService;
 
+    /**
+     * 계좌 등록 API
+     */
     @PostMapping(USER_ACCOUNT_REGISTER_URL)
     public ResponseEntity<?> registerAccount(@RequestBody final UserAccountRequest userAccountRequest, @PathVariable final Long userId) {
         userService.registerUserAccount(userAccountRequest, userId);
@@ -27,6 +30,9 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 사용자 계좌 정보 조회 API
+     */
     @GetMapping(USER_ACCOUNT_REGISTER_URL)
     public ResponseEntity<?> findUserAccount(@PathVariable final Long userId) {
         UserAccountResponse userAccountById = userService.findUserAccountById(userId);
@@ -34,6 +40,9 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 사용자 계좌 정보 업데이트 API
+     */
     @PatchMapping(USER_ACCOUNT_REGISTER_URL)
     public ResponseEntity<?> updateAccount(@RequestBody final UserAccountRequest userAccountRequest, @PathVariable final Long userId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -42,6 +51,9 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 사용자 계좌 유/무 검증 API
+     */
     @GetMapping(USER_ACCOUNT_EXIST_URL)
     public ResponseEntity<?> validateAccountExist(@PathVariable final Long userId) {
         boolean result = userService.isExistAccount(userId);

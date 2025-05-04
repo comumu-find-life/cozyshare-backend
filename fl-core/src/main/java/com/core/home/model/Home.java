@@ -4,6 +4,7 @@ import com.core.base.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -14,6 +15,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "home", indexes = {
+        @Index(name = "idx_home_user_status", columnList = "home_id, user_id, home_status"),
+        @Index(name = "idx_home_home_status", columnList = "home_status"),
+        @Index(name = "idx_home_user", columnList = "user_id")
+})
 public class Home extends BaseTimeEntity {
 
     @Id
