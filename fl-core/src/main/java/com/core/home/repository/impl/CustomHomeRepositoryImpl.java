@@ -37,7 +37,7 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
         Tuple tuple = query
                 .select(qHome, qUser)
                 .from(qHome)
-                .join(qUser).on(qHome.userId.eq(qUser.id)) // 인덱스 조회
+                .join(qUser).on(qHome.userId.eq(qUser.id))
                 .join(qHome.images, qHomeImage).fetchJoin()
                 .distinct()
                 .where(qHome.id.eq(homeId))
@@ -53,7 +53,7 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
     @Override
     public List<Home> findByUserId(final Long userId) {
         List<Home> homes = query.selectFrom(qHome)
-                .where(qHome.userId.eq(userId)) // 인덱스 처리됨
+                .where(qHome.userId.eq(userId))
                 .fetch();
         return Collections.unmodifiableList(homes);
     }
@@ -85,7 +85,7 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
 
     @Override
     public List<HomeOverviewResponse> findSellHomePage(Pageable pageable) {
-        //커버링 인덱스를 통한 조회 대상 id 찾기
+        //커버링 인덱스를 통한 조회 대상 id 를 찾는다.
         List<Long> ids = query.select(qHome.id)
                 .from(qHome)
                 .where(qHome.homeStatus.eq(HomeStatus.FOR_SALE))
@@ -96,7 +96,7 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
 
         if(ids.isEmpty()) return Collections.unmodifiableList(new ArrayList<>());
 
-        return query.select(qHome, qUser)
+        return Collections.unmodifiableList(query.select(qHome, qUser)
                 .from(qHome)
                 .join(qUser).on(qHome.userId.eq(qUser.id))
                 .join(qHome.homeAddress).fetchJoin()
@@ -106,7 +106,7 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
                 .stream()
                 .map(tuple -> HomeMapper.INSTANCE.toOverviewResponse(
                         tuple.get(qHome), tuple.get(qUser)))
-                .toList();
+                .toList());
     }
 
     @Override
@@ -131,9 +131,8 @@ public class CustomHomeRepositoryImpl implements CustomHomeRepository {
         List<Home> homes = query.selectFrom(qHome)
                 .where(qHome.homeStatus.eq(HomeStatus.FOR_SALE))
                 .join(qUser).on(qHome.userId.eq(qUser.id))
-                .where(Expressions.stringTemplate(
-                                "function('REPLACE', function('LOWER', {0}), ' ', '')", qHome.homeAddress.city)
-                        .eq(normalizedCityName))
+                .where(Expressions.stringTemplate("function('REPLACE', function('LOWER', {0}), ' ', '')", qHome.homeAddress.city)
+                        .eq(normalizedCityName)) // 클라이언트에서 city 조회는 Google API 를 통해 검색 후 요청을 보내기 때문에 전체 텍스트 인덱스 or LIKE 를 사용하지 않아도 됨
                 .fetch();
 
         return Collections.unmodifiableList(homes);

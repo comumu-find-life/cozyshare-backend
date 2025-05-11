@@ -10,6 +10,7 @@ import com.core.home.service.LocationService;
 import com.core.home.model.LatLng;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,6 +81,16 @@ public class HomeController {
     public ResponseEntity<?> findAllHomesForSale() {
         HomeOverviewWrapper allHomes = homeQueryService.findAllHomesForSale();
         SuccessResponse response = new SuccessResponse(true, ALL_HOMES_RETRIEVE_SUCCESS, allHomes.getHomes());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    /**
+     * 판매중인 집 게시글 페이징 조회 API
+     */
+    @GetMapping(HOMES_BASE_URL)
+    public ResponseEntity<?> findHomesForSaleByPaging(Pageable pageable) {
+        HomeOverviewWrapper homes = homeQueryService.findHomesForSaleByPaging(pageable);
+        SuccessResponse response = new SuccessResponse(true, HOMES_PAGING_SUCCESS, homes);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

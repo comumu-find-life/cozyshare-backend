@@ -34,6 +34,7 @@ public class ResponseMessage {
     public static final String HOME_IMAGE_UPDATE_SUCCESS = "집 게시글 사진 수정 성공";
     public static final String HOME_SELL_SUCCESS = "집 판매 완료";
     public static final String ALL_HOMES_RETRIEVE_SUCCESS = "모든 집 정보 조회 성공";
+    public static final String HOMES_PAGING_SUCCESS = "집 게시글 페이징 조회 성공";
     public static final String HOME_DELETE_SUCCESS = "delete!";
     public static final String CITY_HOMES_RETRIEVE_SUCCESS = "city 이름으로 조회 성공";
     public static final String FAVORITE_HOMES_RETRIEVE_SUCCESS = "찜 목록 집 조회 성공";

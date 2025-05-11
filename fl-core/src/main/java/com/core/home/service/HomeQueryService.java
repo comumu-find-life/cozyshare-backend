@@ -12,6 +12,7 @@ import com.infra.utils.OptionalUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,6 +42,10 @@ public class HomeQueryService {
     public HomeOverviewWrapper findAllHomesForSale() {
         List<HomeOverviewResponse> homeOverviewResponses = homeRepository.findAllSellHome();
         return new HomeOverviewWrapper(homeOverviewResponses);
+    }
+
+    public HomeOverviewWrapper findHomesForSaleByPaging(final Pageable pageable){
+        return new HomeOverviewWrapper(homeRepository.findSellHomePage(pageable));
     }
 
     /**
