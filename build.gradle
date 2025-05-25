@@ -8,6 +8,21 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+
+        maven {
+            url = uri("https://maven.pkg.github.com/sinminseok/snail-catch")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+                password = project.findProperty("gpr.key") ?: System.getenv("GPR_KEY")
+            }
+        }
+    }
+}
+
+
 subprojects {
     group = 'comumu'
     version = '0.0.1'
@@ -21,20 +36,6 @@ subprojects {
         mavenCentral()
         google()
     }
-
-//    tasks.withType(Test).configureEach {
-//        def envFile = rootProject.file(".env.test")
-//        if (envFile.exists()) {
-//            envFile.readLines().each { line ->
-//                if (line && !line.startsWith("#")) {
-//                    def (key, value) = line.split("=", 2)
-//                    environment key.trim(), value.trim()
-//                }
-//            }
-//        }
-//
-//        useJUnitPlatform()
-//    }
 
     ext {
         set('springCloudVersion', "2023.0.0")

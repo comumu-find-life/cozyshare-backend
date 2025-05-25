@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  loki:
+    image: grafana/loki:2.8.0
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+      - ./loki/wal:/tmp/loki/wal
+      - ./loki/index:/tmp/loki/index
+      - ./loki/chunks:/tmp/loki/chunks
+      - ./loki/cache:/tmp/loki/cache
+      - ./loki/compactor:/tmp/loki/compactor
+      - ./loki/rules:/tmp/loki/rules
+      - ./loki/rules-temp:/tmp/loki/rules-temp
+
+  promtail:
+    image: grafana/promtail:2.9.3
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/promtail.yaml
+      - /var/log:/var/log                # 호스트 로그 폴더
+    command: -config.file=/etc/promtail/promtail.yaml
+    depends_on:
+      - loki
+
+
+  grafana:
+    image: grafana/grafana:10.2.3
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana:/var/lib/grafana

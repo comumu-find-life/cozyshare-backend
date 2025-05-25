@@ -1,0 +1,52 @@
+<configuration>
+
+    <!-- 상태 모니터링용 로그 -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>
+
+    <!-- Loki Appender -->
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <batchMaxItems>1000</batchMaxItems>
+        <batchMaxBytes>4194304</batchMaxBytes>
+        <batchTimeoutMs>60000</batchTimeoutMs>
+        <sendQueueMaxBytes>41943040</sendQueueMaxBytes>
+
+        <sender class="com.github.loki4j.logback.sender.JavaHttpSender">
+            <!-- localhost 대신 Loki 컨테이너 네트워크 이름으로 변경 -->
+            <url>http://localhost:3100/loki/api/v1/push</url>
+        </sender>
+
+        <encoder class="com.github.loki4j.logback.encoder.JsonEncoder">
+            <labels>{application="fl-api"}</labels>
+            <labelFromMdc>false</labelFromMdc>
+            <logJson>true</logJson>
+            <autoTimestamp>true</autoTimestamp>
+            <prettyPrint>true</prettyPrint>
+        </encoder>
+    </appender>
+
+    <!-- 비동기 처리해서 성능 향상 -->
+    <appender name="ASYNC_LOKI" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>1024</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="LOKI"/>
+    </appender>
+
+    <!-- 콘솔 출력용 appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- root logger : 콘솔과 Loki 동시 출력 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_LOKI"/>
+    </root>
+
+    <!-- Loki sender 내부 로그 TRACE 레벨로 출력 -->
+    <logger name="com.github.loki4j.logback.sender.JavaHttpSender" level="TRACE" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+</configuration>

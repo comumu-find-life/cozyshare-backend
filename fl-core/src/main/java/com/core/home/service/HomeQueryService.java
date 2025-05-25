@@ -73,6 +73,8 @@ public class HomeQueryService {
      */
     public List<HomeOverviewResponse> findByCity(final String cityName) {
         List<Home> homes = homeRepository.findByCity(cityName);
+        if (homes == null || homes.isEmpty()) return List.of();
+
         return homes.stream()
                 .map(home -> {
                     User user = userRepository.findById(home.getUserId())

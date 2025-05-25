@@ -4,12 +4,14 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
-        show_sql: false
-        format_sql: false
+
     hibernate:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
+    naming:
+      physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -22,10 +24,11 @@ spring:
     level:
       root: error
       com.api.exception: error
-      me.selvernine: ERROR
-      com.google.firebase: ERROR
-      com.google.api: ERROR
+      me.selvernine: error
+      com.google.firebase: error
+      com.google.api: error
       org.hibernate: error
+      com.github.loki4j.logback.sender.JavaHttpSender: TRACE
 
   data:
     mongodb:
@@ -100,6 +103,19 @@ jwt:
   refresh:
     expiration: 1209600000
     header: Authorization-refresh
+
+slowquery:
+  repository-pointcut: execution(* com.core..repository.impl..*.*(..))
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 thread:
   pool:

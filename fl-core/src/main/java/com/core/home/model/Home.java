@@ -42,6 +42,7 @@ public class Home extends BaseTimeEntity {
     private HomeInfo homeInfo;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "home_status")
     private HomeStatus homeStatus;
 
     public void addImages(List<HomeImage> images){
