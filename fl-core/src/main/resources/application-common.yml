@@ -104,8 +104,10 @@ jwt:
     expiration: 1209600000
     header: Authorization-refresh
 
-slowquery:
+snail-catch:
+  enabled: true
   repository-pointcut: execution(* com.core..repository.impl..*.*(..))
+  api-key: 0265557c83844248a0c0ddc8e4b6a350
 
 management:
   endpoints:

@@ -25,7 +25,7 @@ bootJar{
 jar{ enabled = true}
 
 dependencies {
-//    implementation 'com.snailcatch:snailcatch-sdk:0.1.32'
+    implementation 'com.snailcatch:snailcatch-sdk:0.1.88'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     testImplementation 'org.springframework.boot:spring-boot-starter-websocket'
     testImplementation 'org.springframework:spring-messaging'

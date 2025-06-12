@@ -51,10 +51,10 @@ dependencies {
     implementation project(':fl-infra')
     testImplementation(testFixtures(project(":fl-core")))
     testImplementation(testFixtures(project(":fl-infra")))
-    implementation 'io.micrometer:micrometer-registry-prometheus'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'com.github.loki4j:loki-logback-appender:1.4.1'
-
+//    implementation 'io.micrometer:micrometer-registry-prometheus'
+//    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+//    implementation 'com.github.loki4j:loki-logback-appender:1.4.1'
+//
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
