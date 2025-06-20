@@ -16,16 +16,19 @@ version 'unspecified'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 bootJar{
     enabled = false
 }
 
-jar{ enabled = true}
+jar {
+    enabled = true
+}
 
 dependencies {
-    implementation 'com.snailcatch:snailcatch-sdk:0.1.88'
+    implementation 'com.github.sinminseok:snail-catch:1.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     testImplementation 'org.springframework.boot:spring-boot-starter-websocket'
     testImplementation 'org.springframework:spring-messaging'

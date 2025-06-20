@@ -19,6 +19,7 @@ allprojects {
                 password = project.findProperty("gpr.key") ?: System.getenv("GPR_KEY")
             }
         }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -49,6 +50,7 @@ subprojects {
     }
 
     dependencies {
+
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'

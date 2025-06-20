@@ -41,6 +41,13 @@ spring:
     url: ${FL_DB_URL}
     username: ${FL_DB_USER_NAME}
     password: ${FL_DB_PASSWROD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      keepalive-time: 300000
+      validation-timeout: 5000
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
@@ -105,9 +112,9 @@ jwt:
     header: Authorization-refresh
 
 snail-catch:
-  enabled: true
+  enabled: false
   repository-pointcut: execution(* com.core..repository.impl..*.*(..))
-  api-key: 0265557c83844248a0c0ddc8e4b6a350
+  api-key: 1e79cdb5d7a84eb8b453562ab44b5a7f
 
 management:
   endpoints:
