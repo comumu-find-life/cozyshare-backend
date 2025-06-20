@@ -30,6 +30,9 @@ public class ProtectedDealController {
     private final ProtectedDealService protectedDealService;
     private final UserService userService;
 
+    /**
+     * 두 사람 사이에 진행된 모든 안전거래를 조회하는 API
+     */
     @PostMapping(DEALS_READ)
     public ResponseEntity<?> findProtectedDeal(@RequestBody final ProtectedDealFindRequest request) {
         List<ProtectedDealResponse> protectedDealResponse = protectedDealService.findProtectedDeal(request.getGetterId(), request.getProviderId(), request.getHomeId(), request.getDmId());
@@ -37,6 +40,9 @@ public class ProtectedDealController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 자신의 모든 안전거래를 조회하는 API
+     */
     @GetMapping(DEALS_FIND_ALL_BY_USER_ID)
     public ResponseEntity<?> findAllByUserId(@PathVariable final Long userId){
         List<ProtectedDealResponse> allByUserId = protectedDealService.findAllByUserId(userId);
@@ -44,6 +50,9 @@ public class ProtectedDealController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 안전거래를 저장하는 API (임대인이 사용)
+     */
     @PostMapping(DEALS_SAVE)
     public ResponseEntity<?> saveProtectedDeal(@RequestBody final ProtectedDealGeneratorRequest request)  {
         ProtectedDealGeneratorResponse protectedDeal = protectedDealService.saveProtectedDeal(request);
@@ -51,6 +60,10 @@ public class ProtectedDealController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * 안전거래를 수락하는 API (임차인이 사용)
+     * *임차인의 포인트를 감소 시킨다*
+     */
     @PostMapping(DEALS_ACCEPT_REQUEST)
     public ResponseEntity<?> acceptDeal(@PathVariable final Long dealId) {
         Long getterId = getLoggedInUserId();

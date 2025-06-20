@@ -4,12 +4,14 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
-        show_sql: false
-        format_sql: false
+
     hibernate:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
+    naming:
+      physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -22,25 +24,16 @@ spring:
     level:
       root: error
       com.api.exception: error
-      me.selvernine: ERROR
-      com.google.firebase: ERROR
-      com.google.api: ERROR
+      me.selvernine: error
+      com.google.firebase: error
+      com.google.api: error
       org.hibernate: error
+      com.github.loki4j.logback.sender.JavaHttpSender: TRACE
 
   data:
     mongodb:
       uri: ${FL_CHAT_DB_URL}
       database: ${FL_CHAT_DB_USER_NAME}
-
-#    elasticsearch:
-#      repositories:
-#        enabled: true
-#      client:
-#        reactive: false
-#        sniff: false
-#      uris: ${ELASTIC_SEARCH_HOST}
-
-
 
   datasource:
     initialization-mode: never
@@ -48,6 +41,13 @@ spring:
     url: ${FL_DB_URL}
     username: ${FL_DB_USER_NAME}
     password: ${FL_DB_PASSWROD}
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      keepalive-time: 300000
+      validation-timeout: 5000
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
@@ -110,6 +110,21 @@ jwt:
   refresh:
     expiration: 1209600000
     header: Authorization-refresh
+
+snail-catch:
+  enabled: false
+  repository-pointcut: execution(* com.core..repository.impl..*.*(..))
+  api-key: 1e79cdb5d7a84eb8b453562ab44b5a7f
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 thread:
   pool:

@@ -28,6 +28,9 @@ import static com.core.user.entity_helper.UserHelper.generateUser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * 테스트를 위해 MongoDB 가 로컬에서 실행되고 있어야 함
+ */
 @SpringBootTest(classes = ChattingTestApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")

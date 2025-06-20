@@ -112,8 +112,8 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping(USERS_FIND_BY_ID)
-    public ResponseEntity<?> deleteAccount(@PathVariable final Long userId){
+    @DeleteMapping(USERS_BASE_URL)
+    public ResponseEntity<?> deleteAccount(){
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         userService.delete(email);
         SuccessResponse response = new SuccessResponse(true, DELETE_ACCOUNT, null);

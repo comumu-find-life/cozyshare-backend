@@ -43,6 +43,7 @@ public class CustomProtectedDealRepositoryImpl implements CustomProtectedDealRep
                         qProtectedDeal.homeId.eq(homeId),
                         qProtectedDeal.dmId.eq(dmId))
                 .fetch();
+
         fetch.stream()
                 .forEach(tuple -> {
                     ProtectedDeal protectedDeal= tuple.get(QProtectedDeal.protectedDeal);

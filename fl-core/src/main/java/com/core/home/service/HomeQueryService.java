@@ -12,6 +12,7 @@ import com.infra.utils.OptionalUtil;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,12 +36,16 @@ public class HomeQueryService {
     }
 
     /**
-     * 모든 집 게시글 조회
+     * 판매중인 모든 집 게시글 조회
      */
     @Cacheable(value = "homeOverviewCache", key = "'allHomes'")
-    public HomeOverviewWrapper findAllHomes() {
+    public HomeOverviewWrapper findAllHomesForSale() {
         List<HomeOverviewResponse> homeOverviewResponses = homeRepository.findAllSellHome();
         return new HomeOverviewWrapper(homeOverviewResponses);
+    }
+
+    public HomeOverviewWrapper findHomesForSaleByPaging(final Pageable pageable){
+        return new HomeOverviewWrapper(homeRepository.findSellHomePage(pageable));
     }
 
     /**
@@ -68,6 +73,8 @@ public class HomeQueryService {
      */
     public List<HomeOverviewResponse> findByCity(final String cityName) {
         List<Home> homes = homeRepository.findByCity(cityName);
+        if (homes == null || homes.isEmpty()) return List.of();
+
         return homes.stream()
                 .map(home -> {
                     User user = userRepository.findById(home.getUserId())

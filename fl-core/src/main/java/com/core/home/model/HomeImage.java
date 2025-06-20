@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "home_image")
 public class HomeImage extends BaseTimeEntity {
 
     @Id

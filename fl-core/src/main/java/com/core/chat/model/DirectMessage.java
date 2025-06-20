@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 import java.time.LocalDateTime;
 
+/**
+ * 채팅 정보를 나타내는 엔티티
+ */
 @Getter
 @Builder
 @Setter

@@ -3,8 +3,8 @@ spring:
     properties:
       hibernate:
         default_batch_fetch_size: 100
-        show_sql: false
-        format_sql: false
+        show_sql: true
+        format_sql: true
     hibernate:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -98,5 +98,5 @@ domain:
 
 firebase:
   project-id: ${FIREBASE_PROJECT_ID}
-    key-url: ${FIREBASE_KEY_URL}
-    key-name: ${FIREBASE_KEY_NAME}
+  key-url: ${FIREBASE_KEY_URL}
+  key-name: ${FIREBASE_KEY_NAME}
